@@ -3,7 +3,7 @@ package com.example.myapplication
 
 fun main() {
     var teacher=Teacher()
-    println(teacher.displayAbs())
+     println(teacher.displayAbs())
 }
   abstract class PersonAbstract {
 
