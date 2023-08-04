@@ -1,14 +1,14 @@
-package com.example.myapplication
+package com.example.myapplication.kotlin
 
 fun main() {
 
-    var car=Car();
+    var car= Car();
 
     car.startEngine()
     car.accelerate()
 }
 
-class Car:Vehicle{
+class Car: Vehicle {
     override val speed: Int
         get() = speed
 

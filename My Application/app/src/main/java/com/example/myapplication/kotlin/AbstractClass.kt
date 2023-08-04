@@ -1,8 +1,8 @@
-package com.example.myapplication
+package com.example.myapplication.kotlin
 
 
 fun main() {
-    var teacher=Teacher()
+    var teacher= Teacher()
      println(teacher.displayAbs())
 }
   abstract class PersonAbstract {

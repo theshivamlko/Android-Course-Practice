@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.kotlin
 
 fun main(){
      var s1:Number=3.4f

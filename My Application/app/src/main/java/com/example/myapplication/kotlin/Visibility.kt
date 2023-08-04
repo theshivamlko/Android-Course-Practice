@@ -1,12 +1,12 @@
-package com.example.myapplication
+package com.example.myapplication.kotlin
 
 
 fun main() {
-    val person:Person = Person();
+    val person: Person = Person();
     println(person.name)
   //  println(person.salary) // private Error
 
-    val visibility2:Visibility2 = Visibility2();
+    val visibility2: Visibility2 = Visibility2();
     println(visibility2.name)
     println(visibility2.hairColor)
 
