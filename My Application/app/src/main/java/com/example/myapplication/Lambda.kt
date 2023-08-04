@@ -69,6 +69,10 @@ fun main() {
         return a - b;
     })
 
+
+    println(hof6()())
+    println(hof7(::message))
+
 }
 
 fun add2(a: Int, b: Int): Int {
@@ -100,10 +104,27 @@ fun hof3(name: (String) -> Unit) {
 
 fun hof4(name: String, subtract: (Int, Int) -> Int) {
     var res = subtract(10, 5)
+    val msg = fun(): String {
+        return "abc"
+    }
     println("hof4 $res")
+    println("hof4 ${subtract.javaClass}")
+    println("hof4 ${msg.javaClass}")
 }
 
 // higher-order function definition
+
+fun hof6():() -> String {
+    return ::message;
+}
+fun message():String{
+    return  "Hi"
+}
+
+fun hof7(regFun:() -> String) {
+    println(regFun);
+}
+
 
 class Lambda {
 
