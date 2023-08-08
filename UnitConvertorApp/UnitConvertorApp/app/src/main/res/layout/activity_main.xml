@@ -41,12 +41,21 @@
     <Button
             android:text="Implicit Intent"
             android:id="@+id/btnIntent2"
+            android:fontFamily="@font/milk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
          />
     <Button
             android:text="Strings XML"
             android:id="@+id/btnIntent3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+         />
+
+    <Button
+            android:text="Drawables"
+            android:id="@+id/btn4"
+            android:fontFamily="@font/milk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
          />

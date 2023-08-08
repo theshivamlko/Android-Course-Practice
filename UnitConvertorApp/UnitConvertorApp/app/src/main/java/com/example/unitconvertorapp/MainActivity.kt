@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         val btnIntent1 = lazy { findViewById<Button>(R.id.btnIntent1) }.value
         val btnIntent2: Button by lazy { findViewById(R.id.btnIntent2) }
         val btnIntent3: Button by lazy { findViewById(R.id.btnIntent3) }
+        val btn4: Button by lazy { findViewById(R.id.btn4) }
 
 
         btn.setOnClickListener { it: View? ->
@@ -68,6 +69,11 @@ class MainActivity : AppCompatActivity() {
             btnIntent3.setText(resources.getText(R.string.sttringex))
             resources.getTextArray(R.array.strarray).forEach { println(it) }
             resources.getStringArray(R.array.strarray).forEach { println(it) }
+        }
+
+        btn4.setOnClickListener {
+            var intent: Intent = Intent(this, DrawableActivity::class.java)
+            startActivity(intent)
         }
     }
 
