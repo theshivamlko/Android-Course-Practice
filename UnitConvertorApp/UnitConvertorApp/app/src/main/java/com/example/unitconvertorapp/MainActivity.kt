@@ -1,6 +1,7 @@
 package com.example.unitconvertorapp
 
  import android.content.Intent
+ import android.net.Uri
  import android.os.Bundle
  import android.os.PersistableBundle
  import android.view.ContextMenu
@@ -19,11 +20,28 @@ class MainActivity : AppCompatActivity() {
         val edt2=findViewById<EditText>(R.id.edt2)
         val btn:Button=findViewById(R.id.btn)
 
+          val btnIntent1: Button by lazy { findViewById<Button>(R.id.btnIntent1) }
+        val btnIntent2: Button by lazy { findViewById(R.id.btnIntent2) }
+
 
         btn.setOnClickListener { it: View? ->
            val k=edt1.text.toString().toDouble()
             val res=poundLambda(k)
             edt2.setText("$res Pounds")
+        }
+
+        btnIntent1.setOnClickListener{
+            var intent:Intent= Intent(this,ActivityIntent::class.java)
+            intent.putExtra("num",123)
+             startActivity(intent)
+
+        }
+
+
+        btnIntent2.setOnClickListener {
+            var intent:Intent= Intent(Intent.ACTION_VIEW)
+            intent.setData(Uri.parse("https://google.com"))
+            startActivity(intent)
         }
     }
 
