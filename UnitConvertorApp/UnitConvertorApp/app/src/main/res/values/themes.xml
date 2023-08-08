@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="Theme.UnitConvertorApp" parent="android:Theme.Material.Light.NoActionBar"/>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.UnitConvertorApp" parent="Theme.AppCompat.DayNight">
+            <item name="android:font" tools:targetApi="o">@font/milk</item>
+            <item name="android:textColor" tools:targetApi="o">@color/purple_200</item>
+        </style>
 </resources>
