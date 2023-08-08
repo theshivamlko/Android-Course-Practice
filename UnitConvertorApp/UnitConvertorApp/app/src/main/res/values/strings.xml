@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">UnitConvertorApp</string>
+    <string name="sttringex">New String XML Tag</string>
+
+    <string-array name="strarray">
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Dart</item>
+    </string-array>
 </resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:id="@+id/Group1">
+        <item android:id="@+id/menu1" android:title="Menu1"/>
+        <item android:id="@+id/menu2" android:title="Menu2"/>
+    </group>
+
+    <item android:id="@+id/menu3" android:title="Menu3"
+          android:icon="@mipmap/ic_launcher">
+    </item>
+
+    <item android:id="@+id/menu4" android:title="Menu4"
+          app:actionLayout="@layout/custom_men"
+          app:showAsAction="always"
+          android:icon="@mipmap/ic_launcher">
+    </item>
+</menu>

@@ -4,10 +4,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.view.ContextMenu
-import android.view.View
+import android.view.*
 import android.widget.Button
 import android.widget.EditText
+import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat
@@ -22,8 +23,9 @@ class MainActivity : AppCompatActivity() {
         val edt2 = findViewById<EditText>(R.id.edt2)
         val btn: Button = findViewById(R.id.btn)
 
-        val btnIntent1=  lazy { findViewById<Button>(R.id.btnIntent1) }.value
+        val btnIntent1 = lazy { findViewById<Button>(R.id.btnIntent1) }.value
         val btnIntent2: Button by lazy { findViewById(R.id.btnIntent2) }
+        val btnIntent3: Button by lazy { findViewById(R.id.btnIntent3) }
 
 
         btn.setOnClickListener { it: View? ->
@@ -38,7 +40,10 @@ class MainActivity : AppCompatActivity() {
             var intent: Intent = Intent(this, ActivityIntent::class.java)
             intent.putExtra("num", 123)
             startActivity(intent)
-            btnIntent1.setBackgroundColor(resources.getColor(R.color.purple_700,resources.newTheme().apply { R.style.Theme_UnitConvertorApp  } ))
+            btnIntent1.setBackgroundColor(
+                resources.getColor(
+                    R.color.purple_700,
+                    resources.newTheme().apply { R.style.Theme_UnitConvertorApp }))
             btnIntent1.setTextColor(android.graphics.Color.GREEN)
 
         }
@@ -49,13 +54,20 @@ class MainActivity : AppCompatActivity() {
             intent.setData(Uri.parse("https://google.com"))
             startActivity(intent)
             println("btnIntent2")
-            btnIntent2.setTextColor(ContextCompat.getColor(this,R.color.black))
+            btnIntent2.setTextColor(ContextCompat.getColor(this, R.color.black))
 
-          /*  var intent:Intent= Intent(Intent.ACTION_SEND)
-            intent.putExtra(Intent.EXTRA_SUBJECT,"Hi everyone" )
-            intent.putExtra(Intent.EXTRA_TEXT,"Some random description" )
-            intent.setType("text/plain")
-            startActivity(intent)*/
+            /*  var intent:Intent= Intent(Intent.ACTION_SEND)
+              intent.putExtra(Intent.EXTRA_SUBJECT,"Hi everyone" )
+              intent.putExtra(Intent.EXTRA_TEXT,"Some random description" )
+              intent.setType("text/plain")
+              startActivity(intent)*/
+        }
+
+
+        btnIntent3.setOnClickListener {
+            btnIntent3.setText(resources.getText(R.string.sttringex))
+            resources.getTextArray(R.array.strarray).forEach { println(it) }
+            resources.getStringArray(R.array.strarray).forEach { println(it) }
         }
     }
 
@@ -64,6 +76,43 @@ class MainActivity : AppCompatActivity() {
     fun convertToPound(kilo: Double): Double {
         var pound = kilo * 2.20462
         return pound
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        println("onCreateOptionsMenu")
+        val menu1: MenuInflater = menuInflater;
+        menu1.inflate(R.menu.main_menu, menu)
+        return true;
+    }
+
+    var counter:Int=0
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        println("onOptionsItemSelected")
+
+        when (item.itemId) {
+            R.id.menu1 -> println(item.title)
+            R.id.menu2 -> println(item.title)
+            R.id.menu3 -> println(item.title)
+            R.id.menu4 -> {
+                viewAlertCountTextview.setText("${++counter}")
+            }
+        }
+        return false
+    }
+    lateinit var viewAlertCountTextview:TextView
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        println("onPrepareOptionsMenu")
+        val alertMenuItem = menu?.findItem(R.id.menu4)
+        val rootView: FrameLayout =   alertMenuItem?.actionView as FrameLayout
+        println("onPrepareOptionsMenu $rootView")
+          val viewAlertRedCircle: FrameLayout by lazy { rootView.findViewById<FrameLayout>(R.id.view_alert_red_circle) }
+            viewAlertCountTextview=  lazy { rootView.findViewById<TextView>(R.id.view_alert_count_textview) }.value
+
+        rootView.setOnClickListener{
+            onOptionsItemSelected(alertMenuItem);
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
