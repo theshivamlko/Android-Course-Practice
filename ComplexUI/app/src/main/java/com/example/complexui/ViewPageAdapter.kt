@@ -15,6 +15,4 @@ class ViewPageAdapter(activity: MainActivity):FragmentStateAdapter(activity) {
             else->return LoginFragment()
         }
     }
-
-
 }

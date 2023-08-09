@@ -36,9 +36,7 @@ class SettingFragment : Fragment() {
        val view= inflater.inflate(R.layout.fragment_setting, container, false)
 
       val viewPager2:ViewPager2=  view.findViewById<ViewPager2>(R.id.viewpager)
-
         val viewPageAdapter:ViewPageAdapter= ViewPageAdapter(activity )
-
         viewPager2.orientation=ViewPager2.ORIENTATION_HORIZONTAL
         viewPager2.adapter=viewPageAdapter
 
