@@ -23,8 +23,7 @@ class RecycleViewActivity : AppCompatActivity() {
         val type = object : TypeToken<List<Country>>() {}.type
         val list = Gson().fromJson<ArrayList<Country>>(CustomListActivity().jsonCountry, type)
         println(list.size)
-       val myRecyclerViewAdpater: MyRecyclerViewAdpater= MyRecyclerViewAdpater(list)
-
+        val myRecyclerViewAdpater: MyRecyclerViewAdpater= MyRecyclerViewAdpater(list)
         mRecycle.layoutManager=LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         mRecycle.adapter=myRecyclerViewAdpater
 
