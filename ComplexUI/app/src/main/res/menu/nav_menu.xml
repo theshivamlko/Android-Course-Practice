@@ -14,7 +14,7 @@
 
     <item android:title="Settings"  android:id="@+id/settings">
         <menu>
-            <item android:title="Orders" android:id="@+id/orders"/>
+            <item android:title="ViewPager" android:id="@+id/viewPager"/>
         </menu>
     </item>
     <item android:title="About Us" android:id="@+id/aboutus"/>

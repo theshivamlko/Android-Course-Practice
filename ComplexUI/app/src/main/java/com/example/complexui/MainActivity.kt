@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.home -> replaceFragment(HomeFragment(), it.title.toString())
                 R.id.message -> replaceFragment(LoginFragment(), it.title.toString())
+                R.id.viewPager -> replaceFragment(SettingFragment(), it.title.toString())
                 else ->    true
             }
         }
