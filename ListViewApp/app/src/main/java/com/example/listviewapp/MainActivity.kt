@@ -33,6 +33,10 @@ class MainActivity : AppCompatActivity() {
 
             startActivity(Intent(this,CustomListActivity::class.java))
         }
+        mButton3.setOnClickListener { l->
+
+            startActivity(Intent(this,RecycleViewActivity::class.java))
+        }
 
     }
 }
