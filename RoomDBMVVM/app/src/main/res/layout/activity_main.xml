@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="userViewModel"
+                  type="com.example.roomdbmvvm.livedata.UserViewModel"/>
+
+    </data>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".MainActivity">
+
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="@{userViewModel.nameEdt}"
+
+                android:hint="Name"
+                android:id="@+id/editTextText"/>
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="@{userViewModel.emailEdt}"
+                android:hint="Email"
+                android:ems="10"
+                android:id="@+id/editTextText2"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="100dp"
+        android:orientation="horizontal"
+        >
+            <Button
+                    android:layout_width="200dp"
+                    android:onClick="@{()->userViewModel.saveOrUpdate()}"
+                    android:text="@{userViewModel.btnAddUpdateTxt}"
+                    android:layout_height="wrap_content" android:id="@+id/button1"/>
+            <Button
+                    android:layout_width="200dp"
+                    android:onClick="@{()->userViewModel.clearOrDelete()}"
+                    android:text="@{userViewModel.btnClearDeleteTxt}"
+                    android:layout_height="wrap_content" android:id="@+id/button2"/>
+
+
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   android:id="@+id/recyclerView"
+
+        />
+    </LinearLayout>
+
+</layout>
