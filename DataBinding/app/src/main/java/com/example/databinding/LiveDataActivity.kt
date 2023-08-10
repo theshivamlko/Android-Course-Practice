@@ -30,7 +30,7 @@ class LiveDataActivity : AppCompatActivity() {
             })
 
             button4.setOnClickListener {
-              val num=  editTextText.text.toString().toInt()
+              val num=  binding.editTextText.text.toString().toInt()
                 println("button4 ${num}")
                 viewModel.setTotal(num)
 

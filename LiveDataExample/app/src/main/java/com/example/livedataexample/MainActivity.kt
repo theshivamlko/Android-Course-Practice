@@ -2,6 +2,8 @@ package com.example.livedataexample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.livedataexample.databinding.ActivityMainBinding
@@ -28,10 +30,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
         mainViewModel.user.observe(this, {
             println("User Listen ${it.name}")
             activityMainBinding.textView.text = it.name
         })
+
+        Handler(Looper.myLooper()!!).postDelayed(Runnable {
+            mainViewModel.updateUser(User("AAAAA", 100))
+
+        },5000)
 
 
     }
