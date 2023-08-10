@@ -22,7 +22,29 @@
         <Button
                 android:text="Button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/button" tools:layout_editor_absoluteY="397dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/button"
+                tools:layout_editor_absoluteY="397dp"
+                tools:layout_editor_absoluteX="166dp"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ViewModel"
+                android:id="@+id/textView2"
+                android:layout_marginTop="50dp"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="0.473"
+                app:layout_constraintVertical_bias="0.057"/>
+
+        <Button
+                android:text="ViewModel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button2"
+                tools:layout_editor_absoluteY="397dp"
                 tools:layout_editor_absoluteX="166dp"/>
 
     </LinearLayout>
