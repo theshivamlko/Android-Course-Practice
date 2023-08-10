@@ -5,13 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import com.example.databinding.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private  lateinit var binding:ActivityMainBinding
     private  lateinit var viewModel:MainActivityViewModel
+    private  lateinit var myViewModelFactory: MyViewModelFactory
    // var count = 0;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +19,8 @@ class MainActivity : AppCompatActivity() {
 
         binding=DataBindingUtil.setContentView(this,R.layout.activity_main)
 
-        viewModel=ViewModelProvider(this).get(MainActivityViewModel::class.java)
+        myViewModelFactory= MyViewModelFactory(100)
+        viewModel=ViewModelProvider(this,myViewModelFactory).get(MainActivityViewModel::class.java)
 
         println("ViewModel ${viewModel.count}")
         binding.let {
@@ -39,6 +40,11 @@ class MainActivity : AppCompatActivity() {
             println("ViewModel")
         //    binding.textView2.setText("${++count}" )
              binding.textView2.setText("${++viewModel.count}")
+        }
+
+        binding.button3.setOnClickListener {
+            println("ViewModel")
+        startActivity(Intent(this,LiveDataActivity::class.java))
         }
     }
 
