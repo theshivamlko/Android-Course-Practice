@@ -31,6 +31,12 @@
                 android:gravity="start|top"
                 android:hint="Description"
                 android:inputType="textMultiLine" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Button" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 

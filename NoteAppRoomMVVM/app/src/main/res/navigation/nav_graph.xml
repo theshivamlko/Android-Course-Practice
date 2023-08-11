@@ -16,5 +16,11 @@
     <fragment
         android:id="@+id/addNoteFragment"
         android:name="com.example.noteapproommvvm.AddNoteFragment"
-        android:label="AddNoteFragment" />
+        android:label="AddNoteFragment" >
+        <action
+            android:id="@+id/action_addNoteFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+
+        <argument android:name="note" app:argType="com.example.noteapproommvvm.roomdb.NoteEntity"></argument>
+    </fragment>
 </navigation>
