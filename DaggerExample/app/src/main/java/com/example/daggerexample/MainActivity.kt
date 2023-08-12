@@ -10,7 +10,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
 
-    @Inject  // Field Injection
+      @Inject  // Field Injection
       lateinit var mobile: Mobile
 
    // private lateinit var mobile: Mobile
@@ -31,9 +31,14 @@ class MainActivity : AppCompatActivity() {
 
 
        // Auto initialize variable
-       DaggerMobileComponent.builder().amoledDisplayModule(AmoledDisplayModule(1920))
+/*       DaggerMobileComponent.builder().amoledDisplayModule(AmoledDisplayModule(1920))
            .build()
            .inject(this)
+       mobile.call()*/
+
+
+       // Using Application class
+       (application as MobileApplication).mobile.inject(this)
        mobile.call()
 
     }
