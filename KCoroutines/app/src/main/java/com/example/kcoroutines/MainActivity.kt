@@ -1,6 +1,8 @@
 package com.example.kcoroutines
 
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -9,13 +11,22 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.fragment.app.findFragment
+import androidx.lifecycle.ReportFragment.Companion.reportFragment
 import com.example.kcoroutines.databinding.ActivityMainBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    var counter=1;
 
+    val TAG="MainActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -28,9 +39,67 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
+
         binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+
+            when(counter){
+                1->{
+                    ++counter
+                    dataFromMainThread()
+                }
+                2->{
+                    ++counter
+                    dataFromThread1()
+                }
+                3->{
+                    ++counter
+                    dataFromThread2()
+                }
+            }
+
+
+            // Local
+          /*  CoroutineScope(Dispatchers.IO).launch {
+                downloadFile()
+            }  */
+
+
+            // Global
+          /*  kotlinx.coroutines.GlobalScope .launch {
+                downloadFile()
+            }*/
+
+        }
+
+
+
+    }
+
+    fun dataFromMainThread(){
+
+        CoroutineScope(Dispatchers.Main).launch {
+
+            binding.textView.setText("Hello from MAIN")
+        }
+    }
+    fun dataFromThread1(){
+
+        CoroutineScope(Dispatchers.IO).launch {
+            binding.textView.setText("Hello from IO")
+
+        }
+    }
+
+    fun dataFromThread2(){
+        CoroutineScope(Dispatchers.Unconfined).launch {
+            binding.textView.setText("Hello from Unconfined")
+
+        }
+    }
+
+    private fun downloadFile(){
+        for (i in 1..10000000){
+            Log.e(TAG,"downloadFile ${Thread.currentThread().name}  ${Thread.currentThread().id} $i")
         }
     }
 
