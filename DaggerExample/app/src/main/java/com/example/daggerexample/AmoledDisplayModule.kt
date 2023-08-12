@@ -4,10 +4,10 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class AmoledDisplayModule {
+class AmoledDisplayModule(val resolution:Int) {
     @Provides
     fun provideAmoledDisplay(amoledDisplay: AmoledDisplay):Display{
-        println("AmoledDisplayModule DISPLAY")
+        println("AmoledDisplayModule DISPLAY $resolution")
         return  AmoledDisplay()
     }
 }

@@ -9,7 +9,6 @@ class Mobile @Inject constructor(private val simCard: SimCard
     }
 
     fun call() {
-
         simCard.getNumber()
         battery.getPercentage()
         display.turnOnScreen()

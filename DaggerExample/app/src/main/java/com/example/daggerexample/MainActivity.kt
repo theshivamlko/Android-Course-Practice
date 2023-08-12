@@ -26,7 +26,14 @@ class MainActivity : AppCompatActivity() {
 
 
        // Auto initialize variable
-        DaggerMobileComponent.create().inject(this)
+    /*    DaggerMobileComponent.create().inject(this)
+       mobile.call()*/
+
+
+       // Auto initialize variable
+       DaggerMobileComponent.builder().amoledDisplayModule(AmoledDisplayModule(1920))
+           .build()
+           .inject(this)
        mobile.call()
 
     }
