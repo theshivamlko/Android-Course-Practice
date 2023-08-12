@@ -3,12 +3,17 @@ package com.example.daggerexample
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import dagger.internal.DaggerGenerated
+import javax.inject.Inject
 
 
 // Dependency Injection
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mobile: Mobile
+
+    @Inject  // Field Injection
+      lateinit var mobile: Mobile
+
+   // private lateinit var mobile: Mobile
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -16,13 +21,13 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        DaggerMobileComponent.create().getMobileInstance().call()
+      /*  mobile = DaggerMobileComponent.create().getMobileInstance()
+        mobile.call()*/
 
 
-
-
-
-
+       // Auto initialize variable
+        DaggerMobileComponent.create().inject(this)
+       mobile.call()
 
     }
 }

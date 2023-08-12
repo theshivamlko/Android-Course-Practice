@@ -2,7 +2,8 @@ package com.example.daggerexample
 
 import javax.inject.Inject
 
-class Mobile @Inject constructor(private val simCard: SimCard,private val battery: Battery) {
+class Mobile @Inject constructor(private val simCard: SimCard
+,private val battery: Battery,private val display: Display) {
     init {
 
     }
@@ -11,6 +12,7 @@ class Mobile @Inject constructor(private val simCard: SimCard,private val batter
 
         simCard.getNumber()
         battery.getPercentage()
+        display.turnOnScreen()
 
     }
 }
