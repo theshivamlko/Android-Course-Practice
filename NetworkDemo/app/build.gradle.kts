@@ -15,7 +15,6 @@ android {
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -42,6 +41,7 @@ android {
 }
 
 dependencies {
+
     val lifecycle_version = "2.6.1"
 
     implementation("androidx.core:core-ktx:1.9.0")
@@ -52,7 +52,6 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
     annotationProcessor("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
 
-
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.google.code.gson:gson:2.10.1")
@@ -61,5 +60,6 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
 }
 
