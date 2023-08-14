@@ -19,6 +19,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -26,6 +27,7 @@ import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -150,12 +152,26 @@ class MainActivity : ComponentActivity() {
                                 .scale(1.2f)
                                 .aspectRatio(9f / 16f)
                                 .blur(
-                                    radius = 10.dp,
+                                    radius = 2.dp,
                                     edgeTreatment = BlurredEdgeTreatment(
                                         shape = RoundedCornerShape(percent = 5)
                                     )
                                 )
                         )
+
+                        var inputVal by remember {
+                            mutableStateOf("")
+                        }
+
+                        BasicTextField(value = inputVal, onValueChange = {text-> inputVal=text},
+
+
+                            modifier = Modifier.border(width = 2.dp, color = Color.Red, shape = RoundedCornerShape(12.dp))
+
+                            )
+
+                        Text(text = "Hello $inputVal")
+
                     }
                 }
             }
