@@ -1,5 +1,6 @@
 package com.example.jetcomposeapp
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -51,9 +52,6 @@ import kotlin.random.Random
 
 
 class MainActivity : ComponentActivity() {
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -149,14 +147,13 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
 }
 
+
 @Composable
-fun DisplayText(num:Int) {
+fun DisplayText(num: Int) {
 
-    for (i in 1..10) {
-
+    for (i in 1..num) {
         val onClickFun = {
             println("$i")
 
@@ -184,6 +181,7 @@ fun DisplayText(num:Int) {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
+
     Text(
         text = "Hello $name!",
         modifier = modifier,
