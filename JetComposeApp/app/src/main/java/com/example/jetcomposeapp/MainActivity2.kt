@@ -3,17 +3,23 @@ package com.example.jetcomposeapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.contentValuesOf
 import com.example.jetcomposeapp.ui.theme.JetComposeAppTheme
 
 class MainActivity2 : ComponentActivity() {
@@ -43,6 +50,7 @@ class MainActivity2 : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Greeting2(name: String, modifier: Modifier = Modifier) {
 
@@ -50,44 +58,67 @@ fun Greeting2(name: String, modifier: Modifier = Modifier) {
         mutableStateOf(0)
     }
 
-    Column {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            RadioButton(
-                selected = selectedItem == 1,
-                onClick = { selectedItem = 1 },
+    Scaffold(
+        topBar = {
+            TopAppBar(title =
+            { Text(text = "ABC") }
             )
-            Text(text = "Pizza")
-        }
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            RadioButton(
-                selected = selectedItem == 2,
-                onClick = { selectedItem = 2 },
-            )
-            Text(text = "Burger")
-        }
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            RadioButton(
-                selected = selectedItem == 3,
-                onClick = { selectedItem = 3 },
-            )
-            Text(text = "Pasta")
-        }
+        },
 
-        CircularProgressIndicator(
-            modifier = Modifier.size(size=100.dp),
-            color = Color.Red,
-            strokeWidth = 10.dp,
+        ) { contentPadding ->
 
-          //  progress = 0.5f
-        )
+        Box(modifier = Modifier.padding(contentPadding))
+
+        Scaffold(
+            topBar = {
+
+            },
+
+            ) { contentPadding ->
+
+            Box(modifier = Modifier.padding(contentPadding))
+
+
+            Column {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    RadioButton(
+                        selected = selectedItem == 1,
+                        onClick = { selectedItem = 1 },
+                    )
+                    Text(text = "Pizza")
+                }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    RadioButton(
+                        selected = selectedItem == 2,
+                        onClick = { selectedItem = 2 },
+                    )
+                    Text(text = "Burger")
+                }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    RadioButton(
+                        selected = selectedItem == 3,
+                        onClick = { selectedItem = 3 },
+                    )
+                    Text(text = "Pasta")
+                }
+
+                CircularProgressIndicator(
+                    modifier = Modifier.size(size = 100.dp),
+                    color = Color.Red,
+                    strokeWidth = 10.dp,
+                    //  progress = 0.5f
+                )
+
+            }
+
+        }
     }
-
 
 
 }
