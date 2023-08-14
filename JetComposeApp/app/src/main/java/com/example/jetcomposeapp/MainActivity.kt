@@ -179,6 +179,10 @@ fun DisplayText(num: Int) {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
 
+
+    val user = User(20, "Lucknow")
+
+
     Text(
         text = "Hello $name!",
         modifier = modifier,
@@ -196,3 +200,5 @@ fun GreetingPreview() {
         Greeting("Preview")
     }
 }
+
+data class User(val age: Int, val name: String)
