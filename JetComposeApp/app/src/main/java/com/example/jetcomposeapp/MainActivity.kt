@@ -105,7 +105,6 @@ class MainActivity : ComponentActivity() {
                         Greeting("Shivam")
                         DisplayText(2)
 
-
                         Button(
                             onClick = {
                                 println("Display")
