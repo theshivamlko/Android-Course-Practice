@@ -11,6 +11,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,6 +21,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -55,6 +58,8 @@ import kotlin.random.Random
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 
 class MainActivity : ComponentActivity() {
 
@@ -165,8 +170,27 @@ class MainActivity : ComponentActivity() {
 
                         BasicTextField(value = inputVal, onValueChange = {text-> inputVal=text},
 
+                            keyboardOptions= KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Search),
 
-                            modifier = Modifier.border(width = 2.dp, color = Color.Red, shape = RoundedCornerShape(12.dp))
+                            keyboardActions= KeyboardActions(onDone = {
+
+                                println("onDone $this")
+                            }),
+
+                            modifier = Modifier.border(width = 2.dp, color = Color.Red, shape = RoundedCornerShape(12.dp)),
+                            decorationBox = { innerTextField ->
+                                Row(
+                                    Modifier
+                                        .background(Color.LightGray, RoundedCornerShape(percent = 30))
+                                        .padding(16.dp)
+                                ) {
+
+                                    if (inputVal.isEmpty()) {
+                                        Text("Label")
+                                    }
+                                    innerTextField()  //<-- Add this
+                                }
+                            },
 
                             )
 
