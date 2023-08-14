@@ -27,6 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
@@ -49,12 +50,22 @@ import androidx.compose.ui.unit.sp
 import com.example.jetcomposeapp.ui.theme.JetComposeAppTheme
 import com.example.jetcomposeapp.ui.theme.navokiColor
 import kotlin.random.Random
-
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 
 class MainActivity : ComponentActivity() {
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
+            var user by remember {
+                mutableStateOf(User(20,"Lucknow"))
+            }
+
             JetComposeAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -88,6 +99,9 @@ class MainActivity : ComponentActivity() {
                         Button(
                             onClick = {
                                 println("Display")
+
+                                user=User(10,"Jaunpur")
+                             //   user
                             },
                             shape = RoundedCornerShape(size = 20.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = Color.Green),
@@ -97,7 +111,7 @@ class MainActivity : ComponentActivity() {
                             )
                         ) {
                             Text(
-                                text = "Display" +
+                                text = "${user.name}" +
                                         stringResource(id = R.string.app_name),
                                 color = Color.Red,
                                 fontSize = 30.sp,
@@ -131,18 +145,18 @@ class MainActivity : ComponentActivity() {
                                 .border(
                                     width = 10.dp,
                                     color = Color.Red,
-                                    shape =  CircleShape
+                                    shape = CircleShape
                                 )
                                 .scale(1.2f)
-                                .aspectRatio(9f/16f)
-                                .blur(radius = 10.dp, edgeTreatment = BlurredEdgeTreatment(shape = RoundedCornerShape(percent = 5  )))
-
+                                .aspectRatio(9f / 16f)
+                                .blur(
+                                    radius = 10.dp,
+                                    edgeTreatment = BlurredEdgeTreatment(
+                                        shape = RoundedCornerShape(percent = 5)
+                                    )
+                                )
                         )
-
-
                     }
-
-
                 }
             }
         }
@@ -152,6 +166,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun DisplayText(num: Int) {
+
+
 
     for (i in 1..num) {
         val onClickFun = {
@@ -181,6 +197,11 @@ fun DisplayText(num: Int) {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
+
+
+
+
+
 
     Text(
         text = "Hello $name!",
