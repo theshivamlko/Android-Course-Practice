@@ -13,6 +13,7 @@ fun main() {
 
      // var counter=0 // OLD
     // Solution , New Thread name CounterThread
+
     var counterContext= newSingleThreadContext("CounterThread")
     var counter=0
 
@@ -20,13 +21,14 @@ fun main() {
         println("sharedState1 START")
 
         // Or here counterContext will run whole func in new thread not Dispatchers.Default
-        withContext(Dispatchers.Default){
-            sharedState1{
+        // Coarse grained Thread Confinement
+        withContext(counterContext) {
+            sharedState1 {
                 // counterContext refer to update counter
                 // on separate thread CounterThread
-                withContext(counterContext){
+              //  withContext(counterContext){
                     counter++
-                }
+          //      }
             }
         }
         println("sharedState1 END $counter")
