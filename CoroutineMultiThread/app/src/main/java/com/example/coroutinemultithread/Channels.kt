@@ -9,57 +9,69 @@ import kotlinx.coroutines.runBlocking
 
 
 fun main() {
-  //  channel()
-  //  channelClose()
-    channelProducer()
+
+    runBlocking {
+        println("main pipeline start")
+        val v1 = channel()
+        val v2 = channelClose()
+        val v3 = channelProducer()
+        println("main pipeline end $v1 \n $v2 \n $v3")
+    }
+
+
 }
 
 
-  fun channelProducer() {
-      runBlocking {
-          val channel = produce<Int> {// runs async
-              for (c in 1..5) {
+fun channelProducer():String {
+    var str=""
+   return runBlocking {
+        val channel = produce<Int> {// runs async
+            for (c in 1..5) {
                 //  delay(100L)
-                  println("produce send $c")
-                  channel.send(c)
-              }
-          }
+                println("produce send $c")
+                channel.send(c)
+            }
+        }
 
-          for (c in channel) {
-              delay(500L)
-              println("produce receive $c")
+        for (c in channel) {
+            delay(500L)
+            str+="$c"
+            println("produce receive $c")
 
-          }
-      }
-  }
+        }
+
+        return@runBlocking str
+    }
+}
 
 
-  fun channelClose() {
+fun channelClose() {
 
     runBlocking {
-        println("channel START")
+        println("channelClose START")
         val channel = Channel<Int>()
 
         launch {
             for (c in 1..5) {
                 delay(100L)
-                println("channel send $c")
+                println("channelClose send $c")
                 channel.send(c)
             }
-            channel.close( )
+            channel.close()
         }
         for (c in channel) {
 
             delay(500L)
-            println("channel receive $c")
+            println("channelClose receive $c")
 
         }
-        println("channel END")
+        println("channelClose END")
 
     }
 
 }
-  fun channel() {
+
+fun channel() {
 
     runBlocking {
         println("channel START")
