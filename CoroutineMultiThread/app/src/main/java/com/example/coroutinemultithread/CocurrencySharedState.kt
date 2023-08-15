@@ -5,11 +5,35 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.system.measureTimeMillis
 
 fun main() {
+
+    // Mutax Exclusion Lock
+    var mutex= Mutex()
+
+    var counter=0
+
+    runBlocking {
+        println("sharedState1 START")
+        withContext(Dispatchers.Default) {
+            sharedState1 {
+                    mutex.withLock{
+                        counter++
+                    }
+            }
+        }
+        println("sharedState1 END $counter")
+    }
+}
+
+
+// Fin grained and Coarse Grained
+/* fun main() {
 
      // var counter=0 // OLD
     // Solution , New Thread name CounterThread
@@ -34,6 +58,7 @@ fun main() {
         println("sharedState1 END $counter")
     }
 }
+*/
 
 // Atomic Variable Solution
 
