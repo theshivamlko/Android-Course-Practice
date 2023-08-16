@@ -33,6 +33,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
@@ -62,9 +66,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 
 class MainActivity : ComponentActivity() {
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         println("MainActivity onCreate  ")
@@ -72,7 +73,7 @@ class MainActivity : ComponentActivity() {
             println("MainActivity setContent  ")
 
             var user by remember {
-                mutableStateOf(User(20,"Lucknow"))
+                mutableStateOf(User(20, "Lucknow"))
             }
 
             JetComposeAppTheme {
@@ -105,12 +106,24 @@ class MainActivity : ComponentActivity() {
                         Greeting("Shivam")
                         DisplayText(2)
 
+
+                        var count = 0
+                        val count2 by remember {
+                            mutableStateOf(0)
+                        }
+
+                        var count3 by remember {
+                            mutableStateOf(0)
+                        }
+
                         Button(
                             onClick = {
                                 println("Display")
 
-                                user=User(10,"Jaunpur")
-                             //   user
+                                user = User(10, "Jaunpur")
+                                //   user
+
+                                println("Display ${++count3}")
                             },
                             shape = RoundedCornerShape(size = 20.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = Color.Green),
@@ -164,26 +177,45 @@ class MainActivity : ComponentActivity() {
                                         shape = RoundedCornerShape(percent = 5)
                                     )
                                 )
+
+                                .aspectRatio(9f / 16f)
+                                .blur(
+                                    radius = 10.dp,
+                                    edgeTreatment = BlurredEdgeTreatment(
+                                        shape = RoundedCornerShape(percent = 5)
+                                    )
+                                )
                         )
 
                         var inputVal by remember {
                             mutableStateOf("")
                         }
 
-                        BasicTextField(value = inputVal, onValueChange = {text-> inputVal=text},
+                        BasicTextField(
+                            value = inputVal, onValueChange = { text -> inputVal = text },
 
-                            keyboardOptions= KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Search),
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Number,
+                                imeAction = ImeAction.Search
+                            ),
 
-                            keyboardActions= KeyboardActions(onDone = {
+                            keyboardActions = KeyboardActions(onDone = {
 
                                 println("onDone $this")
                             }),
 
-                            modifier = Modifier.border(width = 2.dp, color = Color.Red, shape = RoundedCornerShape(12.dp)),
+                            modifier = Modifier.border(
+                                width = 2.dp,
+                                color = Color.Red,
+                                shape = RoundedCornerShape(12.dp)
+                            ),
                             decorationBox = { innerTextField ->
                                 Row(
                                     Modifier
-                                        .background(Color.LightGray, RoundedCornerShape(percent = 30))
+                                        .background(
+                                            Color.LightGray,
+                                            RoundedCornerShape(percent = 30)
+                                        )
                                         .padding(16.dp)
                                 ) {
 
@@ -209,8 +241,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DisplayText(num: Int) {
 
-
-
     for (i in 1..num) {
         val onClickFun = {
             println("$i")
@@ -232,18 +262,11 @@ fun DisplayText(num: Int) {
 
         )
     }
-
-
 }
 
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-
-
-
-
-
 
     Text(
         text = "Hello $name!",
