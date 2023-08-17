@@ -5,9 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.loader.content.AsyncTaskLoader
 import androidx.navigation.fragment.findNavController
 import com.example.coroutinemultithread.databinding.FragmentFirstBinding
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Observer
 import kotlinx.coroutines.delay
+import org.jetbrains.annotations.Async
 import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -258,7 +262,6 @@ class FirstFragment : Fragment() {
 
             var counter = 0
 
-
             repeat(5) {
                 executor.execute {
                     val time = measureTimeMillis {
@@ -278,7 +281,6 @@ class FirstFragment : Fragment() {
             executor.execute {
                 println("Start2")
                 val time = measureTimeMillis {
-
                     for (i in 1..10000) {
                         for (j in 1..100) {
                             counter++
@@ -288,7 +290,6 @@ class FirstFragment : Fragment() {
                 }
                 println("END2 ${counter} $time")
             }
-
 
 
             println("Main returns  ")
@@ -305,7 +306,6 @@ class FirstFragment : Fragment() {
                         println("ExecutorService ${it}")
                         Thread(it)
                     })
-
 
 
             var counter = 0
@@ -341,9 +341,26 @@ class FirstFragment : Fragment() {
                 println("END2 ${counter} $time")
             }
 
-
-
             println("Main returns  ")
+        }
+
+
+        binding.button8.setOnClickListener {
+
+            for (i in 1..1000000) {
+                for (j in 1..10000) {
+                    counter++
+                }
+            }
+            println("END2 ${counter} ")
+
+
+        }
+
+        binding.button9.setOnClickListener {
+
+
+
 
         }
 

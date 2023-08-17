@@ -24,9 +24,14 @@ fun main() {
             sharedState1 {
                     mutex.withLock{
                         counter++
+
+
+
                     }
             }
         }
+
+
         println("sharedState1 END $counter")
     }
 }

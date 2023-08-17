@@ -4,9 +4,11 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import java.util.concurrent.locks.ReentrantLock
 
 
 fun main() {
+
     runBlocking {
 
         //without async are in sequence
