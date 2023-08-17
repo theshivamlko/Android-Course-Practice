@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.coroutinemultithread.databinding.FragmentFirstBinding
+import kotlinx.coroutines.delay
 import java.util.concurrent.atomic.AtomicInteger
 
 /**
@@ -51,7 +52,7 @@ class FirstFragment : Fragment() {
                     }
 
                 }
-                println(count)
+
             })
 
 
@@ -60,12 +61,10 @@ class FirstFragment : Fragment() {
                 for (i in 1..10000) {
                     for (j in 1..100) {
                         count++
-
                     }
-
                 }
-                println(count)
-            })
+                 println("END2 ${count}")
+             })
             thread.start()
             println("run")
             thread2.start()
@@ -102,6 +101,46 @@ class FirstFragment : Fragment() {
             })
             thread.start()
             println("run")
+            thread2.start()
+        }
+        var LOCK=Any()
+
+        binding.button3.setOnClickListener {
+
+            var counter=0
+            val thread = Thread(Runnable {
+                println("Start")
+                for (i in 1..10000) {
+                    for (j in 1..100) {
+                        Thread.sleep(1000)
+                        synchronized(LOCK) {
+                            println("Thread1== ${counter++}")
+                        }
+
+                    }
+
+                }
+                println("")
+                println("END1 ${counter}")
+            })
+
+
+            val thread2 = Thread(Runnable {
+                println("Start2")
+                for (i in 1..10000) {
+                    for (j in 1..100) {
+                        Thread.sleep(1000)
+                        synchronized(LOCK) {
+                            println("Thread2 ${counter++}")
+                        }
+
+                    }
+
+                }
+                println("END2 ${counter}")
+            })
+            thread.start()
+
             thread2.start()
         }
 
