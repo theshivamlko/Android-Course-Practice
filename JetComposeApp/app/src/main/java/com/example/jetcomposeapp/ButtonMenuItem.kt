@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.sp
 
 
 @Composable
@@ -29,7 +30,7 @@ fun ButtonMenuItem(
             imageVector = Icons.Filled.AddCircle, contentDescription = "",
             tint = if (selected) Color.Green else Color.Blue
         )
-        Text(text = label, color = if (selected) Color.Green else Color.Blue)
+        Text(text = label, fontSize = 10.sp, color = if (selected) Color.Green else Color.Blue)
 
     }
 }

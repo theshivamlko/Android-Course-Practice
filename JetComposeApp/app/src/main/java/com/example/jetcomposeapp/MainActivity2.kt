@@ -6,15 +6,18 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope.*
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material3.BottomAppBar
@@ -23,6 +26,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -74,7 +79,7 @@ fun Greeting2(name: String, modifier: Modifier = Modifier) {
     var selectedItem by remember {
         mutableStateOf(0)
     }
-    var selectedBottom by remember{
+    var selectedBottom by remember {
         mutableStateOf(0)
     }
 
@@ -125,20 +130,82 @@ fun Greeting2(name: String, modifier: Modifier = Modifier) {
         },
         containerColor = Color.Yellow,
         bottomBar = {
-            BottomAppBar(containerColor=Color.Red, tonalElevation = 20.dp) {
-                Row (horizontalArrangement = Arrangement.SpaceEvenly){
-                    repeat(5){
+            Box(modifier = Modifier.fillMaxWidth().height(60.dp)) {
 
-                        ButtonMenuItem("Button $it",it,selectedBottom==it,Icons.Outlined.AccountCircle){
-                            selectedBottom=it
-                        }
-                    }
+                NavigationBar(
+                    containerColor = Color.Blue,
+                    contentColor = Color.Magenta,
+                    tonalElevation = 2.dp,
+
+                    ) {
+
+                    NavigationBarItem(selected = true,
+                        label = { Text("HOME") },
+                        onClick = {
+                            println("")
+                        },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Filled.AddCircle,
+                                contentDescription = ""
+                            )
+                        })
+                    NavigationBarItem(selected = true,
+                        label = { Text("PROFILE") },
+                        onClick = {
+                            println("")
+                        },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Filled.AddCircle,
+                                contentDescription = ""
+                            )
+                        })
+                    NavigationBarItem(selected = true,
+                        label = { Text("SETTING") },
+                        onClick = {
+                            println("")
+                        },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Filled.AddCircle,
+                                contentDescription = ""
+                            )
+                        })
+                    NavigationBarItem(selected = true,
+                        label = { Text("ORDERS") },
+                        onClick = {
+                            println("")
+                        },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Filled.AddCircle,
+                                contentDescription = ""
+                            )
+                        })
                 }
-
-
             }
         },
+        /*  bottomBar = {
+              BottomAppBar(containerColor=Color.Red, tonalElevation = 20.dp) {
+                  Row (horizontalArrangement = Arrangement.SpaceEvenly){
+                      repeat(5){
+
+                          ButtonMenuItem("Button $it",it,selectedBottom==it,Icons.Outlined.AccountCircle){
+                              selectedBottom=it
+                          }
+                      }
+                  }
+
+
+              }
+          },*/
+
+
+
         content = {
+
+
             Box(modifier = Modifier.padding(it))
 
             Column {
