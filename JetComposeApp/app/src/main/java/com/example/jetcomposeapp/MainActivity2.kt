@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,7 +15,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -47,6 +50,9 @@ import com.example.jetcomposeapp.ui.theme.JetComposeAppTheme
 class MainActivity2 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
         setContent {
             JetComposeAppTheme {
                 Surface(
@@ -68,11 +74,15 @@ fun Greeting2(name: String, modifier: Modifier = Modifier) {
     var selectedItem by remember {
         mutableStateOf(0)
     }
+    var selectedBottom by remember{
+        mutableStateOf(0)
+    }
 
     Scaffold(
         topBar = {
-            Surface(shadowElevation=29.dp,
-                ) {
+            Surface(
+                shadowElevation = 20.dp,
+            ) {
                 TopAppBar(
                     title =
                     { Text(text = "ABC") },
@@ -83,7 +93,6 @@ fun Greeting2(name: String, modifier: Modifier = Modifier) {
                         Color.Green,
                         Color.Yellow //Add your own color here, just to clarify.
                     ),
-
                     navigationIcon = {
                         IconButton(onClick = { activity.finish() }) {
 
@@ -94,10 +103,7 @@ fun Greeting2(name: String, modifier: Modifier = Modifier) {
                     actions = {
                         IconButton(
                             onClick = {
-
                                 println("AccountCircle")
-
-
                             },
 
                             ) {
@@ -107,16 +113,33 @@ fun Greeting2(name: String, modifier: Modifier = Modifier) {
                                 tint = Color.Gray
                             )
 
+
                         }
 
+
                     },
+
 
                     )
             }
         },
+        containerColor = Color.Yellow,
+        bottomBar = {
+            BottomAppBar(containerColor=Color.Red, tonalElevation = 20.dp) {
+                Row (horizontalArrangement = Arrangement.SpaceEvenly){
+                    repeat(5){
+
+                        ButtonMenuItem("Button $it",it,selectedBottom==it,Icons.Outlined.AccountCircle){
+                            selectedBottom=it
+                        }
+                    }
+                }
+
+
+            }
+        },
         content = {
             Box(modifier = Modifier.padding(it))
-
 
             Column {
                 Row(
