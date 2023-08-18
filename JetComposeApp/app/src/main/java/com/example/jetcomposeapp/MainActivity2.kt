@@ -17,12 +17,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -83,110 +85,93 @@ fun Greeting2(name: String, modifier: Modifier = Modifier) {
         mutableStateOf(0)
     }
 
-    Scaffold(
-        topBar = {
-            Surface(
-                shadowElevation = 20.dp,
-            ) {
-                TopAppBar(
-                    title =
-                    { Text(text = "ABC") },
-                    colors = TopAppBarDefaults.mediumTopAppBarColors(
-                        Color.Blue,
-                        Color.Gray,
-                        Color.Red,
-                        Color.Green,
-                        Color.Yellow //Add your own color here, just to clarify.
-                    ),
-                    navigationIcon = {
-                        IconButton(onClick = { activity.finish() }) {
+    Scaffold(topBar = {
+        Surface(
+            shadowElevation = 20.dp,
+        ) {
+            TopAppBar(
+                title = { Text(text = "ABC") },
+                colors = TopAppBarDefaults.mediumTopAppBarColors(
+                    Color.Blue,
+                    Color.Gray,
+                    Color.Red,
+                    Color.Green,
+                    Color.Yellow //Add your own color here, just to clarify.
+                ),
+                navigationIcon = {
+                    IconButton(onClick = { activity.finish() }) {
 
-                            Icon(imageVector = Icons.Outlined.ArrowBack, contentDescription = "a")
-                        }
-                    },
+                        Icon(imageVector = Icons.Outlined.ArrowBack, contentDescription = "a")
+                    }
+                },
 
-                    actions = {
-                        IconButton(
-                            onClick = {
-                                println("AccountCircle")
-                            },
+                actions = {
+                    IconButton(
+                        onClick = {
+                            println("AccountCircle")
+                        },
 
-                            ) {
-                            Icon(
-                                imageVector = Icons.Filled.AccountCircle,
-                                contentDescription = "",
-                                tint = Color.Gray
-                            )
+                        ) {
+                        Icon(
+                            imageVector = Icons.Filled.AccountCircle,
+                            contentDescription = "",
+                            tint = Color.Gray
+                        )
 
 
-                        }
+                    }
 
 
-                    },
+                },
 
 
+                )
+        }
+    }, containerColor = Color.Yellow, bottomBar = {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(60.dp)
+        ) {
+
+            NavigationBar(
+                containerColor = Color.Blue,
+                contentColor = Color.Magenta,
+                tonalElevation = 2.dp,
+
+                ) {
+
+                NavigationBarItem(selected = true, label = { Text("HOME") }, onClick = {
+                    println("")
+                }, icon = {
+                    Icon(
+                        imageVector = Icons.Filled.AddCircle, contentDescription = ""
                     )
+                })
+                NavigationBarItem(selected = true, label = { Text("PROFILE") }, onClick = {
+                    println("")
+                }, icon = {
+                    Icon(
+                        imageVector = Icons.Filled.AddCircle, contentDescription = ""
+                    )
+                })
+                NavigationBarItem(selected = true, label = { Text("SETTING") }, onClick = {
+                    println("")
+                }, icon = {
+                    Icon(
+                        imageVector = Icons.Filled.AddCircle, contentDescription = ""
+                    )
+                })
+                NavigationBarItem(selected = true, label = { Text("ORDERS") }, onClick = {
+                    println("")
+                }, icon = {
+                    Icon(
+                        imageVector = Icons.Filled.AddCircle, contentDescription = ""
+                    )
+                })
             }
-        },
-        containerColor = Color.Yellow,
-        bottomBar = {
-            Box(modifier = Modifier.fillMaxWidth().height(60.dp)) {
-
-                NavigationBar(
-                    containerColor = Color.Blue,
-                    contentColor = Color.Magenta,
-                    tonalElevation = 2.dp,
-
-                    ) {
-
-                    NavigationBarItem(selected = true,
-                        label = { Text("HOME") },
-                        onClick = {
-                            println("")
-                        },
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Filled.AddCircle,
-                                contentDescription = ""
-                            )
-                        })
-                    NavigationBarItem(selected = true,
-                        label = { Text("PROFILE") },
-                        onClick = {
-                            println("")
-                        },
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Filled.AddCircle,
-                                contentDescription = ""
-                            )
-                        })
-                    NavigationBarItem(selected = true,
-                        label = { Text("SETTING") },
-                        onClick = {
-                            println("")
-                        },
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Filled.AddCircle,
-                                contentDescription = ""
-                            )
-                        })
-                    NavigationBarItem(selected = true,
-                        label = { Text("ORDERS") },
-                        onClick = {
-                            println("")
-                        },
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Filled.AddCircle,
-                                contentDescription = ""
-                            )
-                        })
-                }
-            }
-        },
-        /*  bottomBar = {
+        }
+    },/*  bottomBar = {
               BottomAppBar(containerColor=Color.Red, tonalElevation = 20.dp) {
                   Row (horizontalArrangement = Arrangement.SpaceEvenly){
                       repeat(5){
@@ -246,8 +231,27 @@ fun Greeting2(name: String, modifier: Modifier = Modifier) {
 
             }
 
-        }
-    )
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
+
+                FloatingActionButton(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(vertical = 100.dp),
+                    onClick = {
+                        println("FloatingActionButton")
+                    },
+
+
+                    ) {
+                    Icon(imageVector = Icons.Filled.Add, contentDescription = "")
+
+                }
+            }
+
+
+        })
 
 
 }
