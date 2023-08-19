@@ -22,6 +22,7 @@ import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstrainedLayoutReference
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.core.graphics.rotationMatrix
 import com.example.jetcomposeapp.ui.theme.JetComposeAppTheme
 
 class ConstraintlayoutActivity4 : ComponentActivity() {
@@ -84,8 +85,8 @@ fun Greeting3(name: String, modifier: Modifier = Modifier) {
 
         Divider(thickness = 2.dp)
 
-        ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
-            val (cyan, black, green) = createRefs()
+        ConstraintLayout(modifier = Modifier.fillMaxSize().background(Color.Blue)) {
+            val (cyan, black, green,grey,majenta) = createRefs()
 
             Box(modifier = Modifier
                 .size(60.dp)
@@ -100,6 +101,25 @@ fun Greeting3(name: String, modifier: Modifier = Modifier) {
                 .size(60.dp).constrainAs(green){})
 
             createHorizontalChain(cyan,black, green,chainStyle = ChainStyle.SpreadInside)
+
+            val guideVert=  createGuidelineFromBottom(0.2f)
+            val guideHori=  createGuidelineFromStart(0.5f)
+
+            Box(modifier = Modifier
+                .background(Color.DarkGray)
+                .size(60.dp).constrainAs(grey){
+                    bottom.linkTo(guideVert)
+                    start.linkTo(guideHori)
+
+                })
+
+            Box(modifier = Modifier
+                .background(Color.Magenta)
+                .size(60.dp).constrainAs(majenta){
+                    top.linkTo(guideVert)
+                    start.linkTo(guideHori)
+                    rotationMatrix(60f,10f,20f)
+                })
 
         }
 
