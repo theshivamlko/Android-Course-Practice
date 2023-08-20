@@ -1,16 +1,12 @@
 package com.example.librayappcompose.interfaces
 
-import androidx.lifecycle.LiveData
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
 import com.example.librayappcompose.roomdb.BookEntity
+import kotlinx.coroutines.flow.Flow
 
-interface IAppData {
+interface IAppRoomDB {
 
 
-    suspend fun getAllBooks(): LiveData<List<BookEntity>>
+      fun getAllBooks(): Flow<List<BookEntity>>
 
 
     suspend fun insertBook(bookEntity: BookEntity)

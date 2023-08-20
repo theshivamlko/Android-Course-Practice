@@ -1,10 +1,10 @@
 package com.example.librayappcompose.roomdb
 
-import androidx.lifecycle.LiveData
-import com.example.librayappcompose.interfaces.IAppData
+import com.example.librayappcompose.interfaces.IAppRoomDB
+import kotlinx.coroutines.flow.Flow
 
-class RoomDBRepository(val appDatabase: AppDatabase):IAppData {
-    override suspend fun getAllBooks(): LiveData<List<BookEntity>> {
+class RoomDBRepository(val appDatabase: AppDatabase):IAppRoomDB {
+    override   fun getAllBooks(): Flow<List<BookEntity>> {
       return appDatabase.getDAO().getAllBooks()
     }
 

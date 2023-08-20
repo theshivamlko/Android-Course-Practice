@@ -5,13 +5,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.librayappcompose.api.ApiRepository
 import com.example.librayappcompose.roomdb.BookEntity
 import com.example.librayappcompose.roomdb.RoomDBRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
-class BookViewModel(private val roomDBRepository: RoomDBRepository) : ViewModel() {
+class BookViewModel(
+    private val roomDBRepository: RoomDBRepository,
+    private val apiRepository: ApiRepository
+) : ViewModel() {
+    var booksList  = MutableStateFlow(emptyList<BookEntity>())
 
-    var booksList: LiveData<List<BookEntity>>? = null
+
 
     fun addBook(bookEntity: BookEntity) {
         viewModelScope.launch {
@@ -31,12 +39,24 @@ class BookViewModel(private val roomDBRepository: RoomDBRepository) : ViewModel(
         }
     }
 
-    fun getAllBooks() {
-        viewModelScope.launch {
-          //  booksList.value = roomDBRepository.getAllBooks()
-          //  booksList.value
+    fun getAllBooksFromApi() {
+       viewModelScope.launch {
+         val books=  apiRepository.getAllBooks()
+           booksList.value=books
+       }
+
+    }/*
+    fun getAllBooks(bookEntity: BookEntity) {
+        booksList = flow {
+            emit(apiRepository.getAllBooks())
+
         }
 
-    }
+    }*/
+
+
+    // From Local DB
+   // var booksList = roomDBRepository.getAllBooks()
+
 
 }

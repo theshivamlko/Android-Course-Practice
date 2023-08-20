@@ -6,13 +6,14 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
 interface BooksDAO {
 
     @Query("SELECT * FROM books")
-    fun getAllBooks(): LiveData<List<BookEntity>>
+    fun getAllBooks(): Flow<List<BookEntity>>
 
 
     @Insert
