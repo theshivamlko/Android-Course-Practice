@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8407117b-7c4b-43a0-9e8e-bd5ac1cbcbdc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/.idea/kotlinc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/proguard-rules.pro" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/androidTest/java/com/example/librayappcompose/ExampleInstrumentedTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/java/com/example/librayappcompose/MainActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/java/com/example/librayappcompose/ui/theme/Color.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/java/com/example/librayappcompose/ui/theme/Theme.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/java/com/example/librayappcompose/ui/theme/Type.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/res/drawable/ic_launcher_foreground.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/res/mipmap-hdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/res/mipmap-mdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/res/mipmap-xhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/res/values/themes.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/res/xml/backup_rules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/main/res/xml/data_extraction_rules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/app/src/test/java/com/example/librayappcompose/ExampleUnitTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/gradle.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../LibrayAppCompose/settings.gradle.kts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="2UGAwbR3mDJXbduvhGUDfT0Ce8K" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8407117b-7c4b-43a0-9e8e-bd5ac1cbcbdc" name="Changes" comment="" />
+      <created>1692555783535</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1692555783535</updated>
+    </task>
+    <servers />
+  </component>
+</project>
