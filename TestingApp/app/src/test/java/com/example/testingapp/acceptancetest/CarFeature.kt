@@ -1,12 +1,14 @@
 package com.example.testingapp.acceptancetest
 
-import junit.framework.Assert.assertEquals
+import com.example.testingapp.outsideintdd.Car
+import junit.framework.TestCase.assertEquals
 import org.junit.Assert
  import org.junit.Test
 
 class CarFeature {
 
-    val car:Car=Car(6.0)
+    //Try till Failing Acceptance is Passed
+    val car: Car =Car(6.0)
     @Test
     fun carIsLoosingFuelWhenItTurnsON(){
         car.turnOn()
