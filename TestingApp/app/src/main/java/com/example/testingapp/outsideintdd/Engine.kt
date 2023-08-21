@@ -11,5 +11,10 @@ class Engine(
         temperature=95
 
     }
+   suspend fun turnOnViaSuspend() {
+        isTurnOn = true
+        temperature=90
+
+    }
 
 }

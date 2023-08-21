@@ -5,7 +5,8 @@ import com.example.testingapp.outsideintdd.Engine
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import org.junit.Assert
- import org.junit.Test
+import org.junit.Rule
+import org.junit.Test
 
 class CarFeature {
 
@@ -13,6 +14,7 @@ class CarFeature {
 
     //Try till Failing Acceptance is Passed
     private val car: Car =Car(6.0,engine)
+
 
 
 
