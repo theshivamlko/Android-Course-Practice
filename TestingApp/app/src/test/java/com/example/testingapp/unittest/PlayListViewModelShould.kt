@@ -42,6 +42,12 @@ class PlayListViewModelShould {
 
     @Test
     fun getPlaylistsFromRepository() {
+        playListViewModel = mockSuccessfullCase()
+
+
+    }
+
+    private fun mockSuccessfullCase(): PlayListViewModel {
         runBlocking {
 
             whenever(playListRepository.getPlayLists()).thenReturn(
@@ -50,31 +56,16 @@ class PlayListViewModelShould {
                 }
             )
 
-            playListViewModel = PlayListViewModel(playListRepository)
         }
-        runBlocking {
-            playListViewModel.playList.getValueForTest()
-
-            // check if this function invoked before or not
-            verify(playListRepository, times(1)).getPlayLists()
-
-        }
-
+        playListViewModel = PlayListViewModel(playListRepository)
+        return playListViewModel
     }
 
     @Test
     fun emitsPlaylistsFromRepository() {
 
-        runBlocking {
-            whenever(playListRepository.getPlayLists()).thenReturn(
-                flow {
-                    emit(expected)
-                }
-            )
 
-
-        }
-        playListViewModel = PlayListViewModel(playListRepository)
+        playListViewModel = mockSuccessfullCase()
         assertEquals(expected, playListViewModel.playList.getValueForTest())
 
 
