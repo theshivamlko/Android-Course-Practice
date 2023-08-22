@@ -10,6 +10,9 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import com.example.testingapp.R
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 /**
  * A fragment representing a list of Items.
@@ -18,16 +21,21 @@ class PlayListFragment : Fragment() {
     lateinit var playListViewModel: PlayListViewModel
     lateinit var playListViewModelFactory: PlayListViewModelFactory
 
-    var playListAPI = PlayListAPI(object :API{
-        override fun fetchAllPlayList(): List<PlayList> {
-            return super.fetchAllPlayList()
-        }
-    })
+    val retrofit=Retrofit.Builder().baseUrl("https://64e3a922bac46e480e791059.mockapi.io/api/v1/")
+        .client(OkHttpClient())
+        .addConverterFactory(MoshiConverterFactory.create())
+        .build()
+
+    val api=retrofit.create(API::class.java)
+
+    var playListAPI = PlayListAPI(api)
 
     var playListRepository = PlayListRepository(playListAPI)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
 
     }
 
@@ -57,6 +65,8 @@ class PlayListFragment : Fragment() {
 
     private fun setUpView(view: RecyclerView) {
         view.layoutManager = LinearLayoutManager(context)
+
+        println("setUpView ${playListViewModel.playList.value?.getOrNull()?.size}")
         view.adapter =
             MyPlayListRecyclerViewAdapter(playListViewModel.playList.value?.getOrNull()!!)
 
@@ -79,6 +89,8 @@ class PlayListFragment : Fragment() {
         playListViewModelFactory = PlayListViewModelFactory(playListRepository)
         playListViewModel =
             ViewModelProvider(this, playListViewModelFactory).get(PlayListViewModel::class.java)
+
+
 
     }
 }

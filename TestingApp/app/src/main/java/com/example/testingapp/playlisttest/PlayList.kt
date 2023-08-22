@@ -1,3 +1,14 @@
 package com.example.testingapp.playlisttest
 
-data class PlayList(val  id:String,val name:String, val category:String)
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+
+@JsonClass(generateAdapter = true)
+data class PlayList(
+    @Json(name = "id")
+    val  id:String,
+    @Json(name = "name")
+    val name:String,
+    @Json(name = "category")
+    val category:String)

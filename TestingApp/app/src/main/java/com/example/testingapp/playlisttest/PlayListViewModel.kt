@@ -14,6 +14,9 @@ class PlayListViewModel(val playListRepository:PlayListRepository):ViewModel() {
 
     // Other Version
     val playList =liveData<Result<List<PlayList>>>(){
+
+
+        println("liveData")
         emitSource(playListRepository.getPlayLists().asLiveData())
   }
 

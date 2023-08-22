@@ -42,23 +42,23 @@ class PlayListFeatureTest {
 
     @Test
     fun displayPlayList(){
-        Thread.sleep(4000)
+        Thread.sleep(3000)
 
 
         assertRecyclerViewItemCount(R.id.playlist_list,50)
 
 
-        onView(allOf(withId(R.id.playlist_name), isDescendantOfA(withId(R.id.playlist_list))))
+        onView(allOf(withId(R.id.playlist_name), isDescendantOfA(withId(R.id.playlist_item))))
             .check(matches(withText("Troy Hodkiewicz")))
             .check(matches(isDisplayed()))
 
 
-        onView(allOf(withId(R.id.playlist_category), isDescendantOfA(withId(R.id.playlist_list))))
+        onView(allOf(withId(R.id.playlist_category), isDescendantOfA(withId(R.id.playlist_item))))
             .check(matches(withText("Fort Verniecester")))
             .check(matches(isDisplayed()))
 
         // Check Drawable
-        onView(allOf(withId(R.id.imageView), isDescendantOfA(withId(R.id.playlist_list))))
+        onView(allOf(withId(R.id.imageView), isDescendantOfA(withId(R.id.playlist_item))))
             .check(matches(withDrawable(R.drawable.ic_launcher_background)))
             .check(matches(isDisplayed()))
 
@@ -69,8 +69,7 @@ class PlayListFeatureTest {
 
 
 
-/*
-    fun nthChildOf(parentMatcher: Matcher<View>, childPosition: Int): Matcher<View> {
+/*    fun nthChildOf(parentMatcher: Matcher<View>, childPosition: Int): Matcher<View> {
         return object : TypeSafeMatcher<View>() {
             override fun describeTo(description: Description) {
                 description.appendText("position $childPosition of parent ")
@@ -86,8 +85,7 @@ class PlayListFeatureTest {
                         && parent.getChildAt(childPosition) == view)
             }
         }
-    }
-*/
+    }*/
 
 }
 
