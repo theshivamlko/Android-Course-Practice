@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package petros.efthymiou.groovy.utils
+package com.example.testingapp.util
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

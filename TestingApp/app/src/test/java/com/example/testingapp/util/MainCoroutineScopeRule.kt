@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.outsideintddexample.acceptancetests
+package com.example.testingapp.util
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
