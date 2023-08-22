@@ -1,12 +1,15 @@
 package com.example.testingapp.playlisttest
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
-class PlayListRepository {
+class PlayListRepository(val playListAPI: PlayListAPI) {
 
-  suspend  fun getPlayLists(): Flow<Result<List<PlayList>>> {
+    suspend fun getPlayLists(): Flow<Result<List<PlayList>>> {
 
-    TODO("")
+
+
+        return playListAPI.fetchPlayList()
 
     }
 

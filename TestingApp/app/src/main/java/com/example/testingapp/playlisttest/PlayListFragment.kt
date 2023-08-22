@@ -18,7 +18,13 @@ class PlayListFragment : Fragment() {
     lateinit var playListViewModel: PlayListViewModel
     lateinit var playListViewModelFactory: PlayListViewModelFactory
 
-      var playListRepository= PlayListRepository()
+    var playListAPI = PlayListAPI(object :API{
+        override fun fetchAllPlayList(): List<PlayList> {
+            return super.fetchAllPlayList()
+        }
+    })
+
+    var playListRepository = PlayListRepository(playListAPI)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +40,7 @@ class PlayListFragment : Fragment() {
         setUpList()
         playListViewModel.playList.observe(this as LifecycleOwner) {
 
-            if(it.getOrNull()!=null){
+            if (it.getOrNull() != null) {
                 // Set the adapter
                 if (view is RecyclerView) {
 
@@ -51,7 +57,8 @@ class PlayListFragment : Fragment() {
 
     private fun setUpView(view: RecyclerView) {
         view.layoutManager = LinearLayoutManager(context)
-        view.adapter = MyPlayListRecyclerViewAdapter(playListViewModel.playList.value?.getOrNull()!!)
+        view.adapter =
+            MyPlayListRecyclerViewAdapter(playListViewModel.playList.value?.getOrNull()!!)
 
     }
 
@@ -68,9 +75,10 @@ class PlayListFragment : Fragment() {
             }
     }
 
-    fun setUpList(){
-        playListViewModelFactory= PlayListViewModelFactory(playListRepository)
-        playListViewModel=ViewModelProvider(this,playListViewModelFactory).get(PlayListViewModel::class.java)
+    fun setUpList() {
+        playListViewModelFactory = PlayListViewModelFactory(playListRepository)
+        playListViewModel =
+            ViewModelProvider(this, playListViewModelFactory).get(PlayListViewModel::class.java)
 
     }
 }
