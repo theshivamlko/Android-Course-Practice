@@ -34,7 +34,7 @@ class PlayListFragment : Fragment() {
         setUpList()
         playListViewModel.playList.observe(this as LifecycleOwner) {
 
-            if(it.getOrNull(0)!=null){
+            if(it.getOrNull()!=null){
                 // Set the adapter
                 if (view is RecyclerView) {
 
@@ -51,7 +51,7 @@ class PlayListFragment : Fragment() {
 
     private fun setUpView(view: RecyclerView) {
         view.layoutManager = LinearLayoutManager(context)
-        view.adapter = MyPlayListRecyclerViewAdapter(playListViewModel.playList.value!!)
+        view.adapter = MyPlayListRecyclerViewAdapter(playListViewModel.playList.value?.getOrNull()!!)
 
     }
 
