@@ -3,8 +3,9 @@ package com.example.testingapp.playlisttest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class PlayListAPI(val api: API) {
+class PlayListAPI @Inject constructor(val api: API) {
 
     suspend fun fetchPlayList(): Flow<Result<List<PlayList>>> {
         println("fetchPlayList1 ${api.fetchAllPlayList()}")

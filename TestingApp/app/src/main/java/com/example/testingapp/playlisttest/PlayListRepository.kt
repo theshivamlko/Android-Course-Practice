@@ -1,14 +1,12 @@
 package com.example.testingapp.playlisttest
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class PlayListRepository(val playListAPI: PlayListAPI) {
+class PlayListRepository @Inject constructor(val playListAPI: PlayListAPI) {
 
     suspend fun getPlayLists(): Flow<Result<List<PlayList>>> {
-
         return playListAPI.fetchPlayList()
-
     }
 
 }

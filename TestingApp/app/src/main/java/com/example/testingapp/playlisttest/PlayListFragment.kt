@@ -10,31 +10,27 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import com.example.testingapp.R
+import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Inject
 
 /**
  * A fragment representing a list of Items.
  */
+
+@AndroidEntryPoint
 class PlayListFragment : Fragment() {
+
     lateinit var playListViewModel: PlayListViewModel
+
+    @Inject
     lateinit var playListViewModelFactory: PlayListViewModelFactory
 
-    val retrofit=Retrofit.Builder().baseUrl("https://64e3a922bac46e480e791059.mockapi.io/api/v1/")
-        .client(OkHttpClient())
-        .addConverterFactory(MoshiConverterFactory.create())
-        .build()
-
-    val api=retrofit.create(API::class.java)
-
-    var playListAPI = PlayListAPI(api)
-
-    var playListRepository = PlayListRepository(playListAPI)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
 
     }
@@ -86,10 +82,9 @@ class PlayListFragment : Fragment() {
     }
 
     fun setUpList() {
-        playListViewModelFactory = PlayListViewModelFactory(playListRepository)
+      //  playListViewModelFactory = PlayListViewModelFactory(playListRepository) done by Hilt
         playListViewModel =
             ViewModelProvider(this, playListViewModelFactory).get(PlayListViewModel::class.java)
-
 
 
     }

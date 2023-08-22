@@ -6,9 +6,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class PlayListViewModel(val playListRepository:PlayListRepository):ViewModel() {
+class PlayListViewModel @Inject constructor(val playListRepository:PlayListRepository):ViewModel() {
 
   //  val playList =MutableLiveData<Result<List<PlayList>>>()
 
