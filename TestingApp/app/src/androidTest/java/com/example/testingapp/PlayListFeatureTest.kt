@@ -14,7 +14,9 @@ import androidx.test.rule.ActivityTestRule
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.adevinta.android.barista.assertion.*
 import com.adevinta.android.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotDisplayed
 import com.adevinta.android.barista.internal.matcher.DrawableMatcher.Companion.withDrawable
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.TypeSafeMatcher
 
@@ -64,6 +66,17 @@ class PlayListFeatureTest {
 
 
     }
+
+    @Test
+    fun displayLoaderOnScreen(){
+        assertDisplayed(R.id.loader)
+    }
+    @Test
+    fun hideLoader(){
+        Thread.sleep(3000)
+        assertNotDisplayed(R.id.loader)
+    }
+
 
 
 

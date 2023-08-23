@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp")
+//    id("com.google.devtools.ksp")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
 
@@ -10,12 +10,12 @@ plugins {
 
 android {
     namespace = "com.example.testingapp"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.testingapp"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -64,11 +64,11 @@ android {
         correctErrorTypes = true
     }
 
-    hilt {
-        enableAggregatingTask = true
-        enableExperimentalClasspathAggregation = true
-
-    }
+//    hilt {
+//        enableAggregatingTask = true
+//        enableExperimentalClasspathAggregation = true
+//
+//    }
 
 }
 
@@ -121,20 +121,20 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
 
     implementation("com.squareup.moshi:moshi:1.15.0")
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
 
 
     val room_version = "2.5.2"
     implementation("androidx.room:room-runtime:$room_version")
-    ksp("androidx.room:room-compiler:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
 
-    implementation("com.google.dagger:hilt-android:2.43")
-    kapt("com.google.dagger:hilt-compiler:2.43")
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.43")
-    kaptAndroidTest("com.google.dagger:hilt-compiler:2.43")
-    testImplementation("com.google.dagger:hilt-android-testing:2.43")
-    kaptTest("com.google.dagger:hilt-compiler:2.43")
+    implementation("com.google.dagger:hilt-android:2.47")
+    kapt("com.google.dagger:hilt-compiler:2.47")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.47")
+    kaptAndroidTest("com.google.dagger:hilt-compiler:2.47")
+    testImplementation("com.google.dagger:hilt-android-testing:2.47")
+    kaptTest("com.google.dagger:hilt-compiler:2.47")
 
 // The following options were not recognized by any processor: '[dagger.hilt.internal.useAggregatingRootProcessor, kapt.kotlin.generated, dagger.fastInit, dagger.hilt.android.internal.disableAndroidSuperclassValidation, dagger.hilt.android.internal.projectType]'
 }

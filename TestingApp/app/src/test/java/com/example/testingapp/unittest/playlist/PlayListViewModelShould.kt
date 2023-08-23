@@ -3,6 +3,7 @@ package com.example.testingapp.unittest.playlist
 import com.example.testingapp.playlisttest.PlayList
 import com.example.testingapp.playlisttest.PlayListRepository
 import com.example.testingapp.playlisttest.PlayListViewModel
+import com.example.testingapp.util.captureValues
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
@@ -28,7 +29,7 @@ class PlayListViewModelShould : BaseUnitTest() {
 
 
     private val expected = Result.success(playList)
-    private val exception =RuntimeException("Something Went Wrong")
+    private val exception = RuntimeException("Something Went Wrong")
 
 
     @Test
@@ -70,12 +71,12 @@ class PlayListViewModelShould : BaseUnitTest() {
         }
 
         playListViewModel = PlayListViewModel(playListRepository)
-        assertEquals(exception,playListViewModel.playList.getValueForTest()?.exceptionOrNull())
+        assertEquals(exception, playListViewModel.playList.getValueForTest()?.exceptionOrNull())
 
     }
 
 
-@Test
+    @Test
     fun emitRuntimeErrorOnError() {
 
         runBlocking {
@@ -87,7 +88,47 @@ class PlayListViewModelShould : BaseUnitTest() {
         }
 
         playListViewModel = PlayListViewModel(playListRepository)
-        assertNotSame( java.lang.RuntimeException("Something"),playListViewModel.playList.getValueForTest()?.exceptionOrNull())
+        assertNotSame(
+            java.lang.RuntimeException("Something"),
+            playListViewModel.playList.getValueForTest()?.exceptionOrNull()
+        )
 
     }
+
+
+    @Test
+    fun showSpinnerWhileBlocking() {
+        runBlocking {
+            playListViewModel = PlayListViewModel(playListRepository)
+
+            playListViewModel.loader.captureValues{
+                playListViewModel.playList.getValueForTest()
+                assertEquals(true,values.first())
+            }
+        }
+    }
+
+    @Test
+    fun closeLoaderAfterPlaylistLoaded() {
+        runBlocking {
+            playListViewModel = PlayListViewModel(playListRepository)
+
+            playListViewModel.loader.captureValues{
+                playListViewModel.playList.getValueForTest()
+                assertEquals(false,values.last())
+            }
+        }
+    }
+    @Test
+    fun closeLoaderAfterPlaylistLoadedERROR() {
+        runBlocking {
+            playListViewModel = PlayListViewModel(playListRepository)
+
+            playListViewModel.loader.captureValues{
+                playListViewModel.playList.getValueForTest()
+                assertEquals(false,values.last())
+            }
+        }
+    }
+
 }

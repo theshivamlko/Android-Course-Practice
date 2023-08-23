@@ -11,6 +11,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import com.example.testingapp.R
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.WithFragmentBindings
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -25,15 +26,12 @@ class PlayListFragment : Fragment() {
 
     lateinit var playListViewModel: PlayListViewModel
 
+    lateinit var playListFragmentBindings: PlayListFragmentBindings
+
     @Inject
     lateinit var playListViewModelFactory: PlayListViewModelFactory
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +40,15 @@ class PlayListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_play_list, container, false)
 
         setUpList()
+        playListViewModel.loader.observe(this as LifecycleOwner) {loading->
+
+            when(loading){
+                true-> playListFragmentBindings.loader.visibilty=View.VISIBLE
+                false-> playListFragmentBindings.loader.visibilty=View.GONE
+            }
+        }
+
+
         playListViewModel.playList.observe(this as LifecycleOwner) {
 
             if (it.getOrNull() != null) {
