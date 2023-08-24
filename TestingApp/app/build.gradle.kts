@@ -131,10 +131,12 @@ dependencies {
 
     implementation("com.google.dagger:hilt-android:2.47")
     kapt("com.google.dagger:hilt-compiler:2.47")
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.47")
-    kaptAndroidTest("com.google.dagger:hilt-compiler:2.47")
-    testImplementation("com.google.dagger:hilt-android-testing:2.47")
-    kaptTest("com.google.dagger:hilt-compiler:2.47")
+//    androidTestImplementation("com.google.dagger:hilt-android-testing:2.47")
+//    kaptAndroidTest("com.google.dagger:hilt-compiler:2.47")
+//    testImplementation("com.google.dagger:hilt-android-testing:2.47")
+//    kaptTest("com.google.dagger:hilt-compiler:2.47")
+
+    androidTestImplementation("com.jakewharton.espresso:okhttp3-idling-resource:1.0.0")
 
 // The following options were not recognized by any processor: '[dagger.hilt.internal.useAggregatingRootProcessor, kapt.kotlin.generated, dagger.fastInit, dagger.hilt.android.internal.disableAndroidSuperclassValidation, dagger.hilt.android.internal.projectType]'
 }

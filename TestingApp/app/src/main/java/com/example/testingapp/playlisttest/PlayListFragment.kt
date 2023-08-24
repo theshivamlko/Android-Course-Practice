@@ -26,7 +26,7 @@ class PlayListFragment : Fragment() {
 
     lateinit var playListViewModel: PlayListViewModel
 
-    lateinit var playListFragmentBindings: PlayListFragmentBindings
+ //   lateinit var playListFragmentBindings: PlayListFragmentBindings
 
     @Inject
     lateinit var playListViewModelFactory: PlayListViewModelFactory
@@ -42,10 +42,10 @@ class PlayListFragment : Fragment() {
         setUpList()
         playListViewModel.loader.observe(this as LifecycleOwner) {loading->
 
-            when(loading){
-                true-> playListFragmentBindings.loader.visibilty=View.VISIBLE
+           /* when(loading){
+               true-> playListFragmentBindings.loader.visibilty=View.VISIBLE
                 false-> playListFragmentBindings.loader.visibilty=View.GONE
-            }
+            }*/
         }
 
 

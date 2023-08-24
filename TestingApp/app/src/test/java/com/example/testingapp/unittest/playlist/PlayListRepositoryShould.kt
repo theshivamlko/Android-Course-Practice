@@ -1,5 +1,6 @@
 package com.example.testingapp.unittest.playlist
 
+import com.example.testingapp.playlisttest.PlayListMapper
 import com.example.testingapp.playlisttest.PlayList
 import com.example.testingapp.playlisttest.PlayListAPI
 import com.example.testingapp.playlisttest.PlayListRepository
@@ -16,6 +17,7 @@ import org.mockito.kotlin.whenever
 class PlayListRepositoryShould : BaseUnitTest() {
 
 
+    val playListMapper: PlayListMapper = mock<PlayListMapper>()
     val playList = mock<List<PlayList>>()
     val playListAPI: PlayListAPI = mock()
     val exception=RuntimeException("Something Went Wrong")
@@ -61,6 +63,17 @@ class PlayListRepositoryShould : BaseUnitTest() {
         //    assertEquals(exception,playListRepository.getPlayLists().first().exceptionOrNull())
        //     assertEquals(java.lang.RuntimeException("Hello"),playListRepository.getPlayLists().first().exceptionOrNull())
               assertEquals(java.lang.RuntimeException("Something Went Wrong"),playListRepository.getPlayLists().first().exceptionOrNull())
+        }
+
+    }
+    @Test
+    fun delegateBussinessLogicToMapper(){
+
+        runBlocking {
+            val playListRepository=PlayListRepository(playListAPI)
+            playListRepository.getPlayLists().first()
+
+            verify(mapper,times(1)).invoke(playList)
         }
 
     }

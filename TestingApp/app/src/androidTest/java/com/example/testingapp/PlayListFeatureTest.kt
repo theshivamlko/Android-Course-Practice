@@ -30,7 +30,7 @@ import org.junit.runner.Description
 
 
 @RunWith(AndroidJUnit4::class)
-class PlayListFeatureTest {
+class PlayListFeatureTest:BaseUnitTest() {
 
     val mainActivity=ActivityTestRule(MainActivity::class.java)
     @Rule get
@@ -44,7 +44,8 @@ class PlayListFeatureTest {
 
     @Test
     fun displayPlayList(){
-        Thread.sleep(3000)
+        // Remove after adding okhttp client in test
+      //  Thread.sleep(3000)
 
 
         assertRecyclerViewItemCount(R.id.playlist_list,50)
@@ -75,6 +76,14 @@ class PlayListFeatureTest {
     fun hideLoader(){
         Thread.sleep(3000)
         assertNotDisplayed(R.id.loader)
+    }
+
+    @Test
+    fun imageLoaded(){
+        // Check Drawable
+        onView(allOf(withId(R.id.imageView), isDescendantOfA(nthChildOf((R.id.playlist_item)))))
+            .check(matches(withDrawable(R.drawable.ic_launcher_background)))
+            .check(matches(isDisplayed()))
     }
 
 

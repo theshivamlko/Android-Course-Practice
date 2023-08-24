@@ -9,6 +9,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 
+val client=OkHttpClient()
+// val idlingResource=OkHttp3IdlingResource.create("okhttp",client)
+
+
 @Module
 @InstallIn(FragmentComponent::class)
 class PlayListModule {
@@ -19,7 +23,7 @@ class PlayListModule {
     @Provides
     fun getRetrofit(): Retrofit {
         return Retrofit.Builder().baseUrl("https://64e3a922bac46e480e791059.mockapi.io/api/v1/")
-            .client(OkHttpClient())
+            .client(client)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
     }
