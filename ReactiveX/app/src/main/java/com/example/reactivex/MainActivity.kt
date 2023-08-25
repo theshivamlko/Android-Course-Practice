@@ -37,9 +37,14 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding.button.setOnClickListener {
             startActivity(Intent(this, MainActivity2::class.java))
         }
+        activityMainBinding.button2.setOnClickListener {
+            startActivity(Intent(this, SubjectsMainActivity3::class.java))
+        }
 
 
-        singleValueObserver()
+      //  singleValueObserver()
+
+
 
     }
 
