@@ -14,6 +14,7 @@ import io.reactivex.rxjava3.subjects.AsyncSubject
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.ReplaySubject
+import io.reactivex.rxjava3.subjects.UnicastSubject
 
 class SubjectsMainActivity3 : AppCompatActivity() {
 
@@ -24,19 +25,40 @@ class SubjectsMainActivity3 : AppCompatActivity() {
             DataBindingUtil.setContentView(this, R.layout.activity_subjects_main3)
 
 
-
-      //  asyncSubjects()
+          asyncSubjects()
 //        behaviourSubjects()
 
-     //    publishSubjects()
-     /*    Handler().postDelayed({
-            behaviourSubjects()
+        //    publishSubjects()
+        /*    Handler().postDelayed({
+               behaviourSubjects()
 
-        },3000)*/
+           },3000)*/
 
-        replaySubjects()
+     //    replaySubjects()
+   //  unicastSubjects()
     }
 
+
+    fun unicastSubjects() {
+
+        lateinit var myObservable: Observable<String>
+        myObservable = Observable.just("A", "B", "C", "D", "E")
+
+        val asyncSubject = UnicastSubject.create<String>(2)
+
+        myObservable.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(asyncSubject)
+
+        asyncSubject.onNext("JAVA")
+        asyncSubject.subscribe(getObservable1("unicastSubjects1"))
+        asyncSubject.onNext("KOTLIN")
+        asyncSubject.onNext("DART")
+        asyncSubject.subscribe(getObservable1("unicastSubjects2"))
+        asyncSubject.onNext("GO")
+
+
+    }
 
     fun replaySubjects() {
 
@@ -58,6 +80,7 @@ class SubjectsMainActivity3 : AppCompatActivity() {
 
 
     }
+
     fun publishSubjects() {
 
         lateinit var myObservable: Observable<String>
@@ -112,23 +135,24 @@ class SubjectsMainActivity3 : AppCompatActivity() {
 
         asyncSubject.subscribe(getObservable1("asyncSubjects1"))
         asyncSubject.onNext("JAVA")
-        asyncSubject.subscribe(getObservable1("asyncSubjects2"))
-        asyncSubject.subscribe(getObservable1("asyncSubjects3"))
         asyncSubject.onNext("KOTLIN")
+        asyncSubject.onNext("DART")
+        asyncSubject.subscribe(getObservable1("asyncSubjects2"))
+        asyncSubject.onNext("GO")
         asyncSubject.onComplete()
 
 
     }
 
-    fun getObservable1(tag:String):Observer<String>{
-        return  object : DisposableObserver<String>() {
+    fun getObservable1(tag: String): Observer<String> {
+        return object : DisposableObserver<String>() {
             override fun onNext(t: String) {
                 println("onNext $tag $t")
 
             }
 
             override fun onError(e: Throwable) {
-                println("onError $tag")
+                println("onError $tag $e")
             }
 
             override fun onComplete() {
