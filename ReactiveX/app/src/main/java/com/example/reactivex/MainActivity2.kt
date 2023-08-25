@@ -63,9 +63,115 @@ class MainActivity2 : AppCompatActivity() {
         //  createMap()
        // flatMap()
       //  concatMap()
-        bufferMap()
+     //   bufferMap()
+      //  filterMap()
+     //   distinct()
+      //  skip()
+        skipLast()
     }
 
+    fun skipLast() {
+        lateinit var myObservableInt: Observable<Int>
+        myObservableInt = Observable.just(1,2,4,3,6,3,1,5)
+
+        myObservableInt.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .skipLast(4)
+            .subscribeWith(object : DisposableObserver<Int>() {
+                override fun onNext(t:  Int ) {
+                    println("onNext distinct $t")
+
+                }
+
+                override fun onError(e: Throwable) {
+                    println("onError distinct")
+                }
+
+                override fun onComplete() {
+                    println("onComplete distinct")
+                }
+
+            })
+
+
+    }
+    fun skip() {
+        lateinit var myObservableInt: Observable<Int>
+        myObservableInt = Observable.just(1,2,4,3,6,3,1,5)
+
+        myObservableInt.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .skip(4)
+            .subscribeWith(object : DisposableObserver<Int>() {
+                override fun onNext(t:  Int ) {
+                    println("onNext distinct $t")
+
+                }
+
+                override fun onError(e: Throwable) {
+                    println("onError distinct")
+                }
+
+                override fun onComplete() {
+                    println("onComplete distinct")
+                }
+
+            })
+
+
+    }
+    fun distinct() {
+        lateinit var myObservableInt: Observable<Int>
+        myObservableInt = Observable.just(1,2,4,3,6,3,1,5)
+
+        myObservableInt.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .distinct()
+            .subscribeWith(object : DisposableObserver<Int>() {
+                override fun onNext(t:  Int ) {
+                    println("onNext distinct $t")
+
+                }
+
+                override fun onError(e: Throwable) {
+                    println("onError distinct")
+                }
+
+                override fun onComplete() {
+                    println("onComplete distinct")
+                }
+
+            })
+
+
+    }
+    fun filterMap() {
+        lateinit var myObservableInt: Observable<Int>
+        myObservableInt = Observable.range(1, 20)
+
+        myObservableInt.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .filter {
+                it%3==0
+            }
+            .subscribeWith(object : DisposableObserver<Int>() {
+                override fun onNext(t:  Int ) {
+                    println("onNext filterMap $t")
+
+                }
+
+                override fun onError(e: Throwable) {
+                    println("onError filterMap")
+                }
+
+                override fun onComplete() {
+                    println("onComplete filterMap")
+                }
+
+            })
+
+
+    }
     fun bufferMap() {
         lateinit var myObservableInt: Observable<Int>
         myObservableInt = Observable.range(1, 20)
