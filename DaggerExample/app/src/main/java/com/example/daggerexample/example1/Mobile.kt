@@ -1,9 +1,10 @@
-package com.example.daggerexample
+package com.example.daggerexample.example1
 
 import javax.inject.Inject
 
 class Mobile @Inject constructor(private val simCard: SimCard
-,private val battery: Battery,private val display: Display) {
+                                 , private val battery: Battery, private val display: Display
+) {
     init {
 
     }

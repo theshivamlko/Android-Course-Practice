@@ -1,4 +1,4 @@
-package com.example.daggerexample
+package com.example.daggerexample.example1
 
 import android.app.Application
 
@@ -11,7 +11,7 @@ lateinit var mobile: MobileComponent
 
     }
 
-  fun  initDagger():MobileComponent=
+  fun  initDagger(): MobileComponent =
       // Auto initialize variable
       DaggerMobileComponent.builder()
           .amoledDisplayModule(AmoledDisplayModule(1920))
