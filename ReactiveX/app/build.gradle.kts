@@ -55,6 +55,7 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation("com.jakewharton.rxbinding4:rxbinding:4.0.0")
 
 
 }

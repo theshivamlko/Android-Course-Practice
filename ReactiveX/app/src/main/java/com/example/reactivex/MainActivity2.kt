@@ -74,6 +74,7 @@ class MainActivity2 : AppCompatActivity() {
         lateinit var myObservableInt: Observable<Int>
         myObservableInt = Observable.just(1,2,4,3,6,3,1,5)
 
+
         myObservableInt.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .skipLast(4)

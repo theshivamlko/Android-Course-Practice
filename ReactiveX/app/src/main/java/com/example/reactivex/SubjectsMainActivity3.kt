@@ -6,6 +6,7 @@ import android.os.Handler
 import androidx.databinding.DataBindingUtil
 import com.example.reactivex.databinding.ActivitySubjectsMain3Binding
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.observers.DisposableObserver
@@ -40,6 +41,8 @@ class SubjectsMainActivity3 : AppCompatActivity() {
 
 
     fun unicastSubjects() {
+
+
 
         lateinit var myObservable: Observable<String>
         myObservable = Observable.just("A", "B", "C", "D", "E")

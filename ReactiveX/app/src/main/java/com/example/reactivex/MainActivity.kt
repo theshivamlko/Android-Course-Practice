@@ -34,12 +34,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+
+
+
+
         activityMainBinding.button.setOnClickListener {
             startActivity(Intent(this, MainActivity2::class.java))
         }
         activityMainBinding.button2.setOnClickListener {
             startActivity(Intent(this, SubjectsMainActivity3::class.java))
         }
+
+
 
 
       //  singleValueObserver()
