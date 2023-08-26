@@ -11,6 +11,6 @@ class AmoledDisplay3rdPartyClass : Display2 {
 
     }
     override fun turnOnScreen() {
-        println("Mobile2 AmoledDisplay3rdPartyClass")
+        println("AmoledDisplay3rdPartyClass turnOnScreen")
     }
 }
