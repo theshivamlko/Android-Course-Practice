@@ -1,8 +1,10 @@
 package com.example.daggerexample.example2
 
 import dagger.Component
+import javax.inject.Singleton
 
 
+@Singleton
 @Component(
     modules = [AmoledDisplay3rdPartyClassModule::class,
       //  Display2Module::class,

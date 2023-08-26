@@ -11,8 +11,6 @@ class Application2:Application() {
     lateinit var application2:Application2
 
 
-
-
     override fun onCreate() {
         super.onCreate()
 

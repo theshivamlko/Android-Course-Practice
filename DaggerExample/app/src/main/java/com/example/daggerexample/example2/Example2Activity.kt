@@ -39,12 +39,24 @@ class Example2Activity : AppCompatActivity() {
         println("BuilderParam==========Injection")
 
         // Allow Injection with parameter
+/*
         var mobileComponent3 =
             DaggerMobileComponent2.builder()
                 .amoledDisplay3rdPartyClassModule(AmoledDisplay3rdPartyClassModule(200))
                 .build()
         mobile4 = mobileComponent3.getMobile()
         mobile4.call()
+*/
+
+        var mobileComponent3 =
+            DaggerMobileComponent2.builder()
+                .amoledDisplay3rdPartyClassModule(AmoledDisplay3rdPartyClassModule(200))
+                .build()
+       val mobile5 = mobileComponent3.getMobile()
+       val mobile6 = mobileComponent3.getMobile()
+        println("Singleton check ${mobile5.hashCode()} ${mobile6.hashCode()}")
+
+
 
 
     }
