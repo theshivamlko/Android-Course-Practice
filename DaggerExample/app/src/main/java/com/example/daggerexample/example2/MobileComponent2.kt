@@ -14,4 +14,8 @@ interface MobileComponent2 {
     // function should have same name as Dependent
     fun getMobile(): Mobile2
 
+
+    // Allow Injection thru Activity/Fragment only
+    fun inject(activity: Example2Activity)
+
 }
