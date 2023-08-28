@@ -1,9 +1,16 @@
 package com.example.jetcomposeapp.example2
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import androidx.core.app.NotificationCompat
+import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LifecycleOwner
@@ -30,12 +37,17 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.withContext
+import java.util.concurrent.locks.LockSupport
 
 class Jetcompose_AdvActivity : AppCompatActivity() {
 
     lateinit var activityJetomposeAdvBinding: ActivityJetomposeAdvBinding
     lateinit var viewModel1: MyViewModel1
     val data = MutableLiveData<String>()
+
+    lateinit var notificationManager: NotificationManager
+    val channelId = "ABC"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,7 +115,21 @@ class Jetcompose_AdvActivity : AppCompatActivity() {
             }
         }
 
+        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE)
+                as NotificationManager
 
+        activityJetomposeAdvBinding.button1.setOnClickListener {
+            createNotificationChannel(
+                "RandomChannelName",
+                "Random Description"
+            )
+
+            Handler().postDelayed({
+                simpleNotification("My Title", "My Description")
+
+            },3000)
+
+        }
 
 
     }
@@ -139,6 +165,44 @@ class Jetcompose_AdvActivity : AppCompatActivity() {
 
 
     }
+
+
+    fun simpleNotification(title: String, description: String) {
+        val notification = NotificationCompat.Builder(this, channelId)
+            .apply {
+                setContentTitle(title)
+                setContentText(description)
+                setSmallIcon(android.R.drawable.btn_radio)
+                setAutoCancel(true)
+
+
+            }.build()
+
+        val notificationID = 100
+        notificationManager.notify(notificationID, notification)
+
+
+    }
+
+    fun createNotificationChannel(channelName: String, description: String) {
+        println("createNotification ${Build.VERSION.SDK_INT} ${Build.VERSION_CODES.O}")
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel =
+                NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH)
+            channel.apply {
+                this.description = description
+                lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+                setShowBadge(true)
+                enableLights(true)
+            }
+            notificationManager.createNotificationChannel(channel)
+
+        }
+
+
+    }
+
 
     override fun onPause() {
         super.onPause()
