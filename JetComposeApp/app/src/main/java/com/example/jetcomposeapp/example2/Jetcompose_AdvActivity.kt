@@ -3,13 +3,17 @@ package com.example.jetcomposeapp.example2
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.withCreated
 import com.example.jetcomposeapp.MainActivity
@@ -21,7 +25,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.withContext
 
 class Jetcompose_AdvActivity : AppCompatActivity() {
@@ -66,11 +73,36 @@ class Jetcompose_AdvActivity : AppCompatActivity() {
 
           }*/
 
-      lifecycleScope .launch {
-            println("lifecycleScope launch")
-            run()
-            println("lifecycleScope END")
+        /*        val abc = liveData<String>() {
+                    println("liveData launch")
+                    run()
+                    println("liveData END")
+                    activityJetomposeAdvBinding.textView.text = "WWWWWWW"
+
+                    emit("ABC")
+
+
+                }*/
+        /*  abc.observe(this) {
+              println("abc $it")
+          }*/
+
+        /*ABC(object : MutableLiveData<String>(){
+
+            override fun setValue(value: String?) {
+                super.setValue(value)
+                activityJetomposeAdvBinding.textView.text = value
+
+
+            }}
+          )*/
+
+        lifecycleScope.launch {
+            viewModel1.getDataFlow().collect {
+                println("getDataFlow $it")
+            }
         }
+
 
 
 
@@ -87,6 +119,15 @@ class Jetcompose_AdvActivity : AppCompatActivity() {
 
 
         delay(5000L)
+
+        withContext(newSingleThreadContext("AA")) {
+            try {
+                val a = 122 / 0
+            } catch (e: Exception) {
+
+            }
+        }
+
         println("IO ${Thread.currentThread().name}")
         activityJetomposeAdvBinding.textView.text = "QQQQQQQ"
 
@@ -136,6 +177,18 @@ class Jetcompose_AdvActivity : AppCompatActivity() {
     override fun finish() {
         super.finish()
         println("Jetcompose_AdvActivity finish ${viewModel1.editText.value}")
+
+    }
+
+    class ABC(value: MutableLiveData<String>) {
+        init {
+
+
+            Handler().postDelayed({
+
+                value.postValue("Hellow")
+            }, 3000)
+        }
 
     }
 
