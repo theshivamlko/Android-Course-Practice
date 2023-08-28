@@ -211,7 +211,6 @@ class Jetcompose_AdvActivity : AppCompatActivity() {
             android.R.drawable.ic_menu_search, "SEARCH", action3pendingIntent
         ).apply {
             addRemoteInput(remoteInput)
-
         }.build()
 
         val notification = NotificationCompat.Builder(this, channelId).apply {
