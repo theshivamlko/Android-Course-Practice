@@ -1,6 +1,7 @@
 package com.example.mybackgroundservices
 
 import android.content.Context
+import androidx.work.Data
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import kotlinx.coroutines.delay
@@ -11,8 +12,9 @@ class UploadWorker(context: Context, workerParams: WorkerParameters) :
 
         try {
             for (i in 1..20) {
-                println("UploadWorker $i")
+                 println("UploadWorker $i")
                 Thread.sleep(200L)
+                this.setProgressAsync(Data.Builder().putInt("name",i*10).build())
 
             }
 
