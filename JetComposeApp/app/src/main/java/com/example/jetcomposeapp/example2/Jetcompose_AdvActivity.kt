@@ -3,41 +3,27 @@ package com.example.jetcomposeapp.example2
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
+import android.app.PendingIntent
+ import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
-import androidx.core.content.getSystemService
+import androidx.core.app.RemoteInput
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LifecycleCoroutineScope
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.withCreated
+import com.example.jetcomposeapp.ConstraintlayoutActivity4
 import com.example.jetcomposeapp.MainActivity
 import com.example.jetcomposeapp.R
 import com.example.jetcomposeapp.databinding.ActivityJetomposeAdvBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.withContext
-import java.util.concurrent.locks.LockSupport
 
 class Jetcompose_AdvActivity : AppCompatActivity() {
 
@@ -47,6 +33,7 @@ class Jetcompose_AdvActivity : AppCompatActivity() {
 
     lateinit var notificationManager: NotificationManager
     val channelId = "ABC"
+    val key_search = "key_search"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,8 +81,7 @@ class Jetcompose_AdvActivity : AppCompatActivity() {
                     emit("ABC")
 
 
-                }*/
-        /*  abc.observe(this) {
+                }*//*  abc.observe(this) {
               println("abc $it")
           }*/
 
@@ -115,19 +101,17 @@ class Jetcompose_AdvActivity : AppCompatActivity() {
             }
         }
 
-        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE)
-                as NotificationManager
+        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         activityJetomposeAdvBinding.button1.setOnClickListener {
             createNotificationChannel(
-                "RandomChannelName",
-                "Random Description"
+                "RandomChannelName", "Random Description"
             )
 
             Handler().postDelayed({
                 simpleNotification("My Title", "My Description")
 
-            },3000)
+            }, 3000)
 
         }
 
@@ -168,15 +152,80 @@ class Jetcompose_AdvActivity : AppCompatActivity() {
 
 
     fun simpleNotification(title: String, description: String) {
-        val notification = NotificationCompat.Builder(this, channelId)
-            .apply {
-                setContentTitle(title)
-                setContentText(description)
-                setSmallIcon(android.R.drawable.btn_radio)
-                setAutoCancel(true)
+
+        val intent = Intent(this, ConstraintlayoutActivity4::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+
+        val contentpendingIntent =
+            PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_MUTABLE)
+
+        val intent1 = Intent(this, MainActivity::class.java)
+        intent1.putExtra("page", "Notification REPLY")
+        intent1.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        val action1pendingIntent =
+            PendingIntent.getActivity(
+                this,
+                2,
+                intent1,
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+        val action1 = NotificationCompat.Action.Builder(
+            android.R.drawable.btn_plus, "REPLY", action1pendingIntent
+        )
+
+        val intent2 = Intent(this, MainActivity::class.java)
+        intent2.putExtra("page", "Notification DELETE")
+        intent2.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        val action2pendingIntent =
+            PendingIntent.getActivity(
+                this, 3, intent2,
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+
+        val action2 = NotificationCompat.Action.Builder(
+            android.R.drawable.ic_delete, "DELETE", action2pendingIntent
+        )
 
 
-            }.build()
+        // Search Action
+        val remoteInput= RemoteInput.Builder(key_search).apply {
+            setLabel("Search here...")
+
+
+        }.build()
+
+
+        val intent3 = Intent(this, MainActivity::class.java)
+        intent3.putExtra("page", "Notification SEARCH")
+        intent3.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+
+        val action3pendingIntent =
+            PendingIntent.getActivity(
+                this,
+                2,
+                intent3,
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_MUTABLE
+            )
+        val action3 = NotificationCompat.Action.Builder(
+            android.R.drawable.ic_menu_search, "SEARCH", action3pendingIntent
+        ).apply {
+            addRemoteInput(remoteInput)
+
+        }.build()
+
+        val notification = NotificationCompat.Builder(this, channelId).apply {
+            setContentTitle(title)
+            setContentText(description)
+            setSmallIcon(android.R.drawable.btn_radio)
+            setAutoCancel(true)
+            setDefaults(Notification.DEFAULT_SOUND)
+
+            setContentIntent(contentpendingIntent)
+            addAction(action1.build())
+            addAction(action2.build())
+            addAction(action3)
+        }.build()
 
         val notificationID = 100
         notificationManager.notify(notificationID, notification)
