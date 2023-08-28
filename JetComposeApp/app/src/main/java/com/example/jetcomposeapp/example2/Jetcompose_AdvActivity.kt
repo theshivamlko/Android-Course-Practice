@@ -4,15 +4,31 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.withCreated
 import com.example.jetcomposeapp.MainActivity
 import com.example.jetcomposeapp.R
 import com.example.jetcomposeapp.databinding.ActivityJetomposeAdvBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class Jetcompose_AdvActivity : AppCompatActivity() {
 
     lateinit var activityJetomposeAdvBinding: ActivityJetomposeAdvBinding
     lateinit var viewModel1: MyViewModel1
+    val data = MutableLiveData<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +51,50 @@ class Jetcompose_AdvActivity : AppCompatActivity() {
         activityJetomposeAdvBinding.textView.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
+
+
+        /* data.observe(this){
+             println("MutableLiveData $it ")
+             activityJetomposeAdvBinding.textView.text=it
+         }*/
+
+        /*  println("lifecycleScope 1")
+          lifecycleScope.launch(Dispatchers.IO) {
+              println("lifecycleScope launch")
+               run()
+              println("lifecycleScope END")
+
+          }*/
+
+      lifecycleScope .launch {
+            println("lifecycleScope launch")
+            run()
+            println("lifecycleScope END")
+        }
+
+
+
+    }
+
+    suspend fun run() {
+
+        /* for (i in 1..100000000){
+             println("IO ${Thread.currentThread().name}")
+
+         }*/
+
+
+
+
+        delay(5000L)
+        println("IO ${Thread.currentThread().name}")
+        activityJetomposeAdvBinding.textView.text = "QQQQQQQ"
+
+        data.postValue("Aaaaaaaaa")
+        // here
+        println("Unconfined3 ${Thread.currentThread().name}")
+        delay(5000L)
+        println("Unconfined4 ${Thread.currentThread().name}")
 
 
     }

@@ -64,10 +64,43 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+
+
+
+
+suspend fun run() {
+
+
+
+    lifecycleScope.launch(Dispatchers.IO) {
+        delay(5000L)
+        println("IO ${Thread.currentThread().name}")
+        // here
+        lifecycleScope.launch(Dispatchers.Unconfined) {
+            println("Unconfined3 ${Thread.currentThread().name}")
+            delay(5000L)
+            println("Unconfined4 ${Thread.currentThread().name}")
+        }
+    }
+
+}
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+      /*  println("lifecycleScope 1")
+        lifecycleScope.launch {
+            println("lifecycleScope launch")
+            run()
+            println("lifecycleScope END")
+
+        }*/
+
         println("MainActivity onCreate  ")
         setContent {
             println("MainActivity setContent  ")
