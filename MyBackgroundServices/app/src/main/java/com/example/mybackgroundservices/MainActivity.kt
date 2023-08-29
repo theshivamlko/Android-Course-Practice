@@ -9,6 +9,7 @@ import androidx.work.Constraints
 import androidx.work.Data
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.mybackgroundservices.databinding.ActivityMainBinding
 import java.util.UUID
@@ -48,9 +49,15 @@ class MainActivity : AppCompatActivity() {
                 .setInputData(data)
                 .build()
 
-        workManagerInstance.enqueue(oneTimeWorker)
+        val filterWorker = OneTimeWorkRequestBuilder<FilterWorker>()
+            .addTag("FilterWorker2")
+            .build()
+
+        workManagerInstance.beginWith(filterWorker).then(oneTimeWorker).enqueue()
+
         workedId = oneTimeWorker.id
         println("workedId ${workedId}")
+
         workManagerInstance.getWorkInfoByIdLiveData(oneTimeWorker.id)
             .observe(this) {
                 println("STATE ${it.state.name}")
