@@ -10,11 +10,12 @@ class UploadWorker(context: Context, workerParams: WorkerParameters) :
     Worker(context, workerParams) {
     override fun doWork(): Result {
 
+        val data=inputData.getInt("num",1)
         try {
             for (i in 1..20) {
-                 println("UploadWorker $i")
-                Thread.sleep(200L)
-                this.setProgressAsync(Data.Builder().putInt("name",i*10).build())
+                 println("UploadWorker3 $i workedId $id")
+                Thread.sleep(1000L)
+                this.setProgressAsync(Data.Builder().putInt("name",i*data).build())
 
             }
 
