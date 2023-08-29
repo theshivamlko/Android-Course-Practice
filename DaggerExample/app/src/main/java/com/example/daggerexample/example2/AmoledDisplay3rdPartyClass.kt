@@ -5,12 +5,13 @@ package com.example.daggerexample.example2
 // Consider this as 3rd party class
 // where we cannot inject Annotations
 class AmoledDisplay3rdPartyClass : Display2 {
+    var displayInt=0
 
     init {
         println("AmoledDisplay3rdPartyClass")
 
     }
     override fun turnOnScreen() {
-        println("AmoledDisplay3rdPartyClass turnOnScreen")
+        println("AmoledDisplay3rdPartyClass turnOnScreen $displayInt")
     }
 }

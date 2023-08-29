@@ -2,6 +2,7 @@ package com.example.daggerexample.example2
 
 import dagger.Module
 import dagger.Provides
+import javax.inject.Named
 
 @Module
 class AmoledDisplay3rdPartyClassModule {
@@ -15,8 +16,12 @@ class AmoledDisplay3rdPartyClassModule {
 
 
     @Provides
-    fun getInstance(): AmoledDisplay3rdPartyClass {
+    fun getInstance( ): AmoledDisplay3rdPartyClass {
         return AmoledDisplay3rdPartyClass()
     }
+ /*   @Provides
+    fun getInstanceParams( ): AmoledDisplay3rdPartyClass {
+        return AmoledDisplay3rdPartyClass(counter)
+    }*/
 
 }

@@ -2,6 +2,7 @@ package com.example.daggerexample.example2
 
 import com.example.daggerexample.example1.AmoledDisplay
 import javax.inject.Inject
+import javax.inject.Named
 import javax.inject.Singleton
 
 
@@ -9,6 +10,7 @@ import javax.inject.Singleton
 class Mobile2 @Inject constructor(
     private val simCard2: SimCard2,
     private val battery2: Battery2,
+
     // 3rd party class
     private val amoledDisplay3rdPartyClass: AmoledDisplay3rdPartyClass,
     // interface implement

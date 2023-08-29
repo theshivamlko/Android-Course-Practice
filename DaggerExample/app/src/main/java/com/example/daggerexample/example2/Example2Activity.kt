@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.daggerexample.R
 import javax.inject.Inject
+import javax.inject.Named
 
 class Example2Activity : AppCompatActivity() {
 
@@ -13,7 +14,13 @@ class Example2Activity : AppCompatActivity() {
     @Inject
     lateinit var mobile3: Mobile2
 
+    @Inject
+//    @field:[Named("amoled")]
     lateinit var mobile4: Mobile2
+
+    lateinit var mobile5: Mobile2
+
+    lateinit var mobile6: Mobile2
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,22 +46,23 @@ class Example2Activity : AppCompatActivity() {
         println("BuilderParam==========Injection")
 
         // Allow Injection with parameter
-/*
-        var mobileComponent3 =
-            DaggerMobileComponent2.builder()
+
+        var mobileComponent4 =   DaggerMobileComponent2.builder()
                 .amoledDisplay3rdPartyClassModule(AmoledDisplay3rdPartyClassModule(200))
                 .build()
-        mobile4 = mobileComponent3.getMobile()
+        mobile4 = mobileComponent4.getMobile()
+        println("Injection with parameter ==========$mobile4")
         mobile4.call()
-*/
 
-        var mobileComponent3 =
+
+        // Singleton
+   /*     var mobileComponent3 =
             DaggerMobileComponent2.builder()
                 .amoledDisplay3rdPartyClassModule(AmoledDisplay3rdPartyClassModule(200))
                 .build()
        val mobile5 = mobileComponent3.getMobile()
        val mobile6 = mobileComponent3.getMobile()
-        println("Singleton check ${mobile5.hashCode()} ${mobile6.hashCode()}")
+        println("Singleton check ${mobile5.hashCode()} ${mobile6.hashCode()}")*/
 
 
 

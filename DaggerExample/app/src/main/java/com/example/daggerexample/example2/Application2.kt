@@ -22,8 +22,8 @@ class Application2:Application() {
             DaggerMobileComponent2.builder()
                 .amoledDisplay3rdPartyClassModule(AmoledDisplay3rdPartyClassModule(200))
                 .build()
-        mobile4 = mobileComponent3.getMobile()
-        mobile4.call()
+      //  mobile4 = mobileComponent3.getMobile()
+     //   mobile4.call()
 
     }
 

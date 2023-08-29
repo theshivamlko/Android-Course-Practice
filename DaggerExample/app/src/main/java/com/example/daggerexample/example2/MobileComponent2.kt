@@ -1,6 +1,7 @@
 package com.example.daggerexample.example2
 
 import dagger.Component
+import javax.inject.Named
 import javax.inject.Singleton
 
 
@@ -14,6 +15,7 @@ import javax.inject.Singleton
 interface MobileComponent2 {
 
     // function should have same name as Dependent
+   // @Named("mobile")
     fun getMobile(): Mobile2
 
 
