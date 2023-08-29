@@ -12,12 +12,12 @@ import kotlinx.coroutines.flow.Flow
 interface MovieDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllMovies(movies:List<Movie>)
+    suspend fun insertAllMovies(movies: List<Movie>)
 
     @Query("SELECT * FROM movies")
-    suspend fun getAllMovies():Flow<List<Movie>>
+    fun getAllMovies(): List<Movie>
 
     @Query("DELETE FROM movies")
-    suspend fun deleteAllMovies()
+    fun deleteAllMovies()
 
 }

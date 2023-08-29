@@ -1,23 +1,25 @@
 package com.example.moviemvvmcleanarch.data.model
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 
-@Entity("movies")
+@Entity("tvshows")
     data class TVShow(
+    @PrimaryKey
+    @SerializedName("id")
+    val id: Int,
+
         @SerializedName("backdrop_path")
         val backdropPath: String,
         @SerializedName("first_air_date")
         val firstAirDate: String,
-        @SerializedName("genre_ids")
-        val genreIds: List<Int>,
-        @SerializedName("id")
-        val id: Int,
+
+
         @SerializedName("name")
         val name: String,
-        @SerializedName("origin_country")
-        val originCountry: List<String>,
+
         @SerializedName("original_language")
         val originalLanguage: String,
         @SerializedName("original_name")

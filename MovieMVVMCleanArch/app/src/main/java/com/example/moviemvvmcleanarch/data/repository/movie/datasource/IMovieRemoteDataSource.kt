@@ -1,4 +1,4 @@
-package com.example.moviemvvmcleanarch.data.repository
+package com.example.moviemvvmcleanarch.data.repository.movie.datasource
 
 import android.database.Observable
 import com.example.moviemvvmcleanarch.data.model.Movie

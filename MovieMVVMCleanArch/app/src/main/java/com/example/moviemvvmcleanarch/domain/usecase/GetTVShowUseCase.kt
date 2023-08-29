@@ -6,6 +6,6 @@ import retrofit2.Response
 
 class GetTVShowUseCase(private val itvShowsRepository: ITVShowsRepository) {
 
-    suspend fun getTVShowList(): Response<TVShow> = itvShowsRepository.getPopularTVShows()
+    suspend fun getTVShowList(): List<TVShow> = itvShowsRepository.getPopularTVShows()
 
 }

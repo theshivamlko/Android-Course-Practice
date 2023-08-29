@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.moviemvvmcleanarch.data.model.TVShow
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
@@ -15,7 +16,7 @@ interface TVShowDAO {
     suspend fun insertAllTVShows(tvshows:List<TVShow>)
 
     @Query("SELECT * FROM movies")
-    suspend fun getAllTVShows():LiveData<List<TVShow>>
+    suspend fun getAllTVShows():Flow<List<TVShow>>
 
     @Query("DELETE FROM movies")
     suspend fun deleteAllTVShows()

@@ -6,7 +6,7 @@ import com.example.moviemvvmcleanarch.data.model.TVShow
 import retrofit2.Response
 
 interface ITVShowsRepository {
-    suspend fun getPopularTVShows(): Response<TVShow>
-    suspend fun updateTVShowMovies(tvShowList:List<TVShow>)
+    suspend fun getPopularTVShows(): List<TVShow>
+    suspend fun updateTVShow(tvShowList:List<TVShow>)
 //    suspend fun deleteTVShowMovies( )
 }

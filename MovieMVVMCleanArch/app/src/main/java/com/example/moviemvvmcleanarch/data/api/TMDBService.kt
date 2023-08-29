@@ -31,7 +31,7 @@ interface TMDBService {
         "accept: application/json"
     }""")
     @GET("person/popular")
-    suspend fun getPopularArtists(): LiveData<ArtistsList>
+    suspend fun getPopularArtists(): Flow<ArtistsList>
 
 
 
