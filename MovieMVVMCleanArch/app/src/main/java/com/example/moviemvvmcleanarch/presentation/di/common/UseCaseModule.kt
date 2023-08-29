@@ -1,4 +1,4 @@
-package com.example.moviemvvmcleanarch.presentation.di
+package com.example.moviemvvmcleanarch.presentation.di.common
 
 import com.example.moviemvvmcleanarch.data.repository.artist.ArtistRepositoryImpl
 import com.example.moviemvvmcleanarch.data.repository.movie.MovieRepositoryImpl

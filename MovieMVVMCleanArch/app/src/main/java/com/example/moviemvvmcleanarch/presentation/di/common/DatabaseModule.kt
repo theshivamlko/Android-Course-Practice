@@ -1,4 +1,4 @@
-package com.example.moviemvvmcleanarch.presentation.di
+package com.example.moviemvvmcleanarch.presentation.di.common
 
 import android.content.Context
 import androidx.room.Room
