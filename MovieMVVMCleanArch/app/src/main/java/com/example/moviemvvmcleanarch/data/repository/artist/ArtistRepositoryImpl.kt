@@ -9,41 +9,45 @@ import com.example.moviemvvmcleanarch.data.repository.artist.datasourceImpl.Arti
 import com.example.moviemvvmcleanarch.data.repository.artist.datasourceImpl.ArtistRemoteDataSourceImpl
 import com.example.moviemvvmcleanarch.domain.repository.IArtistRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class ArtistRepositoryImpl(
     val artistRemoteDataSourceImpl: ArtistRemoteDataSourceImpl,
     val artistLocalDBSourceImpl: ArtistLocalDBSourceImpl,
     val artistCacheSourceImpl: ArtistCacheSourceImpl
-
 ) : IArtistRepository {
-    override suspend fun getPopularArtistShows(): LiveData<List<Artist>> {
-        var artistList: MutableLiveData<List<Artist>> = MutableLiveData<List<Artist>>()
 
-        var list = getArtistFromCache().value
-        if (list != null) {
-            artistList.postValue(list!!)
-        } else {
-            list = getArtistFromLocalDB().value
+    override suspend fun getPopularArtist(): Flow<List<Artist>> {
+        return  flow <List<Artist>>{
+
+            var list = getArtistFromCache().value
             if (list != null) {
-                artistList.postValue(list!!)
+                emit(list!!)
             } else {
-                list = getArtistsFromAPI().value
+                list = getArtistFromLocalDB().value
                 if (list != null) {
-                    artistLocalDBSourceImpl.deleteAllArtistFromDB()
-                    artistLocalDBSourceImpl.saveArtistListToDB(list)
-                    artistCacheSourceImpl.savePopularArtistToCache(list)
-                    artistList.postValue(list!!)
+                    emit(list!!)
+                } else {
+                    list = getArtistsFromAPI().value
+                    if (list != null) {
+                        artistLocalDBSourceImpl.deleteAllArtistFromDB()
+                        artistLocalDBSourceImpl.saveArtistListToDB(list)
+                        artistCacheSourceImpl.savePopularArtistToCache(list)
+                        emit(list!!)
+                    }
                 }
+
             }
 
         }
-        return artistList
+
     }
 
-    override suspend fun updateArtistMovies(artistList: List<Artist>) {
-        TODO("Not yet implemented")
+    override suspend fun refreshPopularArtists():Flow<List<Artist>> {
+        return getPopularArtist()
     }
 
 

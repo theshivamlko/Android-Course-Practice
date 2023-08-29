@@ -5,7 +5,7 @@ import com.example.moviemvvmcleanarch.domain.repository.ITVShowsRepository
 
 class UpdateTVShowUseCase(private val itvShowsRepository: ITVShowsRepository) {
 
-    suspend fun updateArtistList(tvShowsList: List<TVShow>) =
-        itvShowsRepository.updateTVShow(tvShowsList)
+    suspend fun refreshPopularTvShows() =
+        itvShowsRepository.refreshPopularTvShows()
 
 }

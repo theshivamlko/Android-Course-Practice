@@ -10,7 +10,10 @@ import com.example.moviemvvmcleanarch.domain.repository.IMovieRepository
 import com.example.moviemvvmcleanarch.domain.repository.ITVShowsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -21,79 +24,92 @@ class TVShowRepositoryImpl(
     val tvShowCacheDataSourceImpl: TVShowCacheDataSourceImpl
 ) : ITVShowsRepository {
 
-    override suspend fun getPopularTVShows(): List<TVShow> {
+    override suspend fun getPopularTVShows(): Flow<List<TVShow>> {
         return getTVShowFromCache()
     }
 
-    override suspend fun updateTVShow(tvShowList: List<TVShow>) {
-        val newList = getTVShowFromAPI()
 
-        if (newList.size > 0) {
+    override suspend fun refreshPopularTvShows(): Flow<List<TVShow>> {
 
-        } else {
-            tVShowLocalDBDataSourceImpl.deleteAllTVShowFromDB()
-            tVShowLocalDBDataSourceImpl.insertAllTVShowInDB(newList)
-            tvShowCacheDataSourceImpl.savePopularTVShowToCache(newList)
-        }
+        return flow {
+            getTVShowFromAPI().collect {
+                if (it.size > 0) {
+
+                    emit(it)
+                } else {
+                    tVShowLocalDBDataSourceImpl.deleteAllTVShowFromDB()
+                    tVShowLocalDBDataSourceImpl.insertAllTVShowInDB(it)
+                    tvShowCacheDataSourceImpl.savePopularTVShowToCache(it)
+                    emit(it)
+                }
 
 
-    }
-
-
-    suspend fun getTVShowFromAPI(): List<TVShow> {
-        lateinit var tvShowsList: List<TVShow>
-        try {
-            val response = tvShowRemoteDataSourceImpl.getPopularTVShowFromRemoteSource()
-            response.flowOn(Dispatchers.IO).collect {
-                tvShowsList = it.results
             }
 
 
-        } catch (e: Exception) {
-            println("TVShowRepositoryImpl ${e.stackTrace}")
         }
-        return tvShowsList
+
+
     }
 
-    suspend fun getTVShowFromLocalDB(): List<TVShow> {
-        lateinit var tvShowsList: List<TVShow>
-        try {
+
+    suspend fun getTVShowFromAPI(): Flow<List<TVShow>> {
+        return flow {
+            try {
+                val response = tvShowRemoteDataSourceImpl.getPopularTVShowFromRemoteSource()
+                response.flowOn(Dispatchers.IO).collect {
+                    emit(it.results)
+                }
+            } catch (e: Exception) {
+                println("TVShowRepositoryImpl ${e.stackTrace}")
+            }
+
+        }
+
+    }
+
+    suspend fun getTVShowFromLocalDB(): Flow<List<TVShow>> {
+
+        return flow {
             tVShowLocalDBDataSourceImpl.getAllTVShowFromDB().flowOn(Dispatchers.IO).collect {
                 if (it.size > 0) {
-                    tvShowsList = it
+                    emit(it)
                 } else {
 
-                    tvShowsList = getTVShowFromAPI()
-                    CoroutineScope(Dispatchers.IO).launch {
-                        tVShowLocalDBDataSourceImpl.insertAllTVShowInDB(tvShowsList)
+                    getTVShowFromAPI().collect {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            tVShowLocalDBDataSourceImpl.insertAllTVShowInDB(it)
+                            emit(it)
+                        }
                     }
+
                 }
             }
 
-        } catch (e: Exception) {
-            println("TVShowRepositoryImpl ${e.stackTrace}")
         }
-        return tvShowsList
     }
 
 
-    suspend fun getTVShowFromCache(): List<TVShow> {
-        lateinit var tvShowsList: List<TVShow>
-        try {
+    suspend fun getTVShowFromCache(): Flow<List<TVShow>> {
 
-            tvShowsList = tvShowCacheDataSourceImpl.getPopularTVShowFromCache()
+        return flow {
+            try {
+                val list = tvShowCacheDataSourceImpl.getPopularTVShowFromCache()
+                if (list.isNotEmpty()) {
+                    emit(list)
+                } else {
+                    getTVShowFromLocalDB().collect {
+                        tvShowCacheDataSourceImpl.savePopularTVShowToCache(it)
+                        emit(list)
+                    }
+                }
 
-        } catch (e: Exception) {
-            println("TVShowRepositoryImpl ${e.stackTrace}")
+            } catch (e: Exception) {
+                println("TVShowRepositoryImpl ${e.stackTrace}")
+            }
+
+
         }
-
-        if (tvShowsList.size > 0) {
-            return tvShowsList
-        } else {
-            tvShowsList = getTVShowFromLocalDB()
-            tvShowCacheDataSourceImpl.savePopularTVShowToCache(tvShowsList)
-        }
-        return tvShowsList
     }
 
 

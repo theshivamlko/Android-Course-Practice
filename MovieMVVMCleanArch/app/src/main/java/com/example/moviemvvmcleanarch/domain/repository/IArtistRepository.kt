@@ -5,10 +5,11 @@ import com.example.moviemvvmcleanarch.data.model.Artist
 import com.example.moviemvvmcleanarch.data.model.Movie
 import com.example.moviemvvmcleanarch.data.model.MovieList
 import com.example.moviemvvmcleanarch.data.model.TVShow
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
 interface IArtistRepository {
-    suspend fun getPopularArtistShows(): LiveData<List<Artist>>
-    suspend fun updateArtistMovies(artistList: List<Artist>)
+    suspend fun getPopularArtist(): Flow<List<Artist>>
+    suspend fun refreshPopularArtists():Flow<List<Artist>>
 //    suspend fun deleteArtistMovies()
 }

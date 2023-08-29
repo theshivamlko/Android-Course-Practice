@@ -5,6 +5,6 @@ import com.example.moviemvvmcleanarch.domain.repository.IArtistRepository
 
 class UpdateArtistsUseCase(private val iArtistRepository: IArtistRepository) {
 
-    suspend fun updateArtistList(artistList:List<Artist>) = iArtistRepository.updateArtistMovies(artistList)
+    suspend fun refreshPopularArtists() = iArtistRepository.refreshPopularArtists()
 
 }
