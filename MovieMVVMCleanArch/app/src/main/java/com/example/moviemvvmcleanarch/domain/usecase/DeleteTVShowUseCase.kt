@@ -4,6 +4,6 @@ import com.example.moviemvvmcleanarch.domain.repository.ITVShowsRepository
 
 class DeleteTVShowUseCase(private val iTVShowsRepository: ITVShowsRepository) {
 
-    suspend fun deleteTVShowList() = iTVShowsRepository.deleteTVShowMovies()
+   // suspend fun deleteTVShowList() = iTVShowsRepository.deleteTVShowMovies()
 
 }
