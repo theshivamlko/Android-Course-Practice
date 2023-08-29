@@ -10,10 +10,12 @@ import androidx.work.Data
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.example.mybackgroundservices.databinding.ActivityMainBinding
 import java.util.UUID
 import java.util.concurrent.Executor
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +30,10 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding.button.setOnClickListener {
 
             startSimpleWorkManager()
+        }
+        activityMainBinding.button2.setOnClickListener {
+
+            periodicManager()
         }
     }
 
@@ -73,6 +79,15 @@ class MainActivity : AppCompatActivity() {
                 println("Worker1 ${work.outputData}")
                 println("Worker2 ${work.progress}")
             }
+
+
+    }
+
+    fun periodicManager(){
+ // min periodic for worker is 15 min
+
+        val periodicWorker=PeriodicWorkRequest.Builder(FilterWorker::class.java,16,TimeUnit.MINUTES).build()
+        workManagerInstance.enqueue(periodicWorker)
 
 
     }
