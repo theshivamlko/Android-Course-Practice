@@ -53,7 +53,14 @@ class MainActivity : AppCompatActivity() {
             .addTag("FilterWorker2")
             .build()
 
-        workManagerInstance.beginWith(filterWorker).then(oneTimeWorker).enqueue()
+        // Multiple workers start parallel
+        val parallelWorker = mutableListOf<OneTimeWorkRequest>()
+        parallelWorker.add(filterWorker)
+        parallelWorker.add(oneTimeWorker)
+        parallelWorker.add(filterWorker)
+
+        workManagerInstance.beginWith(filterWorker).then(oneTimeWorker).then(parallelWorker)
+            .enqueue()
 
         workedId = oneTimeWorker.id
         println("workedId ${workedId}")
