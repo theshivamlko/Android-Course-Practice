@@ -7,6 +7,7 @@ import com.example.moviemvvmcleanarch.domain.usecase.UpdateMoviesUseCase
 import com.example.moviemvvmcleanarch.domain.usecase.UpdateTVShowUseCase
 import com.example.moviemvvmcleanarch.presentation.artist.ArtistViewModel
 import com.example.moviemvvmcleanarch.presentation.tvshow.TvShowViewModel
+import com.example.moviemvvmcleanarch.presentation.tvshow.TvShowViewModelFactory
 import dagger.Module
 import dagger.Provides
 
@@ -20,8 +21,8 @@ class TVShowViewModelModule {
     fun provideTVShowViewModel(
         getTVShowUseCase: GetTVShowUseCase,
         updateTVShowUseCase: UpdateTVShowUseCase
-    ): TvShowViewModel {
-        return TvShowViewModel(getTVShowUseCase, updateTVShowUseCase)
+    ): TvShowViewModelFactory {
+        return TvShowViewModelFactory(getTVShowUseCase, updateTVShowUseCase)
     }
 
 }

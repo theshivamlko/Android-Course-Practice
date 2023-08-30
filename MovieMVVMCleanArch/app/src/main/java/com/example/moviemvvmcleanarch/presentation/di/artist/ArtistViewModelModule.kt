@@ -16,10 +16,10 @@ class ArtistViewModelModule {
 
     @ArtistScope
     @Provides
-    fun provideArtistViewModel(
+    fun provideArtistViewModelFactory(
         getArtistUseCase: GetArtistUseCase, updateArtistsUseCase: UpdateArtistsUseCase
-    ): ArtistViewModel {
-        return ArtistViewModel(getArtistUseCase, updateArtistsUseCase)
+    ): ArtistViewModelFactory {
+        return ArtistViewModelFactory(getArtistUseCase, updateArtistsUseCase)
     }
 
 }

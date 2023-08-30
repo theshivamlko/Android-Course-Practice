@@ -5,6 +5,8 @@ import com.example.moviemvvmcleanarch.presentation.di.artist.ArtistSubComponent
 import com.example.moviemvvmcleanarch.presentation.di.movie.MovieSubComponent
 import com.example.moviemvvmcleanarch.presentation.di.tvshow.TVShowSubComponent
 import dagger.Module
+import dagger.Provides
+import javax.inject.Singleton
 
 
 @Module(subcomponents = [
@@ -15,7 +17,8 @@ import dagger.Module
 ])
 class AppModule(val context: Context) {
 
-
+    @Singleton
+    @Provides
     fun provideApplicationContext():Context{
         return context.applicationContext
     }

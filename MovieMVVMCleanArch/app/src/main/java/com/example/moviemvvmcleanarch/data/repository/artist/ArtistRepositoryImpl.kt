@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.example.moviemvvmcleanarch.data.model.Artist
+import com.example.moviemvvmcleanarch.data.repository.artist.datasource.IArtistCacheSource
+import com.example.moviemvvmcleanarch.data.repository.artist.datasource.IArtistLocalDBSource
+import com.example.moviemvvmcleanarch.data.repository.artist.datasource.IArtistRemoteDataSource
 import com.example.moviemvvmcleanarch.data.repository.artist.datasourceImpl.ArtistCacheSourceImpl
 import com.example.moviemvvmcleanarch.data.repository.artist.datasourceImpl.ArtistLocalDBSourceImpl
 import com.example.moviemvvmcleanarch.data.repository.artist.datasourceImpl.ArtistRemoteDataSourceImpl
@@ -15,13 +18,13 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class ArtistRepositoryImpl(
-    val artistRemoteDataSourceImpl: ArtistRemoteDataSourceImpl,
-    val artistLocalDBSourceImpl: ArtistLocalDBSourceImpl,
-    val artistCacheSourceImpl: ArtistCacheSourceImpl
+    val iArtistRemoteDataSource: IArtistRemoteDataSource,
+    val iArtistLocalDBSource: IArtistLocalDBSource,
+    val iArtistCacheSource: IArtistCacheSource
 ) : IArtistRepository {
 
     override suspend fun getPopularArtist(): Flow<List<Artist>> {
-        return  flow <List<Artist>>{
+        return flow<List<Artist>> {
 
             var list = getArtistFromCache().value
             if (list != null) {
@@ -33,9 +36,9 @@ class ArtistRepositoryImpl(
                 } else {
                     list = getArtistsFromAPI().value
                     if (list != null) {
-                        artistLocalDBSourceImpl.deleteAllArtistFromDB()
-                        artistLocalDBSourceImpl.saveArtistListToDB(list)
-                        artistCacheSourceImpl.savePopularArtistToCache(list)
+                        iArtistLocalDBSource.deleteAllArtistFromDB()
+                        iArtistLocalDBSource.saveArtistListToDB(list)
+                        iArtistCacheSource.savePopularArtistToCache(list)
                         emit(list!!)
                     }
                 }
@@ -46,7 +49,7 @@ class ArtistRepositoryImpl(
 
     }
 
-    override suspend fun refreshPopularArtists():Flow<List<Artist>> {
+    override suspend fun refreshPopularArtists(): Flow<List<Artist>> {
         return getPopularArtist()
     }
 
@@ -54,7 +57,7 @@ class ArtistRepositoryImpl(
     fun getArtistsFromAPI(): LiveData<List<Artist>> {
 
         return liveData<List<Artist>> {
-            val response = artistRemoteDataSourceImpl.getPopularArtistFromRemoteSource()
+            val response = iArtistRemoteDataSource.getPopularArtistFromRemoteSource()
                 .flowOn(Dispatchers.IO).collect {
                     emit(it.results)
                 }
@@ -65,7 +68,7 @@ class ArtistRepositoryImpl(
 
     fun getArtistFromLocalDB(): LiveData<List<Artist>> {
         return liveData<List<Artist>> {
-            val response = artistLocalDBSourceImpl.getAllArtistFromDB()
+            val response = iArtistLocalDBSource.getAllArtistFromDB()
                 .flowOn(Dispatchers.IO).collect {
                     emit(it)
                 }
@@ -74,6 +77,6 @@ class ArtistRepositoryImpl(
 
 
     fun getArtistFromCache(): LiveData<List<Artist>> {
-        return artistCacheSourceImpl.getArtistList()
+        return iArtistCacheSource.getArtistList()
     }
 }

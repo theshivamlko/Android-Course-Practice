@@ -3,6 +3,9 @@ package com.example.moviemvvmcleanarch.data.repository.movie
 import com.example.moviemvvmcleanarch.data.model.Movie
 import com.example.moviemvvmcleanarch.data.model.TVShow
 import com.example.moviemvvmcleanarch.data.model.TVShowsList
+import com.example.moviemvvmcleanarch.data.repository.movie.datasource.ITVShowCacheDataSource
+import com.example.moviemvvmcleanarch.data.repository.movie.datasource.ITVShowLocalDBDataSource
+import com.example.moviemvvmcleanarch.data.repository.movie.datasource.ITVShowRemoteDataSource
 import com.example.moviemvvmcleanarch.data.repository.movie.datasourceImpl.TVShowCacheDataSourceImpl
 import com.example.moviemvvmcleanarch.data.repository.movie.datasourceImpl.TVShowLocalDBDataSourceImpl
 import com.example.moviemvvmcleanarch.data.repository.movie.datasourceImpl.TVShowRemoteDataSourceImpl
@@ -19,9 +22,9 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class TVShowRepositoryImpl(
-    val tvShowRemoteDataSourceImpl: TVShowRemoteDataSourceImpl,
-    val tVShowLocalDBDataSourceImpl: TVShowLocalDBDataSourceImpl,
-    val tvShowCacheDataSourceImpl: TVShowCacheDataSourceImpl
+   val itvShowRemoteDataSource: ITVShowRemoteDataSource,
+   val  itvShowLocalDBDataSource: ITVShowLocalDBDataSource,
+   val  itvShowCacheDataSource: ITVShowCacheDataSource
 ) : ITVShowsRepository {
 
     override suspend fun getPopularTVShows(): Flow<List<TVShow>> {
@@ -37,9 +40,9 @@ class TVShowRepositoryImpl(
 
                     emit(it)
                 } else {
-                    tVShowLocalDBDataSourceImpl.deleteAllTVShowFromDB()
-                    tVShowLocalDBDataSourceImpl.insertAllTVShowInDB(it)
-                    tvShowCacheDataSourceImpl.savePopularTVShowToCache(it)
+                    itvShowLocalDBDataSource.deleteAllTVShowFromDB()
+                    itvShowLocalDBDataSource.insertAllTVShowInDB(it)
+                    itvShowCacheDataSource.savePopularTVShowToCache(it)
                     emit(it)
                 }
 
@@ -56,7 +59,7 @@ class TVShowRepositoryImpl(
     suspend fun getTVShowFromAPI(): Flow<List<TVShow>> {
         return flow {
             try {
-                val response = tvShowRemoteDataSourceImpl.getPopularTVShowFromRemoteSource()
+                val response = itvShowRemoteDataSource.getPopularTVShowFromRemoteSource()
                 response.flowOn(Dispatchers.IO).collect {
                     emit(it.results)
                 }
@@ -71,14 +74,14 @@ class TVShowRepositoryImpl(
     suspend fun getTVShowFromLocalDB(): Flow<List<TVShow>> {
 
         return flow {
-            tVShowLocalDBDataSourceImpl.getAllTVShowFromDB().flowOn(Dispatchers.IO).collect {
+            itvShowLocalDBDataSource.getAllTVShowFromDB().flowOn(Dispatchers.IO).collect {
                 if (it.size > 0) {
                     emit(it)
                 } else {
 
                     getTVShowFromAPI().collect {
                         CoroutineScope(Dispatchers.IO).launch {
-                            tVShowLocalDBDataSourceImpl.insertAllTVShowInDB(it)
+                            itvShowLocalDBDataSource.insertAllTVShowInDB(it)
                             emit(it)
                         }
                     }
@@ -94,12 +97,12 @@ class TVShowRepositoryImpl(
 
         return flow {
             try {
-                val list = tvShowCacheDataSourceImpl.getPopularTVShowFromCache()
+                val list = itvShowCacheDataSource.getPopularTVShowFromCache()
                 if (list.isNotEmpty()) {
                     emit(list)
                 } else {
                     getTVShowFromLocalDB().collect {
-                        tvShowCacheDataSourceImpl.savePopularTVShowToCache(it)
+                        itvShowCacheDataSource.savePopularTVShowToCache(it)
                         emit(list)
                     }
                 }

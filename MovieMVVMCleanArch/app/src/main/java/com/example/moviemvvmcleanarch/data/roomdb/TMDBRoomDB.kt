@@ -7,12 +7,11 @@ import com.example.moviemvvmcleanarch.data.model.Movie
 import com.example.moviemvvmcleanarch.data.model.TVShow
 
 
-@Database(entities = [Movie::class, TVShow::class, Artist::class], version = 1)
+@Database(entities = [Movie::class, TVShow::class, Artist::class], version = 1,exportSchema = false)
 abstract class TMDBRoomDB : RoomDatabase() {
 
     abstract fun movieDAO(): MovieDAO
     abstract fun tvShowDAO(): TVShowDAO
     abstract fun artistDAO(): ArtistDAO
-
 
 }

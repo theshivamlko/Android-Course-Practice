@@ -6,6 +6,7 @@ import com.example.moviemvvmcleanarch.domain.usecase.UpdateArtistsUseCase
 import com.example.moviemvvmcleanarch.domain.usecase.UpdateMoviesUseCase
 import com.example.moviemvvmcleanarch.presentation.artist.ArtistViewModel
 import com.example.moviemvvmcleanarch.presentation.movie.MovieViewModel
+import com.example.moviemvvmcleanarch.presentation.movie.MovieViewModelFactory
 import dagger.Module
 import dagger.Provides
 
@@ -13,14 +14,13 @@ import dagger.Provides
 @Module
 class MovieViewModelModule {
 
-
     @MovieScope
     @Provides
     fun provideMovieViewModel(
         getMoviesUseCase: GetMoviesUseCase,
         updateMoviesUseCase: UpdateMoviesUseCase
-    ): MovieViewModel {
-        return MovieViewModel(getMoviesUseCase, updateMoviesUseCase)
+    ): MovieViewModelFactory {
+        return MovieViewModelFactory(getMoviesUseCase, updateMoviesUseCase)
     }
 
 }

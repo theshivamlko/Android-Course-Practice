@@ -16,7 +16,7 @@ interface TVShowDAO {
     suspend fun insertAllTVShows(tvshows:List<TVShow>)
 
     @Query("SELECT * FROM movies")
-    suspend fun getAllTVShows():Flow<List<TVShow>>
+    fun getAllTVShows():Flow<List<TVShow>>
 
     @Query("DELETE FROM movies")
     suspend fun deleteAllTVShows()
