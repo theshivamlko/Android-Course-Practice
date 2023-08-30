@@ -1,5 +1,9 @@
 package com.example.mybackgroundservices
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.database.DatabaseUtils
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -31,10 +35,25 @@ class MainActivity : AppCompatActivity() {
 
             startSimpleWorkManager()
         }
-        activityMainBinding.button2.setOnClickListener {
 
-            periodicManager()
+        val intent=Intent(this, MyService::class.java)
+        activityMainBinding.button3.setOnClickListener {
+
+            startService(intent)
         }
+
+
+        activityMainBinding.button4.setOnClickListener {
+            stopService(intent)
+        }
+
+        val intent2=Intent(this, MyService::class.java)
+
+        activityMainBinding.startBrodcast.setOnClickListener {
+
+        }
+
+
     }
 
     val workManagerInstance = WorkManager.getInstance(this)
@@ -83,10 +102,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun periodicManager(){
- // min periodic for worker is 15 min
+    fun periodicManager() {
+        // min periodic for worker is 15 min
 
-        val periodicWorker=PeriodicWorkRequest.Builder(FilterWorker::class.java,16,TimeUnit.MINUTES).build()
+        val periodicWorker =
+            PeriodicWorkRequest.Builder(FilterWorker::class.java, 16, TimeUnit.MINUTES).build()
         workManagerInstance.enqueue(periodicWorker)
 
 
@@ -97,5 +117,24 @@ class MainActivity : AppCompatActivity() {
         println("onDestroy ${workedId.node()}")
         workManagerInstance.cancelWorkById(workedId)
 
+    }
+
+    val receiver=object :BroadcastReceiver(){
+        override fun onReceive(p0: Context?, p1: Intent?) {
+            val time=p1?.getStringExtra("time")
+            println("BroadcastReceiver $time")
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        registerReceiver(receiver, IntentFilter(MyService.UPDATE_TIME))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(receiver)
     }
 }

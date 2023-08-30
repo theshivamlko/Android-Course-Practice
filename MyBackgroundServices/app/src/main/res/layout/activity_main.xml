@@ -33,7 +33,24 @@
         android:id="@+id/button3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="START Service" />
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="STOP Service" />
+
+    <Button
+        android:id="@+id/startBrodcast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Listen Broadcast Receiver" />
+
+    <Button
+        android:id="@+id/stopBrodcast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="STOP Broadcast Receiver" />
 
 
 </LinearLayout>
