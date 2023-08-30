@@ -79,9 +79,9 @@ dependencies {
 
 
     // Dagger 2
-    implementation("com.google.dagger:dagger:2.47")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
-    ksp("com.google.dagger:dagger-compiler:2.47")
+//    implementation("com.google.dagger:dagger:2.47")
+//    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
+//    ksp("com.google.dagger:dagger-compiler:2.47")
 
     // Retofit
     implementation("com.squareup.okhttp3:okhttp:4.11.0")

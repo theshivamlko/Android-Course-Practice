@@ -7,17 +7,15 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.moviemvvmcleanarch.R
 import com.example.moviemvvmcleanarch.databinding.ActivityMainBinding
 import com.example.moviemvvmcleanarch.presentation.artist.ArtistFragment
-import com.example.moviemvvmcleanarch.presentation.di.Injector
-import com.example.moviemvvmcleanarch.presentation.movie.MovieFragment
+ import com.example.moviemvvmcleanarch.presentation.movie.MovieFragment
 import com.example.moviemvvmcleanarch.presentation.movie.MovieViewModel
 import com.example.moviemvvmcleanarch.presentation.movie.MovieViewModelFactory
 import com.example.moviemvvmcleanarch.presentation.tvshow.TvShowFragment
-import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
 
-    @Inject
+  //  @Inject
     lateinit var movieViewModelFactory: MovieViewModelFactory
 
     lateinit var activityMainBinding: ActivityMainBinding
@@ -48,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-       (application as Injector).createMovieSubComponent().inject(this)
+  //     (application as Injector).createMovieSubComponent().inject(this)
 //        (application as Injector).createTVShowSubComponent().inject(this)
 //        (application as Injector).createMovieSubComponent().inject(this)
 
