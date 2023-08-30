@@ -14,7 +14,7 @@ class MovieViewModel(
 ) : ViewModel() {
 
     fun getMovies() = liveData<List<Movie>> {
-        val movieList = getMoviesUseCase.getMoviesList()
+       emit(getMoviesUseCase.getMoviesList())
 
     }
 
