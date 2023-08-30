@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName
 
 
 @Entity("artists")
-
 data class Artist(
 
     @PrimaryKey
@@ -16,7 +15,7 @@ data class Artist(
 
 //    @SerializedName("adult")
 //    val adult: Boolean,
-    @SerializedName("gender")
+   /* @SerializedName("gender")
     val gender: Int,
 
 
@@ -29,5 +28,5 @@ data class Artist(
     @SerializedName("popularity")
     val popularity: Double,
     @SerializedName("profile_path")
-    val profilePath: String
+    val profilePath: String*/
 )

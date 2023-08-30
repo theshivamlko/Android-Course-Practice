@@ -9,11 +9,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class MovieLocalDBDataSourceImpl(private val movieDAO: MovieDAO) : IMovieLocalDBDataSource {
-    override suspend fun getAllMoviesFromDB(): Flow<List<Movie>> {
-        return flow {
-            movieDAO.getAllMovies()
+    override suspend fun getAllMoviesFromDB(): List<Movie> {
+        return runBlocking(Dispatchers.IO) {
+           return@runBlocking movieDAO.getAllMovies()
         }
     }
 

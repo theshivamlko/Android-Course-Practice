@@ -7,7 +7,7 @@ import retrofit2.Response
 
 interface IMovieLocalDBDataSource {
 
-    suspend fun getAllMoviesFromDB(): Flow<List<Movie>>
+    suspend fun getAllMoviesFromDB(): List<Movie>
 
     suspend fun insertAllMoviesInDB(movies:List<Movie>)
 

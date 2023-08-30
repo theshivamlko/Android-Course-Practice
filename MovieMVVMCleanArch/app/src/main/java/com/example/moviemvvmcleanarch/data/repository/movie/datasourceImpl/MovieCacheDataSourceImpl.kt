@@ -3,10 +3,9 @@ package com.example.moviemvvmcleanarch.data.repository.movie.datasourceImpl
 import com.example.moviemvvmcleanarch.data.model.Movie
 import com.example.moviemvvmcleanarch.data.repository.movie.datasource.IMovieCacheDataSource
 import com.example.moviemvvmcleanarch.data.repository.movie.datasource.ITVShowCacheDataSource
-import javax.inject.Singleton
 
 
-@Singleton
+
 class MovieCacheDataSourceImpl : IMovieCacheDataSource {
 
     private val movieList = mutableListOf<Movie>()

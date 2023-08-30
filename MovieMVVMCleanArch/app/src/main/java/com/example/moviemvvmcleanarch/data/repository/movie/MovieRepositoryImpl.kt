@@ -4,17 +4,14 @@ import com.example.moviemvvmcleanarch.data.model.Movie
 import com.example.moviemvvmcleanarch.data.repository.movie.datasource.IMovieCacheDataSource
 import com.example.moviemvvmcleanarch.data.repository.movie.datasource.IMovieLocalDBDataSource
 import com.example.moviemvvmcleanarch.data.repository.movie.datasource.IMovieRemoteDataSource
-import com.example.moviemvvmcleanarch.data.repository.movie.datasourceImpl.MovieCacheDataSourceImpl
-import com.example.moviemvvmcleanarch.data.repository.movie.datasourceImpl.MovieLocalDBDataSourceImpl
-import com.example.moviemvvmcleanarch.data.repository.movie.datasourceImpl.MovieRemoteDataSourceImpl
-import com.example.moviemvvmcleanarch.data.repository.movie.datasourceImpl.TVShowCacheDataSourceImpl
-import com.example.moviemvvmcleanarch.data.repository.movie.datasourceImpl.TVShowLocalDBDataSourceImpl
-import com.example.moviemvvmcleanarch.data.repository.movie.datasourceImpl.TVShowRemoteDataSourceImpl
 import com.example.moviemvvmcleanarch.domain.repository.IMovieRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class MovieRepositoryImpl(
     val iMovieRemoteDataSource: IMovieRemoteDataSource,
@@ -27,13 +24,13 @@ class MovieRepositoryImpl(
         return getMoviesFromCache()
     }
 
-    override suspend fun refreshPopularMovies( ):List<Movie> {
+    override suspend fun refreshPopularMovies(): List<Movie> {
 
-        val newList=getMoviesFromAPI()
+        val newList = getMoviesFromAPI()
 
-        if(newList.size>0){
+        if (newList.size > 0) {
 
-        }else{
+        } else {
             iMovieLocalDBDataSource.deleteAllMoviesFromDB()
             iMovieLocalDBDataSource.insertAllMoviesInDB(newList)
             iMovieCacheDataSource.savePopularMoviesToCache(newList)
@@ -48,34 +45,46 @@ class MovieRepositoryImpl(
         try {
             val response = iMovieRemoteDataSource.getPopularMoviesFromRemoteSource()
             val body = response.body()
+            println("MovieRepositoryImpl getMoviesFromAPI ${body}")
             body?.let {
                 movieList = body.results
             }
 
         } catch (e: Exception) {
-            println("MovieRepositoryImpl ${e.stackTrace}")
-        }
+            println("MovieRepositoryImpl error ${e.localizedMessage}")
+            e.printStackTrace()        }
         return movieList
     }
-    suspend fun getMoviesFromLocalDB(): List<Movie> {
-        lateinit var movieList: List<Movie>
-        try {
-            iMovieLocalDBDataSource.getAllMoviesFromDB().flowOn(Dispatchers.IO).collect{
-                if(it.size>0){
-                    movieList=it
-                }else{
 
-                    movieList= getMoviesFromAPI()
-                    CoroutineScope(Dispatchers.IO).launch {
-                        iMovieLocalDBDataSource.insertAllMoviesInDB(movieList)
+    suspend fun getMoviesFromLocalDB(): List<Movie> {
+          var movieList: List<Movie> = listOf()
+        try {
+            runBlocking(Dispatchers.IO) {
+
+                val result =iMovieLocalDBDataSource.getAllMoviesFromDB()
+                println("getMoviesFromLocalDB $result")
+
+                    if (result.size > 0) {
+                        movieList = result
+                    } else {
+
+                        movieList = getMoviesFromAPI()
+                        println("getMoviesFromLocalDB $movieList")
+                        CoroutineScope(Dispatchers.IO).launch {
+                            iMovieLocalDBDataSource.insertAllMoviesInDB(movieList)
+                        }
                     }
-                }
+
+
             }
 
         } catch (e: Exception) {
-            println("MovieRepositoryImpl ${e.stackTrace}")
+            println("MovieRepositoryImpl error ${e.localizedMessage}")
+            e.printStackTrace()
         }
+
         return movieList
+
     }
 
 
@@ -83,21 +92,21 @@ class MovieRepositoryImpl(
         lateinit var movieList: List<Movie>
         try {
 
-          movieList=  iMovieCacheDataSource.getPopularMoviesFromCache()
+            movieList = iMovieCacheDataSource.getPopularMoviesFromCache()
 
         } catch (e: Exception) {
-            println("MovieRepositoryImpl ${e.stackTrace}")
-        }
+            println("MovieRepositoryImpl error ${e.localizedMessage}")
+            e.printStackTrace()        }
 
-        if (movieList.size>0){
+        if (movieList.size > 0) {
             return movieList
-        }else{
-            movieList=getMoviesFromLocalDB()
+        } else {
+            movieList = getMoviesFromLocalDB()
+            println("MovieRepositoryImpl 5 getMoviesFromCache $movieList")
             iMovieCacheDataSource.savePopularMoviesToCache(movieList)
         }
         return movieList
     }
-
 
 
 }

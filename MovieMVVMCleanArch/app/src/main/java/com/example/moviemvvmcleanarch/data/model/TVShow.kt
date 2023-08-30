@@ -1,13 +1,16 @@
 package com.example.moviemvvmcleanarch.data.model
 
+import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import org.jetbrains.annotations.Nullable
 
 
 @Entity("tvshows")
     data class TVShow(
-    @PrimaryKey
+
+    @PrimaryKey(autoGenerate = false)
     @SerializedName("id")
     val id: Int,
 
@@ -18,7 +21,7 @@ import com.google.gson.annotations.SerializedName
 //        val firstAirDate: String,
 
 
-        @SerializedName("name")
+    /*    @SerializedName("name")
         val name: String,
 
         @SerializedName("overview")
@@ -28,6 +31,6 @@ import com.google.gson.annotations.SerializedName
         val popularity: Double,
 
         @SerializedName("poster_path")
-        val posterPath: String,
+        val posterPath: String,*/
 
     )
