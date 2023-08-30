@@ -9,23 +9,23 @@ import com.example.moviemvvmcleanarch.presentation.di.movie.MovieSubComponent
 import com.example.moviemvvmcleanarch.presentation.di.tvshow.TVShowSubComponent
 import javax.inject.Inject
 
-class MyApplication : Application(), Injector {
+class MyApplication : Application()/*, Injector*/ {
 
 
-    lateinit var appComponent: AppComponent
+//    lateinit var appComponent: AppComponent
 
     override fun onCreate() {
         super.onCreate()
-        appComponent = DaggerAppComponent.builder()
-            .appModule(AppModule(applicationContext))
-            .retrofitModule(RetrofitModule(BuildConfig.BASE_URL))
-            .remoteDataModule(RemoteDataModule("API_KEY"))
-            .build()
+//        appComponent = DaggerAppComponent.builder()
+//            .appModule(AppModule(applicationContext))
+//            .retrofitModule(RetrofitModule(BuildConfig.BASE_URL))
+//            .remoteDataModule(RemoteDataModule("API_KEY"))
+//            .build()
 
     }
 
 
-    override fun createMovieSubComponent(): MovieSubComponent {
+   /* override fun createMovieSubComponent(): MovieSubComponent {
         return appComponent.movieSubComponent().create()
     }
 
@@ -35,5 +35,5 @@ class MyApplication : Application(), Injector {
 
     override fun createArtistSubComponent(): ArtistSubComponent {
         return appComponent.artistSubComponent().create()
-    }
+    }*/
 }

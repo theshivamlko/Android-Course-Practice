@@ -17,8 +17,8 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
 
-    @Inject
-    lateinit var movieViewModelFactory: MovieViewModelFactory
+//    @Inject
+//    lateinit var movieViewModelFactory: MovieViewModelFactory
 
     lateinit var activityMainBinding: ActivityMainBinding
 
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-       (application as Injector).createMovieSubComponent().inject(this)
+    //   (application as Injector).createMovieSubComponent().inject(this)
 //        (application as Injector).createTVShowSubComponent().inject(this)
 //        (application as Injector).createMovieSubComponent().inject(this)
 
