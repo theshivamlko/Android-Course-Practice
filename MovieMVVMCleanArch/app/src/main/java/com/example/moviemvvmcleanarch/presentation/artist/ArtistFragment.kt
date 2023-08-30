@@ -32,8 +32,12 @@ class ArtistFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        fragmentArtistBinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_artist, container, false)
+
+        fragmentArtistBinding = FragmentArtistBinding.inflate(inflater)
+     //   FragmentArtistBinding.bind(fragmentArtistBinding.root)
+
+//        fragmentArtistBinding =
+//            DataBindingUtil.inflate(inflater, R.layout.fragment_artist, container, false)
 
         return fragmentArtistBinding.root
     }
@@ -53,7 +57,7 @@ class ArtistFragment : Fragment() {
             ArtistFragment().apply {
                 arguments = Bundle().apply {
 
-                       }
+                }
             }
     }
 }

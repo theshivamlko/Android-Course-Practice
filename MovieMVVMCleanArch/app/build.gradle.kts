@@ -42,9 +42,10 @@ android {
     }
 
     buildFeatures {
-        dataBinding =true
+        dataBinding = true
         buildConfig = true
-        
+        viewBinding = true
+
     }
     buildToolsVersion = "34.0.0"
 }
@@ -70,12 +71,11 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
 
 
-
     // RoomDB
     val room_version = "2.5.2"
     implementation("androidx.room:room-runtime:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
-     implementation("androidx.room:room-ktx:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
 
 
     // Dagger 2

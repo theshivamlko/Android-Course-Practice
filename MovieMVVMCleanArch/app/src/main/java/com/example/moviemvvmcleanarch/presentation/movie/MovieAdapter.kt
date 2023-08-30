@@ -51,7 +51,8 @@ class MyViewHolder(val itemListBinding: ItemListBinding) :
     RecyclerView.ViewHolder(itemListBinding.root) {
 
     fun bind(movie: Movie) {
-        itemListBinding.textView.text = movie.title
+        itemListBinding.model=movie
+   //     itemListBinding.textView.text = movie.title
 // https://image.tmdb.org/t/p/w300/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg
         Glide.with(itemListBinding.imageView.context)
             .load("https://image.tmdb.org/t/p/w300/${movie.posterPath}")
