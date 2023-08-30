@@ -13,9 +13,17 @@
         <TextView
             android:id="@+id/label"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="ARTISTS"
+            android:layout_height="wrap_content"
+            android:text="ARTIST"
             android:textSize="40sp" />
+
+        <ProgressBar
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/progressBar"
+            android:visibility="gone"
+
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

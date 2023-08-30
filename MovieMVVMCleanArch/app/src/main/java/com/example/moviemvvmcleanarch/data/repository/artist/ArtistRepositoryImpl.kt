@@ -2,6 +2,7 @@ package com.example.moviemvvmcleanarch.data.repository.artist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import com.example.moviemvvmcleanarch.data.model.Artist
 import com.example.moviemvvmcleanarch.data.repository.artist.datasource.IArtistCacheSource
@@ -34,13 +35,15 @@ class ArtistRepositoryImpl(
                 if (list != null) {
                     emit(list!!)
                 } else {
-                    list = getArtistsFromAPI().value
-                    if (list != null) {
-                        iArtistLocalDBSource.deleteAllArtistFromDB()
-                        iArtistLocalDBSource.saveArtistListToDB(list)
-                        iArtistCacheSource.savePopularArtistToCache(list)
-                        emit(list!!)
+                    getArtistsFromAPI().collect {
+                        if (it != null) {
+                            iArtistLocalDBSource.deleteAllArtistFromDB()
+                            iArtistLocalDBSource.saveArtistListToDB(it)
+                            iArtistCacheSource.savePopularArtistToCache(it)
+                            emit(it!!)
+                        }
                     }
+
                 }
 
             }
@@ -54,16 +57,17 @@ class ArtistRepositoryImpl(
     }
 
 
-    fun getArtistsFromAPI(): LiveData<List<Artist>> {
+    fun getArtistsFromAPI(): Flow<List<Artist>> {
 
-        return liveData<List<Artist>> {
-            val response = iArtistRemoteDataSource.getPopularArtistFromRemoteSource()
-                .flowOn(Dispatchers.IO).collect {
-                    emit(it.results)
+        return flow {
+
+            iArtistRemoteDataSource.getPopularArtistFromRemoteSource().flowOn(Dispatchers.IO)
+                .collect {
+                    emit(it)
                 }
+
+
         }
-
-
     }
 
     fun getArtistFromLocalDB(): LiveData<List<Artist>> {

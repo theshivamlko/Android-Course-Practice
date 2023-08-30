@@ -9,6 +9,6 @@ import retrofit2.Response
 
 interface IArtistRemoteDataSource {
 
-    suspend fun getPopularArtistFromRemoteSource(): Flow<ArtistsList>
+    suspend fun getPopularArtistFromRemoteSource(): Flow<List<Artist>>
 
 }

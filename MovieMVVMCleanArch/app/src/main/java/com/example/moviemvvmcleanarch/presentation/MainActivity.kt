@@ -53,17 +53,16 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding.button.setOnClickListener {
             val fragmentTransaction = supportFragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.fragment, MovieFragment()).commit()
-
         }
+
         activityMainBinding.button2.setOnClickListener {
             val fragmentTransaction = supportFragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.fragment, TvShowFragment()).commit()
-
         }
+
         activityMainBinding.button3.setOnClickListener {
             val fragmentTransaction = supportFragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.fragment, ArtistFragment()).commit()
-
         }
 
 

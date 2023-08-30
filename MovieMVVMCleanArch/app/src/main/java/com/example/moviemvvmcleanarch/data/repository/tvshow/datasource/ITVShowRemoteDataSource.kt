@@ -7,6 +7,6 @@ import retrofit2.Response
 
 interface ITVShowRemoteDataSource {
 
-    suspend fun getPopularTVShowFromRemoteSource(): Flow<TVShowsList>
+    suspend fun getPopularTVShowFromRemoteSource(): Response<TVShowsList>
 
 }

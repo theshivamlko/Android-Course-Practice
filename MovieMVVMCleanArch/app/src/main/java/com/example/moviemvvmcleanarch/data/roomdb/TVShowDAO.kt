@@ -13,10 +13,10 @@ interface TVShowDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllTVShows(tvshows:List<TVShow>)
 
-    @Query("SELECT * FROM movies")
+    @Query("SELECT * FROM tvshows")
     fun getAllTVShows(): List<TVShow>
 
-    @Query("DELETE FROM movies")
+    @Query("DELETE FROM tvshows")
     suspend fun deleteAllTVShows()
 
 }

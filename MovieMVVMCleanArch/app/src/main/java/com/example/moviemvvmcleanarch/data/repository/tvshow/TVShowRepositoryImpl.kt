@@ -19,12 +19,13 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 class TVShowRepositoryImpl(
-   val itvShowRemoteDataSource: ITVShowRemoteDataSource,
-   val  itvShowLocalDBDataSource: ITVShowLocalDBDataSource,
-   val  itvShowCacheDataSource: ITVShowCacheDataSource
+    val itvShowRemoteDataSource: ITVShowRemoteDataSource,
+    val itvShowLocalDBDataSource: ITVShowLocalDBDataSource,
+    val itvShowCacheDataSource: ITVShowCacheDataSource
 ) : ITVShowsRepository {
 
     override suspend fun getPopularTVShows(): Flow<List<TVShow>> {
@@ -60,11 +61,13 @@ class TVShowRepositoryImpl(
         return flow {
             try {
                 val response = itvShowRemoteDataSource.getPopularTVShowFromRemoteSource()
-                response.flowOn(Dispatchers.IO).collect {
-                    emit(it.results)
+                val results = response.body()
+                if (results != null) {
+                    emit(results.results)
                 }
             } catch (e: Exception) {
-                println("TVShowRepositoryImpl ${e.stackTrace}")
+                println("TVShowRepositoryImpl 2 getTVShowFromAPI ${e.localizedMessage}")
+                e.printStackTrace()
             }
 
         }
@@ -72,17 +75,20 @@ class TVShowRepositoryImpl(
     }
 
     suspend fun getTVShowFromLocalDB(): Flow<List<TVShow>> {
+        println("TVShowRepositoryImpl 1 getTVShowFromLocalDB  ")
 
         return flow {
+            println("TVShowRepositoryImpl 2 getTVShowFromLocalDB  ")
             itvShowLocalDBDataSource.getAllTVShowFromDB().flowOn(Dispatchers.IO).collect {
+                println("TVShowRepositoryImpl 3 getTVShowFromLocalDB $it")
                 if (it.size > 0) {
                     emit(it)
                 } else {
 
                     getTVShowFromAPI().collect {
+                        emit(it)
                         CoroutineScope(Dispatchers.IO).launch {
                             itvShowLocalDBDataSource.insertAllTVShowInDB(it)
-                            emit(it)
                         }
                     }
 
@@ -94,10 +100,12 @@ class TVShowRepositoryImpl(
 
 
     suspend fun getTVShowFromCache(): Flow<List<TVShow>> {
+        println("TVShowRepositoryImpl 1  getTVShowFromCache")
 
         return flow {
             try {
                 val list = itvShowCacheDataSource.getPopularTVShowFromCache()
+                println("TVShowRepositoryImpl 2 getTVShowFromCache $list")
                 if (list.isNotEmpty()) {
                     emit(list)
                 } else {
@@ -108,7 +116,8 @@ class TVShowRepositoryImpl(
                 }
 
             } catch (e: Exception) {
-                println("TVShowRepositoryImpl ${e.stackTrace}")
+                println("TVShowRepositoryImpl error ${e.localizedMessage}")
+                e.printStackTrace()
             }
 
 

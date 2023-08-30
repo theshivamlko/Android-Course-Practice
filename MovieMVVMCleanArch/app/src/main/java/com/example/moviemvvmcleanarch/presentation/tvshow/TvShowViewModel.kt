@@ -16,12 +16,16 @@ class TvShowViewModel(
     val updateTVShowUseCase: UpdateTVShowUseCase
 ) : ViewModel() {
 
-    fun getMovies() = liveData<List<Movie>> {
-        val movieList = getTVShowUseCase.getTVShowList()
+    fun getTvShows() = liveData<List<TVShow>> {
+        println("getTvShows1  ")
+        getTVShowUseCase.getTVShowList().collect {
+            println("getTvShows2 $it")
+            emit(it)
+        }
 
     }
 
-    fun updateMovies(): LiveData<List<TVShow>> {
+    fun updateTVShows(): LiveData<List<TVShow>> {
         return liveData<List<TVShow>> {
             updateTVShowUseCase.refreshPopularTvShows().collect {
                 emit(it)

@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="Artist" />
 
-        <fragment
+        <FrameLayout
             android:id="@+id/fragment"
             android:name="com.example.moviemvvmcleanarch.presentation.movie.MovieFragment"
             android:layout_width="match_parent"

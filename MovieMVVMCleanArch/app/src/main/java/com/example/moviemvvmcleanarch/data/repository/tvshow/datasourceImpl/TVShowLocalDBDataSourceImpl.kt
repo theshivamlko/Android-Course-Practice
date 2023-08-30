@@ -16,7 +16,9 @@ class TVShowLocalDBDataSourceImpl(private val tvShowDAO: TVShowDAO) : ITVShowLoc
 
     override suspend fun getAllTVShowFromDB(): Flow<List<TVShow>> {
         return flow {
-            tvShowDAO.getAllTVShows()
+            val list=tvShowDAO.getAllTVShows()
+            println("TVShowLocalDBDataSourceImpl 1 getAllTVShowFromDB $list")
+            emit(list)
         }
     }
 
