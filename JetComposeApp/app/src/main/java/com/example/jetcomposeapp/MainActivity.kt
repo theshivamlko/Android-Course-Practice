@@ -27,6 +27,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,6 +53,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.RemoteInput
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.jetcomposeapp.example2.MyViewModel1
 import com.example.jetcomposeapp.ui.theme.JetComposeAppTheme
 import com.example.jetcomposeapp.ui.theme.navokiColor
 import kotlinx.coroutines.Dispatchers
@@ -263,6 +266,16 @@ class MainActivity : ComponentActivity() {
                             )
 
                         Text(text = "Hello $inputVal")
+
+                        val viewModel= viewModel<MyViewModel1>()
+                        val value=viewModel.getDataFlow().collectAsState(initial = "").value
+
+                        Button(onClick = {
+
+                        },
+                            modifier = Modifier.padding(vertical = 20.dp)) {
+                            Text(text = "$value")
+                        }
 
                     }
                 }

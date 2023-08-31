@@ -36,9 +36,8 @@ class TVShowRepositoryImpl(
     override suspend fun refreshPopularTvShows(): Flow<List<TVShow>> {
 
         return flow {
-            getTVShowFromAPI().collect {
+          getTVShowFromAPI().collect {
                 if (it.size > 0) {
-
                     emit(it)
                 } else {
                     itvShowLocalDBDataSource.deleteAllTVShowFromDB()
@@ -50,6 +49,7 @@ class TVShowRepositoryImpl(
 
             }
 
+            val a= getTVShowFromAPI()
 
         }
 

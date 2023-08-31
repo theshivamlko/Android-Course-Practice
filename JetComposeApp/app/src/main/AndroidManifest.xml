@@ -18,11 +18,7 @@
         <activity
             android:name=".example2.Jetcompose_AdvActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ConstraintlayoutActivity4"
@@ -39,9 +35,15 @@
             android:theme="@style/Theme.JetComposeApp"></activity>
         <activity
             android:name=".MainActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_main2"
-            android:theme="@style/Theme.JetComposeApp" />
+            android:theme="@style/Theme.JetComposeApp" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".MainActivity2"
             android:exported="true"

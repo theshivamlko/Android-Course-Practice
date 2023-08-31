@@ -14,12 +14,18 @@ class MyViewModel1:ViewModel() {
         editText.postValue("Shivam")
     }
 
-    fun getDataFlow():Flow<String>{
+    val count=0
+    val myflow=flow {
+        delay(2000L)
+         emit(count)
+    }
+    fun getDataFlow():Flow<Int>{
         println("MyViewModel1 getDataFlow")
-        return  flow {
-            delay(4000L)
-            emit("Some flow data")
-        }
+        return  myflow
+    }
+
+    fun update(){
+
     }
 
 }
