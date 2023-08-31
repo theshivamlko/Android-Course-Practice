@@ -29,10 +29,7 @@ class MyViewModel1 : ViewModel() {
 
     init {
         editText.postValue("Shivam")
-        mutableStateFlow.update {
-           Thread.sleep(2000)
-            120
-        }
+
     }
 
     val count = 0
@@ -46,10 +43,23 @@ class MyViewModel1 : ViewModel() {
         return myflow
     }
 
+    var counter1=0
+    var counter2=0
+
     fun updateSharedFlow() {
         viewModelScope.launch {
-            delay(2000L)
-            mutableSharedFlow.emit(kotlin.random.Random(0).nextInt(100))
+            repeat(10) {
+                delay(500L)
+                mutableSharedFlow.emit(++counter1)
+            }
+        }
+    }
+    fun updateStateFlow() {
+        viewModelScope.launch {
+            repeat(10) {
+                delay(500L)
+                mutableStateFlow.emit(++counter2)
+            }
         }
     }
 

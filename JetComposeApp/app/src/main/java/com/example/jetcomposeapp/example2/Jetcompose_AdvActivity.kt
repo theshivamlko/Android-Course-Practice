@@ -63,6 +63,7 @@ class Jetcompose_AdvActivity : AppCompatActivity() {
                 println("stateFlow $it")
             }
         }
+        viewModel1.updateStateFlow()
 
         Handler().postDelayed({
             lifecycleScope.launch {
@@ -74,6 +75,26 @@ class Jetcompose_AdvActivity : AppCompatActivity() {
 
 
         },3000)
+
+        Handler().postDelayed({
+            println("New Observer")
+            lifecycleScope.launch {
+
+                viewModel1.stateFlow.collect{
+                    println("stateFlow $it")
+                }
+
+            }
+            lifecycleScope.launch {
+
+                viewModel1.sharedFlow.collect{
+                    println("sharedFlow $it")
+                }
+
+            }
+
+
+        },10000)
 
         /* data.observe(this){
              println("MutableLiveData $it ")
