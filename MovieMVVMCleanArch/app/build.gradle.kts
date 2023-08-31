@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -5,6 +7,8 @@ plugins {
     id("com.google.devtools.ksp")
 
 }
+
+//val key: String = gradleLocalProperties(rootDir).getProperty("key")
 
 android {
     namespace = "com.example.moviemvvmcleanarch"
@@ -19,14 +23,15 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "API_KEY", "\"d0a77ec4ef5752493bc97078e4ca2368\"")
+//        buildConfigField("String", "API_KEY", key)
         buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
 
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources =true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
