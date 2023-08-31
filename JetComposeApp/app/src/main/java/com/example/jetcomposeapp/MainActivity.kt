@@ -274,7 +274,14 @@ class MainActivity : ComponentActivity() {
 
                         },
                             modifier = Modifier.padding(vertical = 20.dp)) {
-                            Text(text = "$value")
+                            Text(text = "View Model $value")
+                        }
+
+                        Button(onClick = {
+
+                        },
+                            modifier = Modifier.padding(vertical = 20.dp)) {
+                            Text(text = "State Flow $value")
                         }
 
                     }

@@ -58,7 +58,11 @@ class Jetcompose_AdvActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
         }
 
-
+        lifecycleScope.launch {
+            viewModel1.stateFlow.collect{
+                println("stateFlow $it")
+            }
+        }
         /* data.observe(this){
              println("MutableLiveData $it ")
              activityJetomposeAdvBinding.textView.text=it
