@@ -4,9 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.daggerexample.R
 import javax.inject.Inject
-import javax.inject.Named
 
-class Example2Activity : AppCompatActivity() {
+class Example3Activity : AppCompatActivity() {
 
 
     lateinit var mobile2: Mobile2
@@ -15,6 +14,7 @@ class Example2Activity : AppCompatActivity() {
     lateinit var mobile3: Mobile2
 
     @Inject
+//    @field:[Named("amoled")]
     lateinit var mobile4: Mobile2
 
     lateinit var mobile5: Mobile2
@@ -46,12 +46,12 @@ class Example2Activity : AppCompatActivity() {
 
         // Allow Injection with parameter
 
-     /*   var mobileComponent4 =   DaggerMobileComponent2.builder()
+        var mobileComponent4 =   DaggerMobileComponent2.builder()
                 .amoledDisplay3rdPartyClassModule(AmoledDisplay3rdPartyClassModule(200))
                 .build()
         mobile4 = mobileComponent4.getMobile()
         println("Injection with parameter ==========$mobile4")
-        mobile4.call()*/
+        mobile4.call()
 
 
         // Singleton

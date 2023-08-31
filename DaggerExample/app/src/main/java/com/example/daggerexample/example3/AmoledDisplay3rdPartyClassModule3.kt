@@ -2,9 +2,11 @@ package com.example.daggerexample.example2
 
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.migration.DisableInstallInCheck
 
+@DisableInstallInCheck
 @Module
-class AmoledDisplay3rdPartyClassModule {
+class AmoledDisplay3rdPartyClassModule3 {
 
     var counter = 0
 

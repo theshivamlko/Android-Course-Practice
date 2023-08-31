@@ -6,7 +6,7 @@ import dagger.hilt.migration.DisableInstallInCheck
 
 @DisableInstallInCheck
 @Module
-  class Display2Module {
+class Display3Module {
 
     @Provides
     fun getInstance(display2InterfaceUsage: Display3InterfaceUsage): Display2 {

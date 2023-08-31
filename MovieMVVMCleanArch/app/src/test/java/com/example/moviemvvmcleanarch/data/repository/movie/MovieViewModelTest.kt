@@ -8,8 +8,6 @@ import org.mockito.Mockito.*
 
 class MovieViewModelTest {
 
-
-
     lateinit var movieViewModel: MovieViewModel
 
     @Before
