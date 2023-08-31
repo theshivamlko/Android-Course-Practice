@@ -58,6 +58,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.1")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.1")
+    implementation("androidx.test:monitor:1.6.1")
 
     // Testing
     val arch_version = "2.2.0"
@@ -66,6 +67,9 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     testImplementation("androidx.arch.core:core-testing:$arch_version")
     testImplementation("com.google.truth:truth:1.1.4")
+
+    testImplementation("org.mockito:mockito-core:5.5.0")
+
 
 
 
