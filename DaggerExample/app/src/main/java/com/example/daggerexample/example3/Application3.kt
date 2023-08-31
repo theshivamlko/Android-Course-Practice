@@ -6,9 +6,9 @@ import javax.inject.Inject
 class Application3:Application() {
 
     @Inject // Inject at singleton
-    lateinit var mobile4:Mobile2
+    lateinit var mobile4:Mobile3
 
-    lateinit var application2:Application2
+    lateinit var application2:Application3
 
 
     override fun onCreate() {
@@ -19,8 +19,8 @@ class Application3:Application() {
         application2=this
 
         var mobileComponent3 =
-            DaggerMobileComponent2.builder()
-                .amoledDisplay3rdPartyClassModule(AmoledDisplay3rdPartyClassModule(200))
+            DaggerMobileComponent3.builder()
+                .amoledDisplay3rdPartyClassModule3(AmoledDisplay3rdPartyClassModule3(200))
                 .build()
       //  mobile4 = mobileComponent3.getMobile()
      //   mobile4.call()

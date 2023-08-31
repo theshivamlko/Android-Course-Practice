@@ -6,19 +6,19 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-    modules = [AmoledDisplay3rdPartyClassModule::class,
+    modules = [AmoledDisplay3rdPartyClassModule3::class,
       //  Display2Module::class,
-        Display2ModuleWithBind::class
+        Display3ModuleWithBind::class
     ]
 )
 interface MobileComponent3 {
 
     // function should have same name as Dependent
    // @Named("mobile")
-    fun getMobile(): Mobile2
+    fun getMobile(): Mobile3
 
 
     // Allow Injection thru Activity/Fragment only
-    fun inject(activity: Example2Activity)
+    fun inject(activity: Example3Activity)
 
 }

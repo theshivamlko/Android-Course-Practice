@@ -8,5 +8,5 @@ import dagger.hilt.migration.DisableInstallInCheck
 @Module
 abstract class Display3ModuleWithBind {
     @Binds
-    abstract fun bindInstance(display2InterfaceUsage: Display3InterfaceUsage):Display2
+    abstract fun bindInstance(display2InterfaceUsage: Display3InterfaceUsage3):Display3
 }

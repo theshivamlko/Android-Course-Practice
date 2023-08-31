@@ -6,13 +6,13 @@ import javax.inject.Singleton
 
 @Singleton
 class Mobile3 @Inject constructor(
-    private val simCard2: SimCard2,
-    private val battery2: Battery2,
+    private val simCard2: SimCard3,
+    private val battery2: Battery3,
 
     // 3rd party class
     private val amoledDisplay3RdPartyClass3: AmoledDisplay3rdPartyClass3,
     // interface implement
-    private val display2: Display2
+    private val display2: Display3
 ) {
     init {
         println("init Mobile2")

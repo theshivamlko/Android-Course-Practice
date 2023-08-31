@@ -2,7 +2,7 @@ package com.example.daggerexample.example2
 
 import javax.inject.Inject
 
-class Display3InterfaceUsage3 @Inject constructor(): Display2 {
+class Display3InterfaceUsage3 @Inject constructor(): Display3 {
 
     init {
         println("Display3InterfaceUsage init")

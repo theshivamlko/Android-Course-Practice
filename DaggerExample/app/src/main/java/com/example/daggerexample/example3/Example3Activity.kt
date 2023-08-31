@@ -8,18 +8,18 @@ import javax.inject.Inject
 class Example3Activity : AppCompatActivity() {
 
 
-    lateinit var mobile2: Mobile2
+    lateinit var mobile2: Mobile3
 
     @Inject
-    lateinit var mobile3: Mobile2
+    lateinit var mobile3: Mobile3
 
     @Inject
 //    @field:[Named("amoled")]
-    lateinit var mobile4: Mobile2
+    lateinit var mobile4: Mobile3
 
-    lateinit var mobile5: Mobile2
+    lateinit var mobile5: Mobile3
 
-    lateinit var mobile6: Mobile2
+    lateinit var mobile6: Mobile3
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,8 +46,8 @@ class Example3Activity : AppCompatActivity() {
 
         // Allow Injection with parameter
 
-        var mobileComponent4 =   DaggerMobileComponent2.builder()
-                .amoledDisplay3rdPartyClassModule(AmoledDisplay3rdPartyClassModule(200))
+        var mobileComponent4 =   DaggerMobileComponent3.builder()
+                .amoledDisplay3rdPartyClassModule3(AmoledDisplay3rdPartyClassModule3(200))
                 .build()
         mobile4 = mobileComponent4.getMobile()
         println("Injection with parameter ==========$mobile4")

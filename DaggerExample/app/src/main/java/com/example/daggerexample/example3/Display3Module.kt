@@ -9,7 +9,7 @@ import dagger.hilt.migration.DisableInstallInCheck
 class Display3Module {
 
     @Provides
-    fun getInstance(display2InterfaceUsage: Display3InterfaceUsage): Display2 {
+    fun getInstance(display2InterfaceUsage: Display3InterfaceUsage3): Display3 {
 
         return display2InterfaceUsage
     }

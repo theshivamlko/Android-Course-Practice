@@ -5,9 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.example.daggerexample.databinding.ActivityMainBinding
-import com.example.daggerexample.example1.Mobile
-import com.example.daggerexample.example1.MobileApplication
-import com.example.daggerexample.example2.Example2Activity
+import com.example.daggerexample.example2.Example3Activity
+
 import javax.inject.Inject
 
 
@@ -29,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
 
         activityMainBinding.button2.setOnClickListener {
-            startActivity(Intent(this,Example2Activity::class.java))
+            startActivity(Intent(this, Example3Activity::class.java))
         }
 
         /*  mobile = DaggerMobileComponent.create().getMobileInstance()
