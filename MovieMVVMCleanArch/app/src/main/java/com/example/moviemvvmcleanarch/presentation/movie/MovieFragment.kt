@@ -29,6 +29,7 @@ import com.example.moviemvvmcleanarch.databinding.FragmentMovieBinding
 import com.example.moviemvvmcleanarch.domain.repository.IMovieRepository
 import com.example.moviemvvmcleanarch.domain.usecase.GetMoviesUseCase
 import com.example.moviemvvmcleanarch.domain.usecase.UpdateMoviesUseCase
+import com.example.moviemvvmcleanarch.presentation.User
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -39,8 +40,8 @@ import java.util.concurrent.TimeUnit
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val ARG_PARAM1 = "name"
+private const val ARG_PARAM2 = "obj"
 
 /**
  * A simple [Fragment] subclass.
@@ -50,7 +51,7 @@ private const val ARG_PARAM2 = "param2"
 class MovieFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
-    private var param2: String? = null
+    private var param2: User? = null
 
     lateinit var movieViewModelFactory: MovieViewModelFactory
 
@@ -74,9 +75,17 @@ class MovieFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        println("onCreate $arguments")
+
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            param2 = it.getParcelable<User> ("obj",User::class.java)
+            println("onCreate")
+            println(param2?.name)
+            println(param2?.age)
+            println(param2?.address)
+            println(param2?.salary)
+
         }
     }
 
