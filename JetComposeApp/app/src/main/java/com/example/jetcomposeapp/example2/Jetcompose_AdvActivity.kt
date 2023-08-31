@@ -63,6 +63,18 @@ class Jetcompose_AdvActivity : AppCompatActivity() {
                 println("stateFlow $it")
             }
         }
+
+        Handler().postDelayed({
+            lifecycleScope.launch {
+                viewModel1.sharedFlow.collect{
+                    println("sharedFlow $it")
+                }
+            }
+           viewModel1.updateSharedFlow()
+
+
+        },3000)
+
         /* data.observe(this){
              println("MutableLiveData $it ")
              activityJetomposeAdvBinding.textView.text=it
