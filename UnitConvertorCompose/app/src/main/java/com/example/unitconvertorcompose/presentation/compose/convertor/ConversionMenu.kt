@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
@@ -28,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.unitconvertorcompose.data.model.Conversion
 
 
@@ -37,8 +39,11 @@ fun ConversionMenu(
     list: List<Conversion>, modifier: Modifier = Modifier,
     convert: (Conversion) -> Unit,
 ) {
+    val viewMod= viewModel<ConvertorViewModel>()
+    println("viewModel ${viewMod.hashCode()}")
+    println("viewModel ${viewMod.selectConversion}")
 
-    var displayText by remember { mutableStateOf("Select option") }
+    var displayText by rememberSaveable { mutableStateOf("Select option") }
     // to assign same width of TextField
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
 

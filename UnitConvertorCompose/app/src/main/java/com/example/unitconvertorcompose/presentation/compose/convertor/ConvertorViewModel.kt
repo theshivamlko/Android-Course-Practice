@@ -1,5 +1,10 @@
 package com.example.unitconvertorcompose.presentation.compose.convertor
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.unitconvertorcompose.data.model.Conversion
@@ -11,6 +16,21 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class ConvertorViewModel(val repository: IConvertorRepository) : ViewModel() {
+
+    val selectConversion: MutableState<Conversion?> =
+        mutableStateOf(null)
+
+
+    val inputText: MutableState<String> =
+        mutableStateOf("")
+
+
+    var typedValue =
+        mutableStateOf("0.0")
+
+    var outputResult =
+        mutableStateOf("")
+
 
     fun getConversions() = listOf<Conversion>(
         Conversion(1, "Pounds to Kilogram", "lbs", "kg", 0.453592),

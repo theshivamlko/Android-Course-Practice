@@ -12,36 +12,27 @@ import com.example.unitconvertorcompose.data.model.Conversion
 @Composable
 fun TopScreen(
     list: List<Conversion>,
+    selectConversion: MutableState<Conversion?>,
+      inputText:  MutableState<String>,
+      typedValue: MutableState<String>,
+      outputResult: MutableState<String>,
     save: (String, String) -> Unit
 ) {
-    val selectConversion: MutableState<Conversion?> = remember {
-        mutableStateOf(null)
-    }
 
-    val inputText: MutableState<String> = remember {
-        mutableStateOf("")
-    }
-
-    var typedValue by remember {
-        mutableStateOf("0.0")
-    }
-    var outputResult by remember {
-        mutableStateOf("")
-    }
 
     ConversionMenu(list) {
         selectConversion.value = it
-        typedValue = "0.0"
+        typedValue.value = "0.0"
 
     }
     selectConversion.value?.let {
         InputBlock(conversion = it, inputText = inputText) { input ->
 
             println(input)
-            typedValue = input
+            typedValue.value  = input
 
-            if (typedValue != "0.0") {
-                val dInput = typedValue.toDouble()
+            if (typedValue.value  != "0.0") {
+                val dInput = typedValue.value .toDouble()
                 val mulitply = selectConversion.value!!.multiplyBy
                 var result = dInput * mulitply
                 println(result)
@@ -53,7 +44,7 @@ fun TopScreen(
 
                 inputText.value=""
 
-                outputResult = "$message1 to $message2"
+                outputResult.value  = "$message1 to $message2"
 
 
                 save(message1, message2)
@@ -61,9 +52,9 @@ fun TopScreen(
         }
     }
 
-    if (outputResult.isNotEmpty()) {
+    if (outputResult.value .isNotEmpty()) {
 
-        ResultBlock(output = outputResult)
+        ResultBlock(output = outputResult.value )
     }
 
 

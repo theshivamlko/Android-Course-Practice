@@ -58,18 +58,23 @@ fun BaseScreen(
         )
         Column(modifier = modifier.padding(20.dp)) {
 
-            TopScreen(list) { s1, s2 ->
+            TopScreen(
+                list,
+                convertorViewModel.selectConversion,
+                convertorViewModel.inputText,
+                convertorViewModel.typedValue,
+                convertorViewModel.outputResult
+            ) { s1, s2 ->
                 convertorViewModel.addResult(s1, s2)
 
             }
             Spacer(modifier = Modifier.padding(20.dp))
 
-            if(historyList.value.isNotEmpty()) {
+            if (historyList.value.isNotEmpty()) {
                 HistoryScreen(historyList) {
                     convertorViewModel.deleteResult(it)
                 }
-            }
-            else{
+            } else {
                 Text(text = "No data available")
             }
         }
