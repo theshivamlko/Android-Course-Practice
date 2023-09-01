@@ -13,7 +13,7 @@ class CreateInstance {
             val db= RoomDBService.getInstance(context)
             val dao=db.convertorDAO()
             val repositoryImpl= ConvertorRepositoryImpl(dao)
-            val factory= ConvertorViewModelFactory(repositoryImpl = repositoryImpl)
+            val factory= ConvertorViewModelFactory(repositoryImpl)
 
             return factory
         }

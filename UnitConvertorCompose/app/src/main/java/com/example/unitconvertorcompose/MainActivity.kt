@@ -10,6 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.example.unitconvertorcompose.presentation.compose.BaseScreen
+import com.example.unitconvertorcompose.presentation.compose.convertor.ConvertorViewModelFactory
 import com.example.unitconvertorcompose.ui.theme.UnitConvertorComposeTheme
 import com.example.unitconvertorcompose.utils.CreateInstance
 
@@ -17,7 +18,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val factory = CreateInstance.createFactoryInstances(this)
+       val factory = CreateInstance.createFactoryInstances(this)
 
         setContent {
             UnitConvertorComposeTheme {

@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+//    id("com.google.dagger.hilt.android")
+
 }
 
 android {
@@ -30,6 +32,9 @@ android {
             )
         }
     }
+    kapt {
+        correctErrorTypes = true
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_19
         targetCompatibility = JavaVersion.VERSION_19
@@ -51,6 +56,7 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    buildToolsVersion = "33.0.2"
 }
 
 dependencies {
@@ -70,6 +76,9 @@ dependencies {
     implementation("androidx.room:room-runtime:2.5.2")
     implementation("androidx.room:room-ktx:2.5.2")
     kapt("androidx.room:room-compiler:2.5.2")
+
+    implementation("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-android-compiler:2.48")
 
 
     testImplementation("junit:junit:4.13.2")

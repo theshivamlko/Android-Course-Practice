@@ -4,7 +4,7 @@ import com.example.unitconvertorcompose.data.model.ConversionResult
 import com.example.unitconvertorcompose.data.roomdb.ConvertorDAO
 import kotlinx.coroutines.flow.Flow
 
-class ConvertorRepositoryImpl (val convertorDAO: ConvertorDAO):IConvertorRepository {
+class ConvertorRepositoryImpl   constructor(val convertorDAO: ConvertorDAO):IConvertorRepository {
     override suspend fun insertResult(result: ConversionResult) {
         convertorDAO.insertConversion(result)
     }

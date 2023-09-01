@@ -5,11 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.unitconvertorcompose.data.model.Conversion
 import com.example.unitconvertorcompose.data.model.ConversionResult
 import com.example.unitconvertorcompose.domain.repository.ConvertorRepositoryImpl
+import com.example.unitconvertorcompose.domain.repository.IConvertorRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class ConvertorViewModel(val repositoryImpl: ConvertorRepositoryImpl) : ViewModel() {
+class ConvertorViewModel(val repository: IConvertorRepository) : ViewModel() {
 
     fun getConversions() = listOf<Conversion>(
         Conversion(1, "Pounds to Kilogram", "lbs", "kg", 0.453592),
@@ -24,28 +25,28 @@ class ConvertorViewModel(val repositoryImpl: ConvertorRepositoryImpl) : ViewMode
     fun getHistoryList(): Flow<List<ConversionResult>> {
         println("ConvertorViewModel getHistoryList")
 
-        return repositoryImpl.getAllResult()
+        return repository.getAllResult()
     }
 
 
     fun addResult(convertFrom: String, convertTo: String) {
         viewModelScope.launch(Dispatchers.IO) {
             println("ConvertorViewModel addResult")
-            repositoryImpl.insertResult(ConversionResult(0, convertFrom, convertTo))
+            repository.insertResult(ConversionResult(0, convertFrom, convertTo))
         }
     }
 
     fun deleteResult(conversionResult: ConversionResult) {
         viewModelScope.launch(Dispatchers.IO) {
             println("ConvertorViewModel deleteResult")
-            repositoryImpl.deleteResult(conversionResult)
+            repository.deleteResult(conversionResult)
         }
     }
 
     fun deleteAllResults() {
         viewModelScope.launch(Dispatchers.IO) {
             println("ConvertorViewModel deleteAllResults")
-            repositoryImpl.deleteAllResult()
+            repository.deleteAllResult()
         }
     }
 
