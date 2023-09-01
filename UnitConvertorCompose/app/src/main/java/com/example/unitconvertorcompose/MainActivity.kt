@@ -7,17 +7,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.unitconvertorcompose.presentation.BaseScreen
+import com.example.unitconvertorcompose.presentation.compose.BaseScreen
 import com.example.unitconvertorcompose.ui.theme.UnitConvertorComposeTheme
+import com.example.unitconvertorcompose.utils.CreateInstance
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val factory = CreateInstance.createFactoryInstances(this)
+
         setContent {
             UnitConvertorComposeTheme {
                 // A surface container using the 'background' color from the theme
@@ -27,6 +28,7 @@ class MainActivity : ComponentActivity() {
                 ) {
 
                     BaseScreen(
+                        factory = factory,
                         modifier = Modifier.background(Color.White)
                     )
 

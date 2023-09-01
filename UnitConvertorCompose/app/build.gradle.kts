@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -30,11 +31,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_19
+        targetCompatibility = JavaVersion.VERSION_19
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "19"
+    }
+    kotlin {
+        jvmToolchain(19)
     }
     buildFeatures {
         compose = true
@@ -61,6 +65,11 @@ dependencies {
     implementation("androidx.compose.material3:material3")
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
+
+    implementation("androidx.room:room-runtime:2.5.2")
+    implementation("androidx.room:room-ktx:2.5.2")
+    kapt("androidx.room:room-compiler:2.5.2")
 
 
     testImplementation("junit:junit:4.13.2")
