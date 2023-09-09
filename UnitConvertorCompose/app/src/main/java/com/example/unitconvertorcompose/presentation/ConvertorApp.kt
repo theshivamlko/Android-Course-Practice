@@ -12,9 +12,9 @@ import io.flutter.embedding.engine.dart.DartExecutor
 //@HiltAndroidApp
 class ConvertorApp:Application() {
 
-     lateinit var flutterEngine: FlutterEngine
 
      companion object{
+          lateinit var flutterEngine: FlutterEngine
           const val FLUTTER_ENGINE_NAME="nps_flutter_engine_name"
      }
 
