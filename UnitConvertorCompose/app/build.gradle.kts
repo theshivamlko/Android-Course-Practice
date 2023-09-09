@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.util.profile
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -21,8 +23,10 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-
-
+        ndk {
+            // Filter for architectures supported by Flutter.
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64")
+        }
     }
 
     buildTypes {
@@ -33,6 +37,9 @@ android {
                 "proguard-rules.pro"
             )
         }
+
+
+
     }
     kapt {
         correctErrorTypes = true
@@ -59,6 +66,9 @@ android {
         }
     }
     buildToolsVersion = "33.0.2"
+
+ //   String storageUrl = System.env.FLUTTER_STORAGE_BASE_URL ?: "https://storage.googleapis.com"
+
 
 
 }
@@ -92,4 +102,12 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    debugImplementation(files("/Users/shivam/StudioProjects/flutter_module/build/host/outputs/repo/com/example/flutter_module/flutter_debug/1.0/flutter_debug-1.0.aar"))
+    releaseImplementation(files("/Users/shivam/StudioProjects/flutter_module/build/host/outputs/repo/com/example/flutter_module/flutter_release/1.0/flutter_release-1.0.aar"))
+
+
+  //  debugImplementation("com.example.flutter_module:flutter_debug-1.0@aar")
+  //  releaseImplementation("com.example.flutter_module.host:flutter_release:1.0:release@aar")
+//    implementation("com.example.flutter_module.host:flutter_profile:1.0:profile@aar")
 }
