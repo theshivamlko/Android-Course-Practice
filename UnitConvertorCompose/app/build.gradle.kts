@@ -21,6 +21,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+
     }
 
     buildTypes {
@@ -57,6 +59,8 @@ android {
         }
     }
     buildToolsVersion = "33.0.2"
+
+
 }
 
 dependencies {

@@ -23,8 +23,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.sideeffects.CounterEvents
+import com.example.sideeffects.CounterViewModel
+import com.example.sideeffects.UIEvents
 import com.example.sideeffects.ui.theme.SideEffectsTheme
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -55,7 +60,7 @@ fun MainScreen(
     var total by remember { mutableStateOf(0.0) }
     var input by remember { mutableStateOf("") }
 
-    val coroutineScope= rememberCoroutineScope()
+    val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = total.hashCode()) {
         Toast.makeText(context, "Please, start counting..", Toast.LENGTH_SHORT).show()
@@ -105,7 +110,6 @@ fun MainScreen(
                 }
 
 
-
             }
         ) {
             Text(
@@ -115,5 +119,52 @@ fun MainScreen(
             )
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MainScreen(
+    counterViewModel: CounterViewModel = viewModel()
+) {
+
+    val screenState = counterViewModel.screenState.value
+
+    LaunchedEffect(key1 = true) {
+        counterViewModel.uiEventFlow.collectLatest { event ->
+            when (event) {
+                is UIEvents.ShowMessage -> {
+                    println(event.message)
+                }
+            }
+
+        }
+    }
+
+    Column {
+        Text(text = screenState.displayResult, fontSize = 30.sp)
+
+        OutlinedTextField(value = screenState.inputValue, onValueChange = {
+            counterViewModel.onEvent(CounterEvents.ValueEntered(it))
+        })
+
+        if (screenState.isButtonShow) {
+            Button(onClick = {
+                counterViewModel.onEvent(CounterEvents.CountButtonClicked)
+
+            }) {
+
+                Text(text = "COUNT")
+            }
+        }
+
+        Button(onClick = {
+            counterViewModel.onEvent(CounterEvents.ResetButtonClicked)
+
+        }) {
+
+            Text(text = "RESET")
+        }
+    }
+
 }
 
