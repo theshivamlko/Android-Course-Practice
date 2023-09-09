@@ -116,7 +116,7 @@ dependencies {
     })*/
     //   implementation fileTree(dir: , include: ['*.jar'])
 
-   debugImplementation("com.example.flutter_module:flutter_debug:1.0")
+    debugImplementation("com.example.flutter_module:flutter_debug:1.0")
     releaseImplementation("com.example.flutter_module.host:flutter_release:1.0")
 //    implementation("com.example.flutter_module.host:flutter_profile:1.0:profile@aar")
 }
