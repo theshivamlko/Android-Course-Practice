@@ -9,10 +9,10 @@ plugins {
 buildscript {
     repositories {
         // other repositories...
-        mavenCentral()
-        val storageUrl=System.getenv().get("FLUTTER_STORAGE_BASE_URL");
-        maven(url = "$storageUrl/download.flutter.io")
-        maven(url = "/Users/shivam/StudioProjects/flutter_module/build/host/outputs/repo")
+        mavenCentral(){
+
+        }
+      //  val storageUrl=System.getenv().get("FLUTTER_STORAGE_BASE_URL");
 
 
     }

@@ -8,6 +8,8 @@ plugins {
 
 }
 
+
+
 android {
     namespace = "com.example.unitconvertorcompose"
     compileSdk = 33
@@ -89,6 +91,8 @@ dependencies {
 
     implementation("androidx.room:room-runtime:2.5.2")
     implementation("androidx.room:room-ktx:2.5.2")
+    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     kapt("androidx.room:room-compiler:2.5.2")
 
     implementation("com.google.dagger:hilt-android:2.48")
@@ -103,11 +107,16 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    debugImplementation(files("/Users/shivam/StudioProjects/flutter_module/build/host/outputs/repo/com/example/flutter_module/flutter_debug/1.0/flutter_debug-1.0.aar"))
-    releaseImplementation(files("/Users/shivam/StudioProjects/flutter_module/build/host/outputs/repo/com/example/flutter_module/flutter_release/1.0/flutter_release-1.0.aar"))
+ //    debugImplementation(files("/Users/shivam/StudioProjects/flutter_module/build/host/outputs/repo/com/example/flutter_module/flutter_debug/1.0/flutter_debug-1.0.aar"))
+ //   releaseImplementation(files("/Users/shivam/StudioProjects/flutter_module/build/host/outputs/repo/com/example/flutter_module/flutter_release/1.0/flutter_release-1.0.aar"))
 
+//    implementation(project(":flutter"))
+ /*   implementation(fileTree("libs") {
+        include("*.jar")
+    })*/
+    //   implementation fileTree(dir: , include: ['*.jar'])
 
-  //  debugImplementation("com.example.flutter_module:flutter_debug-1.0@aar")
-  //  releaseImplementation("com.example.flutter_module.host:flutter_release:1.0:release@aar")
+   debugImplementation("com.example.flutter_module:flutter_debug:1.0")
+    releaseImplementation("com.example.flutter_module.host:flutter_release:1.0")
 //    implementation("com.example.flutter_module.host:flutter_profile:1.0:profile@aar")
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">UnitConvertorCompose</string>
+    <string name="title_activity_main_module">MainActivityModule</string>
 </resources>
