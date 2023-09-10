@@ -28,6 +28,7 @@ class MyService : Service() {
             override fun run() {
                 val intent = Intent(UPDATE_TIME)
                 intent.putExtra("time", System.currentTimeMillis().toString())
+                println("MyService onStartCommand ${intent.getStringExtra("time")}")
                 sendBroadcast(intent)
             }
 

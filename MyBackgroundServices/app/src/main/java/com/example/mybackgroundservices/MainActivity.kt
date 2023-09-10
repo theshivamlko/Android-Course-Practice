@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             startSimpleWorkManager()
         }
 
-        val intent=Intent(this, MyService::class.java)
+        val intent = Intent(this, MyService::class.java)
         activityMainBinding.button3.setOnClickListener {
 
             startService(intent)
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             stopService(intent)
         }
 
-        val intent2=Intent(this, MyService::class.java)
+        val intent2 = Intent(this, MyService::class.java)
 
         activityMainBinding.startBrodcast.setOnClickListener {
 
@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity() {
 
     val workManagerInstance = WorkManager.getInstance(this)
     var workedId = UUID.randomUUID()
+
     fun startSimpleWorkManager() {
         val data = Data.Builder().putInt("num", -10).build()
 
@@ -84,8 +85,10 @@ class MainActivity : AppCompatActivity() {
         parallelWorker.add(oneTimeWorker)
         parallelWorker.add(filterWorker)
 
-        workManagerInstance.beginWith(filterWorker).then(oneTimeWorker).then(parallelWorker)
-            .enqueue()
+      /*  workManagerInstance.beginWith(filterWorker).then(oneTimeWorker).then(parallelWorker)
+            .enqueue()*/
+
+        workManagerInstance.enqueue(oneTimeWorker)
 
         workedId = oneTimeWorker.id
         println("workedId ${workedId}")
@@ -104,7 +107,6 @@ class MainActivity : AppCompatActivity() {
 
     fun periodicManager() {
         // min periodic for worker is 15 min
-
         val periodicWorker =
             PeriodicWorkRequest.Builder(FilterWorker::class.java, 16, TimeUnit.MINUTES).build()
         workManagerInstance.enqueue(periodicWorker)
@@ -119,9 +121,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    val receiver=object :BroadcastReceiver(){
+    val receiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
-            val time=p1?.getStringExtra("time")
+            val time = p1?.getStringExtra("time")
             println("BroadcastReceiver $time")
         }
 
