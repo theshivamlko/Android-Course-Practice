@@ -1,12 +1,24 @@
 package com.example.mybackgroundservices
 
-import android.app.Notification
 import android.app.Service
 import android.content.Intent
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 
+
 class ForegroundService : Service() {
+
+    private var uiHandler: Handler? = null
+
+    override fun onCreate() {
+        super.onCreate()
+        uiHandler = Handler(Looper.getMainLooper());
+
+    }
+
     override fun onBind(p0: Intent?): IBinder? {
 
         return null
@@ -19,6 +31,14 @@ class ForegroundService : Service() {
             Action.STOP.toString() -> stop()
         }
 
+        uiHandler!!.postDelayed( {
+            Toast.makeText(
+                applicationContext,
+                "This is a toast from the background service",
+                Toast.LENGTH_SHORT
+            ).show()
+        },5000L)
+
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -29,6 +49,7 @@ class ForegroundService : Service() {
         notification.setContentTitle("My Foreground Service")
         notification.setContentText("Scanning Memory Card...")
         notification.setOngoing(true)
+
 
 
         startForeground(1, notification.build())
