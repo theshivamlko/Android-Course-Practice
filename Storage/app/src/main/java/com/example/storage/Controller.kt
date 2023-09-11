@@ -1,8 +1,6 @@
 package com.example.storage
 
 import android.Manifest
-import android.Manifest.permission.ACCESS_FINE_LOCATION
-import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
 import android.content.pm.PackageManager
@@ -10,11 +8,10 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.provider.MediaStore
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.ManagedActivityResultLauncher
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import java.io.File
 import java.io.FileFilter
 import java.io.FileOutputStream
 import java.io.IOException
@@ -49,7 +46,7 @@ class Controller {
             return false
         }
 
-        fun saveFileToExternalStorage(context: Context, filename: String, bmp: Bitmap): Boolean {
+        fun saveImageToExternalStorage(context: Context, filename: String, bmp: Bitmap): Boolean {
             var list: Uri?
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 
@@ -99,6 +96,22 @@ class Controller {
             return false
         }
 
+        fun writeFileExternalStorage(context: Context, filename: String, bytes: ByteArray) {
+
+            val file = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOCUMENTS
+            )
+
+            val textFile =
+                File(file.path + File.separator + "Shivam" + File.separator + "$filename.jpg")
+            println("writeFileExternalStorage ${textFile.path}")
+            println("writeFileExternalStorage ${bytes.size}")
+            textFile.parentFile.mkdirs()
+            textFile.createNewFile()
+            textFile.writeBytes(bytes)
+
+        }
+
         fun loadPhotoFromInternalStorage(context: Context): List<AppFile> {
             println("loadPhotoFromInternalStorage")
             try {
@@ -135,7 +148,7 @@ class Controller {
 
         fun requestPermission(
             context: Context,
-          //  permission: ManagedActivityResultLauncher<Array<String>, Map<String, @JvmSuppressWildcards Boolean>>
+            //  permission: ManagedActivityResultLauncher<Array<String>, Map<String, @JvmSuppressWildcards Boolean>>
         ) {
 
             // will be false on 29 Q and above

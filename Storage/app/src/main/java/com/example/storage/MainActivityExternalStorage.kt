@@ -24,18 +24,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.storage.ui.theme.StorageTheme
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.lifecycleScope
 import com.example.storage.Controller.Companion.deletePhotoFromInternalStorage
 import com.example.storage.Controller.Companion.loadPhotoFromInternalStorage
-import com.example.storage.Controller.Companion.requestPermission
-import kotlinx.coroutines.launch
 
 lateinit var cameraPermissionLauncher: ActivityResultLauncher<String>
 
@@ -48,13 +44,13 @@ class MainActivityExternalStorage : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
 
-
         loadPhotoFromInternalStorage(baseContext)
 
 
         setContent {
             StorageTheme {
 
+                val context = LocalContext.current
 
                 cameraPermissionLauncher =
                     rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission()) { isGranted ->
@@ -62,8 +58,17 @@ class MainActivityExternalStorage : ComponentActivity() {
                     }
 
 
-                // requestPermission(LocalContext.current)
+                rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) { uriList ->
+                    uriList.forEach {
+                        //   val bitmap=BitmapFactory.decodeFile(it.path)
+                        Controller.saveImageToExternalStorage(
+                            context, System.currentTimeMillis().toString(), MediaStore.Images
+                                .Media.getBitmap(context.contentResolver, it)
+                        )
 
+                    }
+                    //  list.addAll(loadPhotoFromInternalStorage(context))
+                }
 
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -87,10 +92,17 @@ class MainActivityExternalStorage : ComponentActivity() {
         galleryLauncher =
             rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) { uriList ->
                 uriList.forEach {
-                    Controller.saveFileToExternalStorage(
-                        context, System.currentTimeMillis().toString(), MediaStore.Images
-                            .Media.getBitmap(context.contentResolver, it)
-                    )
+                    val item = context.contentResolver.openInputStream(it)
+                    val bytes = item?.readBytes()
+                    if (bytes != null) {
+                        Controller.writeFileExternalStorage(
+                            context, System.currentTimeMillis().toString(),bytes)
+                    }
+
+                    /* Controller.saveImageToExternalStorage(
+                         context, System.currentTimeMillis().toString(), MediaStore.Images
+                             .Media.getBitmap(context.contentResolver, it)
+                     )*/
 
                 }
                 list.addAll(loadPhotoFromInternalStorage(context))
