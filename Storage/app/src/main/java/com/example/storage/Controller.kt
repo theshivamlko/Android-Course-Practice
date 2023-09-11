@@ -1,21 +1,84 @@
 package com.example.storage
 
+import android.Manifest
+import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.app.Activity
-import android.app.Instrumentation.ActivityResult
+import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.ui.platform.LocalContext
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import java.io.FileFilter
 import java.io.FileOutputStream
 import java.io.IOException
+import java.text.DateFormat
+import java.util.Date
+
 
 class Controller {
 
     companion object {
+        var readPermissionGranted = false
+        var writePermissionGranted = false
+
         fun saveFileToInternalStorage(context: Context, filename: String, bmp: Bitmap): Boolean {
+
+            lateinit var fileOutputStream: FileOutputStream
+            println("saveFileToInternalStorage $filename")
+
+            try {
+                fileOutputStream = context.openFileOutput("$filename.jpg", 0)
+                if (!bmp.compress(Bitmap.CompressFormat.JPEG, 80, fileOutputStream)) {
+                    throw IOException("Compress Failed")
+                }
+
+                return true
+            } catch (e: Exception) {
+                println("saveFileToInternalStorage $e")
+            } finally {
+                fileOutputStream.close()
+            }
+
+            return false
+        }
+
+        fun saveFileToExternalStorage(context: Context, filename: String, bmp: Bitmap): Boolean {
+            var list: Uri?
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+
+                list = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+            } else {
+                list = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            }
+
+
+            val contentValues = ContentValues().apply {
+                put(MediaStore.Images.Media.DISPLAY_NAME, "$filename.jpg")
+                put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+                put(
+                    MediaStore.Images.Media.DATE_MODIFIED,
+                    DateFormat.getInstance().format(Date(System.currentTimeMillis()))
+                )
+            }
+
+            // will save meta data only
+            context.contentResolver.insert(list, contentValues).apply {
+
+                this?.let {
+                    context.contentResolver.openOutputStream(it).apply {
+
+                        bmp.compress(Bitmap.CompressFormat.JPEG, 80, this)
+                    }
+                }
+            }
+
 
             lateinit var fileOutputStream: FileOutputStream
             println("saveFileToInternalStorage $filename")
@@ -69,5 +132,41 @@ class Controller {
 
             return false
         }
+
+        fun requestPermission(
+            context: Context,
+          //  permission: ManagedActivityResultLauncher<Array<String>, Map<String, @JvmSuppressWildcards Boolean>>
+        ) {
+
+            // will be false on 29 Q and above
+            var hasPermission =
+                ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED
+            println("requestPermission $hasPermission")
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                if (!hasPermission) {
+                    println("requestPermission $hasPermission")
+
+
+                    /*  ActivityCompat.requestPermissions(
+                          context as Activity,
+                          arrayOf<String>(
+                              Manifest.permission.WRITE_EXTERNAL_STORAGE
+                          ), 1
+                      )*/
+
+                    /*  (context as ComponentActivity).requestPermissions(
+                          arrayOf<String>(
+                              Manifest.permission.WRITE_EXTERNAL_STORAGE
+                          ), 1
+                      )*/
+                }
+            }
+        }
     }
+
+
 }

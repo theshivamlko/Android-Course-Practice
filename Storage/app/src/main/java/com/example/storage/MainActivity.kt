@@ -36,7 +36,7 @@ import com.example.storage.Controller.Companion.deletePhotoFromInternalStorage
 import com.example.storage.Controller.Companion.loadPhotoFromInternalStorage
 
 
-lateinit var galleryLauncher: ManagedActivityResultLauncher<String, List<@JvmSuppressWildcards Uri>>
+lateinit var galleryLauncher2: ManagedActivityResultLauncher<String, List<@JvmSuppressWildcards Uri>>
 
 class MainActivity : ComponentActivity() {
 
@@ -53,7 +53,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    Greeting2("Android")
                 }
             }
         }
@@ -63,13 +63,13 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun Greeting2(name: String, modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
     var list = remember { mutableStateListOf<AppFile>() }
     list.addAll(loadPhotoFromInternalStorage(context))
 
-    galleryLauncher =
+    galleryLauncher2 =
         rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) { uriList ->
             uriList.forEach {
                 //   val bitmap=BitmapFactory.decodeFile(it.path)
@@ -92,7 +92,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 
         Button(onClick = {
 
-            galleryLauncher.launch("image/*").apply {
+            galleryLauncher2.launch("image/*").apply {
             }
 
         }) {
@@ -121,11 +121,4 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    StorageTheme {
-        Greeting("Android")
-    }
-}
+ 
