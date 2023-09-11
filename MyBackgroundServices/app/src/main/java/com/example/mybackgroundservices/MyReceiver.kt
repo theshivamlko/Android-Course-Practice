@@ -5,7 +5,13 @@ import android.content.Context
 import android.content.Intent
 
 class MyReceiver:BroadcastReceiver() {
-    override fun onReceive(p0: Context?, p1: Intent?) {
+    override fun onReceive(context:   Context?, p1: Intent?) {
+        println("MyReceiver onReceive ${System.currentTimeMillis()} ")
+
+        val foregroundServiceIntent = Intent(context, ForegroundService::class.java)
+        foregroundServiceIntent.action=Action.START.toString()
+
+        context?.startForegroundService(foregroundServiceIntent);
 
     }
 }

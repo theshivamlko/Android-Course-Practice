@@ -1,13 +1,16 @@
 package com.example.mybackgroundservices
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.database.DatabaseUtils
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.work.Constraints
 import androidx.work.Data
@@ -18,12 +21,14 @@ import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.example.mybackgroundservices.databinding.ActivityMainBinding
 import java.util.UUID
-import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
+import android.Manifest
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var activityMainBinding: ActivityMainBinding
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,11 +52,38 @@ class MainActivity : AppCompatActivity() {
             stopService(intent)
         }
 
-        val intent2 = Intent(this, MyService::class.java)
 
         activityMainBinding.startBrodcast.setOnClickListener {
+            val receiver = Intent(this, MyReceiver::class.java)
+            receiver.action="SHIVAM"
 
+            val  myReceiver:MyReceiver= MyReceiver()
+
+            registerReceiver(myReceiver,IntentFilter("SHIVAM"))
+           sendBroadcast(receiver)
         }
+
+        val foregroundServiceIntent = Intent(this, ForegroundService::class.java)
+        foregroundServiceIntent.action=Action.START.toString()
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.POST_NOTIFICATIONS), 0
+        )
+        val notificationChannel = NotificationChannel(
+            "channelId",
+            "Channel Name Service",
+            NotificationManager.IMPORTANCE_HIGH
+        )
+        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        manager.createNotificationChannel(notificationChannel)
+
+        activityMainBinding.button5.setOnClickListener {
+            startForegroundService(foregroundServiceIntent)
+        }
+        activityMainBinding.button6.setOnClickListener {
+            stopService(foregroundServiceIntent)
+        }
+
 
 
     }
@@ -85,8 +117,8 @@ class MainActivity : AppCompatActivity() {
         parallelWorker.add(oneTimeWorker)
         parallelWorker.add(filterWorker)
 
-      /*  workManagerInstance.beginWith(filterWorker).then(oneTimeWorker).then(parallelWorker)
-            .enqueue()*/
+        /*  workManagerInstance.beginWith(filterWorker).then(oneTimeWorker).then(parallelWorker)
+              .enqueue()*/
 
         workManagerInstance.enqueue(oneTimeWorker)
 
