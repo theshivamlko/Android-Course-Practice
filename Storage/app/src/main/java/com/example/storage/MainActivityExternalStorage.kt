@@ -193,7 +193,7 @@ class MainActivityExternalStorage : ComponentActivity() {
             Button(onClick = {
                 val intent = Intent()
                 // use to read only
-              //  intent.action = Intent.ACTION_GET_CONTENT
+                //  intent.action = Intent.ACTION_GET_CONTENT
 
                 // use to pick and write
                 intent.action = Intent.ACTION_OPEN_DOCUMENT
@@ -210,7 +210,6 @@ class MainActivityExternalStorage : ComponentActivity() {
 
             Button(onClick = {
                 println("updateFile2 $fileReadUri")
-
                 fileReadUri?.let {
                     Controller.updateFile(
                         context,
@@ -221,6 +220,14 @@ class MainActivityExternalStorage : ComponentActivity() {
             }) {
                 Text(
                     text = "Intent Update File", modifier = modifier
+                )
+            }
+
+            Button(onClick = {
+                Controller.contentQueryImages(context)
+            }) {
+                Text(
+                    text = "Content Provider", modifier = modifier
                 )
             }
 

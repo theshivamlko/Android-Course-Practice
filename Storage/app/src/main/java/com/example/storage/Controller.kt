@@ -25,6 +25,7 @@ import java.io.OutputStream
 import java.io.OutputStreamWriter
 import java.net.URI
 import java.text.DateFormat
+import java.util.Calendar
 import java.util.Date
 
 
@@ -222,6 +223,80 @@ class Controller {
             fileOutputStream.appendLine("Append this text")
             fileOutputStream.close()
             fileDescriptor?.close()
+        }
+
+        fun contentQueryImages(context: Context) {
+            println("contentQueryImages  ")
+            val projection1 = arrayOf<String>(
+                MediaStore.Images.Media._ID,
+                MediaStore.Images.Media.DATE_TAKEN,
+                MediaStore.Images.Media.DISPLAY_NAME,
+                MediaStore.Images.Media.MIME_TYPE,
+                MediaStore.Images.Media.DATA,
+                MediaStore.Images.Media.HEIGHT,
+                MediaStore.Images.Media.RELATIVE_PATH,
+                MediaStore.Images.Media.VOLUME_NAME,
+            )
+
+            val selectQuery = "${MediaStore.Images.Media.DATE_TAKEN} >= ?"
+
+            val milisecs = Calendar.getInstance().apply {
+                add(Calendar.DAY_OF_YEAR, -10)
+            }.timeInMillis
+
+            val selectArgs = arrayOf(milisecs.toString())
+
+            val sortOrder = "${MediaStore.Images.Media.DATE_MODIFIED} DESC"
+
+            context.contentResolver.query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                projection1,
+                selectQuery,
+                selectArgs,
+                sortOrder
+            )?.use { cursor ->
+
+                println("contentQueryImages ${cursor.count}")
+                println("contentQueryImages ${cursor.columnCount}")
+                val id = cursor.getColumnIndex(MediaStore.Images.Media._ID)
+                val name = cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME)
+                val data = cursor.getColumnIndex(MediaStore.Images.Media.DATA)
+                val height = cursor.getColumnIndex(MediaStore.Images.Media.HEIGHT)
+                val path = cursor.getColumnIndex(MediaStore.Images.Media.RELATIVE_PATH)
+                val mime = cursor.getColumnIndex(MediaStore.Images.Media.MIME_TYPE)
+                val date = cursor.getColumnIndex(MediaStore.Images.Media.DATE_TAKEN)
+                val volume = cursor.getColumnIndex(MediaStore.Images.Media.VOLUME_NAME)
+                var i = 0;
+                while (cursor.moveToNext()) {
+                    println(" Row ${++i} ============")
+                    println("ID ${cursor.getLong(id)}")
+                    println("DISPLAY_NAME ${cursor.getString(name)}")
+                    println("DATA ${cursor.getBlob(data)}")
+                    println("HEIGHT ${cursor.getDouble(height)}")
+                    println("RELATIVE_PATH ${cursor.getString(path)}")
+                    println("MIME_TYPE ${cursor.getString(mime)}")
+                    println("DATE_TAKEN ${cursor.getString(date)}")
+                    println("VOLUME_NAME ${cursor.getString(volume)}")
+                    println("getContentUri ${MediaStore.Images.Media.getContentUri(cursor.getString(volume))}")
+                    println("getContentUri ID ${MediaStore.Images.Media.getContentUri(cursor.getString(volume),cursor.getLong(id))}")
+                }
+
+            }
+
+
+        }
+
+        fun contentQueryDocuments(context: Context) {
+            val projection1 = arrayOf(
+                MediaStore.Images.Media._ID,
+                MediaStore.Images.Media.DATE_MODIFIED,
+                MediaStore.Images.Media.DISPLAY_NAME,
+                MediaStore.Images.Media.MIME_TYPE,
+                MediaStore.Images.Media.DATA,
+                MediaStore.Images.Media.HEIGHT,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                MediaStore.Images.Media.INTERNAL_CONTENT_URI,
+            )
         }
     }
 
