@@ -1,7 +1,6 @@
 package com.example.storage
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,10 +9,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.result.registerForActivityResult
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -40,85 +37,34 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.lifecycleScope
 import com.example.storage.Controller.Companion.deletePhotoFromInternalStorage
 import com.example.storage.Controller.Companion.loadPhotoFromInternalStorage
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 
-lateinit var cameraPermissionLauncher: ActivityResultLauncher<String>
 
 lateinit var galleryLauncher: ManagedActivityResultLauncher<String, List<@JvmSuppressWildcards Uri>>
+
+var fileReadUri: Uri? = null
 
 class MainActivityExternalStorage : ComponentActivity() {
 
     var activityResult = mutableListOf<ActivityResultLauncher<Intent>>()
+    var activityResult2 = mutableListOf<ActivityResultLauncher<Array<String>>>()
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
-        var result =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                println("registerForActivityResult2 New Doc ${result.resultCode} ${result.data}")
-                println("  ${result.data?.extras}  ")
-
-                if (result.resultCode == Activity.RESULT_OK) {
-                    result.data?.data?.let {
-                        println("registerForActivityResult  openOutputStream ${it}")
-                        contentResolver.openOutputStream(it)?.apply {
-                            val text = "1. Some random Text \n 2. ${
-                                SimpleDateFormat("dd-MM-yyy hh:mm").format(
-                                    Date(System.currentTimeMillis())
-                                )
-                            }"
-                            write(text.encodeToByteArray())
-                        }
-                    };
-
-                }
-            }
-
-        activityResult.add(result)
-
-          result =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                println("registerForActivityResult2 Read Doc ${result.resultCode} ${result.data}")
-                println("registerForActivityResult3 ${result.data?.extras}  ")
-
-                if (result.resultCode == Activity.RESULT_OK) {
-                    result.data?.data?.let {
-                        try {
-                            println("registerForActivityResult  openInputStream ${it}")
-                            contentResolver.openInputStream(it)?.apply {
-                                val inputAsString =
-                                    bufferedReader().use { it.readText() }  // defaults to UTF-8
-
-                                println("Read File $inputAsString")
-                            }
-                        } catch (e: Exception) {
-                            println("Exception openInputStream $e")
-
-                        }
-                    };
-
-                }
-            }
-        activityResult.add(result)
-
-        loadPhotoFromInternalStorage(baseContext)
+        registerActivityResults()
 
         setContent {
             StorageTheme {
 
                 val context = LocalContext.current
 
-                cameraPermissionLauncher =
-                    rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission()) { isGranted ->
-                        println("cameraPermissionLauncher $isGranted")
-                    }
+
 
 
                 rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) { uriList ->
@@ -145,7 +91,7 @@ class MainActivityExternalStorage : ComponentActivity() {
                             },
                             colors = TopAppBarDefaults.largeTopAppBarColors(containerColor = Color.Blue)
                         )
-                    }, containerColor = Color.White) {
+                    }, containerColor = Color.DarkGray) {
 
                         Greeting("Android", paddingValues = it)
 
@@ -155,6 +101,7 @@ class MainActivityExternalStorage : ComponentActivity() {
             }
         }
     }
+
 
     @Composable
     fun Greeting(name: String, modifier: Modifier = Modifier, paddingValues: PaddingValues) {
@@ -213,7 +160,12 @@ class MainActivityExternalStorage : ComponentActivity() {
                 )
             }
             Button(onClick = {
-                cameraPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
+                activityResult2.first().launch(
+                    arrayOf(
+                        Manifest.permission.READ_MEDIA_IMAGES,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                )
 
             }) {
                 Text(
@@ -240,7 +192,11 @@ class MainActivityExternalStorage : ComponentActivity() {
 
             Button(onClick = {
                 val intent = Intent()
-                intent.action = Intent.ACTION_GET_CONTENT
+                // use to read only
+              //  intent.action = Intent.ACTION_GET_CONTENT
+
+                // use to pick and write
+                intent.action = Intent.ACTION_OPEN_DOCUMENT
                 intent.addCategory(Intent.CATEGORY_DEFAULT)
                 intent.type = "text/plain"
                 intent.putExtra("requestCode", 1);
@@ -249,6 +205,22 @@ class MainActivityExternalStorage : ComponentActivity() {
             }) {
                 Text(
                     text = "Intent Read File", modifier = modifier
+                )
+            }
+
+            Button(onClick = {
+                println("updateFile2 $fileReadUri")
+
+                fileReadUri?.let {
+                    Controller.updateFile(
+                        context,
+                        it
+                    )
+                }
+
+            }) {
+                Text(
+                    text = "Intent Update File", modifier = modifier
                 )
             }
 
@@ -264,6 +236,66 @@ class MainActivityExternalStorage : ComponentActivity() {
                 }
             }
         }
+    }
+
+    private fun registerActivityResults() {
+        var result =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                println("registerForActivityResult2 New Doc ${result.resultCode} ${result.data}")
+                println("  ${result.data?.extras}  ")
+
+                if (result.resultCode == RESULT_OK) {
+                    result.data?.data?.let {
+                        println("registerForActivityResult  openOutputStream ${it}")
+                        contentResolver.openOutputStream(it)?.apply {
+                            val text = "1. Some random Text \n 2. ${
+                                SimpleDateFormat("dd-MM-yyy hh:mm").format(
+                                    Date(System.currentTimeMillis())
+                                )
+                            }"
+                            write(text.encodeToByteArray())
+                        }
+                    };
+
+                }
+            }
+
+        activityResult.add(result)
+
+        result =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                println("registerForActivityResult2 Read Doc ${result.resultCode} ${result.data}")
+                println("registerForActivityResult3 ${result.data?.extras}  ")
+
+                if (result.resultCode == RESULT_OK) {
+                    result.data?.data?.let {
+                        try {
+                            fileReadUri = it
+                            println("registerForActivityResult  openInputStream ${it}")
+                            contentResolver.openInputStream(it)?.apply {
+                                val inputAsString =
+                                    bufferedReader().use { it.readText() }  // defaults to UTF-8
+
+                                println("openInputStream\n $inputAsString")
+                            }
+                        } catch (e: Exception) {
+                            println("Exception openInputStream $e")
+
+                        }
+                    };
+
+                }
+            }
+        activityResult.add(result)
+
+        var result2: ActivityResultLauncher<Array<String>> =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+
+            }
+        activityResult2.add(result2)
+
+
+        loadPhotoFromInternalStorage(baseContext)
     }
 
 }

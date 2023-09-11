@@ -3,18 +3,27 @@ package com.example.storage
 import android.Manifest
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
+import android.content.UriPermission
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.os.ParcelFileDescriptor
 import android.provider.MediaStore
+import android.provider.OpenableColumns
+import androidx.core.app.ComponentActivity
 import androidx.core.content.ContextCompat
+import androidx.core.net.toFile
 import java.io.File
 import java.io.FileFilter
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.OutputStream
+import java.io.OutputStreamWriter
+import java.net.URI
 import java.text.DateFormat
 import java.util.Date
 
@@ -178,6 +187,41 @@ class Controller {
                       )*/
                 }
             }
+        }
+
+        fun updateFile(context: Context, uri: Uri) {
+            println("updateFile3 ${uri}")
+
+            // var file= uri.toFile()
+            //   println("updateFile4 ${file.exists()}")
+//            context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            //   context.contentResolver.acquireContentProviderClient(uri )
+
+            /* var name = ""
+             val returnCursor = context.contentResolver.query(uri, null, null, null, null)
+             if (returnCursor != null) {
+                 val nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                 returnCursor.moveToFirst()
+                 name = returnCursor.getString(nameIndex)
+                 returnCursor.close()
+             }
+             println("updateFile4 ${name}")*/
+
+            /*   val takeFlags: Int = Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    //   or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+               uri?.let {
+                   context.contentResolver.takePersistableUriPermission(it, takeFlags)
+               }*/
+
+
+            val fileDescriptor =
+                context.contentResolver.openOutputStream(uri)
+            var fileOutputStream = OutputStreamWriter(
+                fileDescriptor
+            )
+            fileOutputStream.appendLine("Append this text")
+            fileOutputStream.close()
+            fileDescriptor?.close()
         }
     }
 
