@@ -24,5 +24,4 @@ dependencyResolutionManagement {
 }
 
 
-// apply { from("flutter_settings.gradle") }
 

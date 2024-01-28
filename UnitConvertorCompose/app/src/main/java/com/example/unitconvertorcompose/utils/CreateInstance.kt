@@ -13,7 +13,7 @@ class CreateInstance {
 
 
     companion object {
-        private val FLUTTER_CHANNEL = "com.example.flutter_module.host"
+        private val FLUTTER_CHANNEL = "com.example.flutter_module"
         fun createFactoryInstances(context: Context): ConvertorViewModelFactory {
             val db = RoomDBService.getInstance(context)
             val dao = db.convertorDAO()

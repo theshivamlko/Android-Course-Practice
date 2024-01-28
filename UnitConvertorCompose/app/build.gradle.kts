@@ -80,7 +80,6 @@ android {
     }
     buildToolsVersion = "33.0.2"
 
- //   String storageUrl = System.env.FLUTTER_STORAGE_BASE_URL ?: "https://storage.googleapis.com"
 
 
 
@@ -118,16 +117,9 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
- //    debugImplementation(files("/Users/shivam/StudioProjects/flutter_module/build/host/outputs/repo/com/example/flutter_module/flutter_debug/1.0/flutter_debug-1.0.aar"))
- //   releaseImplementation(files("/Users/shivam/StudioProjects/flutter_module/build/host/outputs/repo/com/example/flutter_module/flutter_release/1.0/flutter_release-1.0.aar"))
 
-//    implementation(project(":flutter"))
- /*   implementation(fileTree("libs") {
-        include("*.jar")
-    })*/
-    //   implementation fileTree(dir: , include: ['*.jar'])
 
     debugImplementation("com.example.flutter_module:flutter_debug:1.0")
     releaseImplementation("com.example.flutter_module:flutter_release:1.0")
-     "profileImplementation"("com.example.flutter_module:flutter_profile:1.0")
+    "profileImplementation"("com.example.flutter_module:flutter_profile:1.0")
 }
