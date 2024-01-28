@@ -32,7 +32,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            signingConfig = signingConfigs.getByName("debug")
+
+        }
         release {
+            signingConfig = signingConfigs.getByName("debug")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -42,6 +47,7 @@ android {
 
         create("profile") {
             // Apply debug type setting by initWith()
+            signingConfig = signingConfigs.getByName("debug")
             initWith(getByName("debug"))
         }
 
@@ -122,6 +128,6 @@ dependencies {
     //   implementation fileTree(dir: , include: ['*.jar'])
 
     debugImplementation("com.example.flutter_module:flutter_debug:1.0")
-    releaseImplementation("com.example.flutter_module.host:flutter_release:1.0")
-//    profileImplementation("com.example.flutter_module.host:flutter_profile:1.0")
+    releaseImplementation("com.example.flutter_module:flutter_release:1.0")
+     "profileImplementation"("com.example.flutter_module:flutter_profile:1.0")
 }
