@@ -13,7 +13,7 @@ class CreateInstance {
 
 
     companion object {
-        private val FLUTTER_CHANNEL = "com.example.flutter_module"
+        private val FLUTTER_CHANNEL = "com.example.flutter_module.host"
         fun createFactoryInstances(context: Context): ConvertorViewModelFactory {
             val db = RoomDBService.getInstance(context)
             val dao = db.convertorDAO()
@@ -27,6 +27,7 @@ class CreateInstance {
             println("openFlutterPage ")
             val json = JSONObject()
             json.put("counter", counter.toString())
+            json.put("name", "ABCDE")
             println("openFlutterPage ${json.toString()}")
 
             val methodChannel = MethodChannel(

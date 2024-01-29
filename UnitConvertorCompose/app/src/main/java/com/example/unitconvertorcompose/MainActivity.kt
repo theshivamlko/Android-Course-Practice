@@ -103,7 +103,10 @@ class MainActivity : ComponentActivity() {
                CreateInstance.openFlutterPage(counter)
                 context.startActivity(
                     FlutterActivity.withCachedEngine(ConvertorApp.FLUTTER_ENGINE_NAME)
-                        .build(context)
+                        .build(context).apply {
+                            putExtra("counter", counter)
+                            putExtra("name", "Shivam")
+                        }
                 )
                 }catch (e:Exception){
                     println("openFlutterPage Error $e")
