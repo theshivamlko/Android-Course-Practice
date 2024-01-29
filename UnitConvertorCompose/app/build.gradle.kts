@@ -85,13 +85,7 @@ android {
 
 configurations {
     getByName("profileImplementation") {
-        dependencies {
-            implementation("com.example.flutter_module:flutter_profile:1.0")
-        }
     }
-//    "profileImplementation" {
-//      //  extendsFrom implementation
-//    }
 }
 
 
@@ -131,8 +125,7 @@ dependencies {
 
     debugImplementation("com.example.flutter_module:flutter_debug:1.0")
     releaseImplementation("com.example.flutter_module:flutter_release:1.0")
-
+    // 2 ways to use profileImplementation
     add("profileImplementation", "com.example.flutter_module:flutter_profile:1.0")
-   // profileImplementation("com.example.flutter_module:flutter_release:1.0")
-//    "profileImplementation"("com.example.flutter_module:flutter_profile:1.0")
+   // "profileImplementation"("com.example.flutter_module:flutter_profile:1.0")
 }
